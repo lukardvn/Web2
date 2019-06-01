@@ -8,11 +8,6 @@ namespace WebApp.Models.DomainEntities
 {
     public class PriceFinal
     {
-        public PriceFinal()
-        {
-            PriceLists = new HashSet<Pricelist>();
-            Tickets = new HashSet<Ticket>();
-        }
 
         public int ID { get; set; }
         [Required]

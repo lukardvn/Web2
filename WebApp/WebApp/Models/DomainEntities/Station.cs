@@ -8,17 +8,19 @@ namespace WebApp.Models.DomainEntities
 {
     public class Station
     {
-        public Station()
-        {
-            TransportLines = new HashSet<TransportLine>();
-            Location = new Location();
-        }
 
         public int StationID { get; set; }
-        [Required]
+
         public string Name { get; set; }
+
         [Required]
-        public Location Location { get; set; }
+        public double X { get; set; }//longitude
+
+        [Required]
+        public double Y { get; set; }//latitude
+
+        public string Address { get; set; }
+
         public virtual ICollection<TransportLine> TransportLines { get; set; }
     }
 }

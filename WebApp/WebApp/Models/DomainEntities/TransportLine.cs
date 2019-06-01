@@ -7,15 +7,16 @@ namespace WebApp.Models.DomainEntities
 {
     public class TransportLine
     {
-        public TransportLine()
-        {
-            Stations = new HashSet<Station>();
-        }
 
         public int TransportLineID { get; set; }
 
-        public virtual ICollection<Departures> Departures { get; set; }
+        public string FromTo { get; set; }
+        public string LineNumber { get; set; }
+
+        public virtual ICollection<Vehicle> Vehicles { get; set; }
         public virtual ICollection<Station> Stations { get; set; }
+        //treba?
+        public virtual ICollection<LinePoint> LinePoints { get; set; }
 
     }
 }

@@ -9,8 +9,10 @@ namespace WebApp.Models.DomainEntities
     public class Pricelist
     {
         public int ID { get; set; }
+
         [Required]
         public System.DateTime From { get; set; }
+
         public System.DateTime? To { get; set; }
 
     }
