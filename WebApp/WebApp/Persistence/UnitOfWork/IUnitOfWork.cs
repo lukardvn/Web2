@@ -10,5 +10,29 @@ namespace WebApp.Persistence.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         int Complete();
+
+        //irepos
+        IDeparturesRepository Departures { get; set; }
+
+        ILinePointRepository LinePoint { get; set; }
+
+        IPriceFinalRepository PriceFinal { get; set; }
+
+        IPricelistRepository Pricelist { get; set; }
+
+        IStationRepository Station { get; set; }
+
+        IStationsOnLineRepository StationsOnLine { get; set; }
+
+        ITicketRepository Ticket { get; set; }
+
+        ITransportLineRepository TransportLine { get; set; }
+
+        IUserRepository User { get; set; }
+
+        IUserTypeRepository UserType { get; set; }
+
+        IVehicleRepository Vehicle { get; set; }
+
     }
 }
