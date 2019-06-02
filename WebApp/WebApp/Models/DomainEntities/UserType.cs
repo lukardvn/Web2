@@ -9,7 +9,7 @@ namespace WebApp.Models.DomainEntities
     {
         public int ID { get; set; }
 
-        public int TypeOfUser { get; set; }
+        public int TypeOfUser { get; set; } //penzioner,student ,regularni
 
         public double Coefficient{ get; set; }
 

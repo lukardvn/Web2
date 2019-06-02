@@ -5,6 +5,7 @@ using System.Web;
 
 namespace WebApp.Models.DomainEntities
 {
+    //koordinate linije za iscrtavanje na mapi
     public class LinePoint
     {
         public int LinePointID { get; set; }

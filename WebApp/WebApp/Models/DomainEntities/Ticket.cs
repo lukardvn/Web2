@@ -19,9 +19,14 @@ namespace WebApp.Models.DomainEntities
         [Required]
         public int UserID { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public DateTime Expires { get; set; }
+
+        //pricefinal veza?
+        public int PriceFinalID { get; set; }
+        
+        public virtual PriceFinal PriceFinal { get; set; }
 
 
     }

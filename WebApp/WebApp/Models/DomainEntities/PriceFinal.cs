@@ -13,7 +13,12 @@ namespace WebApp.Models.DomainEntities
         [Required]
         public double Price { get; set; }
 
-        public virtual ICollection<Pricelist> PriceLists { get; set; }
+        //da li lista ili samo 0..1 ? 
+        //public virtual ICollection<Pricelist> PriceLists { get; set; }
+
+        public int PricelistID { get; set; }
+
+        public virtual Pricelist Pricelist { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

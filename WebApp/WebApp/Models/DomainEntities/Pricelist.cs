@@ -15,5 +15,9 @@ namespace WebApp.Models.DomainEntities
 
         public System.DateTime? To { get; set; }
 
+        //treba ova veza?
+        public virtual ICollection<PriceFinal> PriceFinals { get; set; }
+
+
     }
 }

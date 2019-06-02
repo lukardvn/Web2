@@ -5,6 +5,7 @@ using System.Web;
 
 namespace WebApp.Models.DomainEntities
 {
+    //ako se bude za vecu ocenu radilo, pracenje vozila
     public class Vehicle
     {
 

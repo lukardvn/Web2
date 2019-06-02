@@ -21,6 +21,9 @@ namespace WebApp.Models.DomainEntities
 
         public string Address { get; set; }
 
-        public virtual ICollection<TransportLine> TransportLines { get; set; }
+        //public virtual ICollection<TransportLine> TransportLines { get; set; } ? ovako
+        //ili
+        //ovako ?
+        public virtual ICollection<StationsOnLine> StationsOnLines { get; set; }
     }
 }

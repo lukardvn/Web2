@@ -17,7 +17,7 @@ namespace WebApp.Models.DomainEntities
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
         public virtual ICollection<Station> Stations { get; set; }
-        //treba?
+        //treba?,kasnije za iscrtavanje 
         public virtual ICollection<LinePoint> LinePoints { get; set; }
 
     }
