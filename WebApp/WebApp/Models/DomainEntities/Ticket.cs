@@ -8,7 +8,7 @@ namespace WebApp.Models.DomainEntities
 {
     public class Ticket
     {
-        public int TickedID { get; set; }
+        public int TicketID { get; set; }
 
         [Required]
         public string TicketType { get; set; }//string to int,its easier to recognize than enums
