@@ -54,14 +54,14 @@ namespace WebApp.Migrations
 
             if (!context.Users.Any(u => u.UserName == "admin@yahoo.com"))
             {
-                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!") };
+                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*, UserTypeID = 1*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
 
             if (!context.Users.Any(u => u.UserName == "appu@yahoo.com"))
             { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!") };
+                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!")/*,UserTypeID = 2*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }

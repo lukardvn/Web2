@@ -17,7 +17,7 @@ namespace WebApp.Models
     public class ApplicationUser : IdentityUser
     {
         #region Properties
-        public int UserTypeID { get; set; }
+        public int? UserTypeID { get; set; }
 
         public virtual UserType UserType { get; set; }
 

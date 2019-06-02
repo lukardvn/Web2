@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,8 @@ namespace WebApp.Models.DomainEntities
 {
     public class UserType
     {
-        public int ID { get; set; }
+        [Key]
+        public int UserTypeID { get; set; }
 
         public int TypeOfUser { get; set; } //penzioner,student ,regularni
 
