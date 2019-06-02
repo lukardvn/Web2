@@ -10,24 +10,33 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class DeparturesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public DeparturesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
+
 
         // GET: api/Departures
-        public IQueryable<Departures> GetDepartures()
+        public IEnumerable<Departures> GetDepartures()
         {
-            return db.Departures;
+            return unitOfWork.Departures.GetAll();
         }
 
         // GET: api/Departures/5
         [ResponseType(typeof(Departures))]
         public IHttpActionResult GetDepartures(int id)
         {
-            Departures departures = db.Departures.Find(id);
+            Departures departures = unitOfWork.Departures.Get(id);
             if (departures == null)
             {
                 return NotFound();
@@ -50,11 +59,11 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(departures).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.Departures.Update(departures);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Departures.Add(departures);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Departures.Add(departures);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = departures.ID }, departures);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Departures))]
         public IHttpActionResult DeleteDepartures(int id)
         {
-            Departures departures = db.Departures.Find(id);
+            Departures departures = unitOfWork.Departures.Get(id);
             if (departures == null)
             {
                 return NotFound();
             }
 
-            db.Departures.Remove(departures);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Departures.Remove(departures);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(departures);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool DeparturesExists(int id)
         {
-            return db.Departures.Count(e => e.ID == id) > 0;
+            return unitOfWork.Departures.Find(d => d.ID == id).Count() > 0;
         }
     }
 }

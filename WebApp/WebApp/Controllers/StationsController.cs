@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class StationsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public StationsController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/Stations
-        public IQueryable<Station> GetStations()
+        public IEnumerable<Station> GetStations()
         {
-            return db.Stations;
+            return unitOfWork.Station.GetAll();
         }
 
         // GET: api/Stations/5
         [ResponseType(typeof(Station))]
         public IHttpActionResult GetStation(int id)
         {
-            Station station = db.Stations.Find(id);
+            Station station = unitOfWork.Station.Get(id);
             if (station == null)
             {
                 return NotFound();
@@ -50,11 +58,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(station).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.Station.Update(station);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Stations.Add(station);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Station.Add(station);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = station.StationID }, station);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Station))]
         public IHttpActionResult DeleteStation(int id)
         {
-            Station station = db.Stations.Find(id);
+            Station station = unitOfWork.Station.Get(id);
             if (station == null)
             {
                 return NotFound();
             }
 
-            db.Stations.Remove(station);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Station.Remove(station);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(station);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool StationExists(int id)
         {
-            return db.Stations.Count(e => e.StationID == id) > 0;
+            return unitOfWork.Station.Find(e => e.StationID == id).Count() > 0;
         }
     }
 }

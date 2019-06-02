@@ -10,24 +10,25 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class TicketsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
 
         // GET: api/Tickets
-        public IQueryable<Ticket> GetTickets()
+        public IEnumerable<Ticket> GetTickets()
         {
-            return db.Tickets;
+            return unitOfWork.Ticket.GetAll();
         }
 
         // GET: api/Tickets/5
         [ResponseType(typeof(Ticket))]
         public IHttpActionResult GetTicket(int id)
         {
-            Ticket ticket = db.Tickets.Find(id);
+            Ticket ticket = unitOfWork.Ticket.Get(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -50,11 +51,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(ticket).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.Ticket.Update(ticket);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +82,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Tickets.Add(ticket);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Ticket.Add(ticket);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = ticket.TicketID }, ticket);
         }
@@ -90,14 +99,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Ticket))]
         public IHttpActionResult DeleteTicket(int id)
         {
-            Ticket ticket = db.Tickets.Find(id);
+            Ticket ticket = unitOfWork.Ticket.Get(id);
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            db.Tickets.Remove(ticket);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Ticket.Remove(ticket);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(ticket);
         }
@@ -106,14 +122,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TicketExists(int id)
         {
-            return db.Tickets.Count(e => e.TicketID == id) > 0;
+            return unitOfWork.Ticket.Find(e => e.TicketID == id).Count() > 0;
         }
     }
 }

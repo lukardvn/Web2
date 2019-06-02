@@ -10,24 +10,25 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class VehiclesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
 
         // GET: api/Vehicles
-        public IQueryable<Vehicle> GetVehicles()
+        public IEnumerable<Vehicle> GetVehicles()
         {
-            return db.Vehicles;
+            return unitOfWork.Vehicle.GetAll();
         }
 
         // GET: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult GetVehicle(int id)
         {
-            Vehicle vehicle = db.Vehicles.Find(id);
+            Vehicle vehicle = unitOfWork.Vehicle.Get(id);
             if (vehicle == null)
             {
                 return NotFound();
@@ -50,11 +51,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(vehicle).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.Vehicle.Update(vehicle);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +82,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Vehicles.Add(vehicle);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Vehicle.Add(vehicle);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = vehicle.VehicleID }, vehicle);
         }
@@ -90,14 +99,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult DeleteVehicle(int id)
         {
-            Vehicle vehicle = db.Vehicles.Find(id);
+            Vehicle vehicle = unitOfWork.Vehicle.Get(id);
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Vehicle.Remove(vehicle);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(vehicle);
         }
@@ -106,14 +122,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool VehicleExists(int id)
         {
-            return db.Vehicles.Count(e => e.VehicleID == id) > 0;
+            return unitOfWork.Vehicle.Find(e => e.VehicleID == id).Count() > 0;
         }
     }
 }

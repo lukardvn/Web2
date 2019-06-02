@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class PricelistsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public PricelistsController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/Pricelists
-        public IQueryable<Pricelist> GetPricelists()
+        public IEnumerable<Pricelist> GetPricelists()
         {
-            return db.Pricelists;
+            return unitOfWork.Pricelist.GetAll();
         }
 
         // GET: api/Pricelists/5
         [ResponseType(typeof(Pricelist))]
         public IHttpActionResult GetPricelist(int id)
         {
-            Pricelist pricelist = db.Pricelists.Find(id);
+            Pricelist pricelist = unitOfWork.Pricelist.Get(id);
             if (pricelist == null)
             {
                 return NotFound();
@@ -50,11 +58,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(pricelist).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.Pricelist.Update(pricelist);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Pricelists.Add(pricelist);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Pricelist.Add(pricelist);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = pricelist.ID }, pricelist);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Pricelist))]
         public IHttpActionResult DeletePricelist(int id)
         {
-            Pricelist pricelist = db.Pricelists.Find(id);
+            Pricelist pricelist = unitOfWork.Pricelist.Get(id);
             if (pricelist == null)
             {
                 return NotFound();
             }
 
-            db.Pricelists.Remove(pricelist);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.Pricelist.Remove(pricelist);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(pricelist);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool PricelistExists(int id)
         {
-            return db.Pricelists.Count(e => e.ID == id) > 0;
+            return unitOfWork.Pricelist.Find(e => e.ID == id).Count() > 0;
         }
     }
 }

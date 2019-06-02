@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class PriceFinalsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public PriceFinalsController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/PriceFinals
-        public IQueryable<PriceFinal> GetPriceFinals()
+        public IEnumerable<PriceFinal> GetPriceFinals()
         {
-            return db.PriceFinals;
+            return unitOfWork.PriceFinal.GetAll();
         }
 
         // GET: api/PriceFinals/5
         [ResponseType(typeof(PriceFinal))]
         public IHttpActionResult GetPriceFinal(int id)
         {
-            PriceFinal priceFinal = db.PriceFinals.Find(id);
+            PriceFinal priceFinal = unitOfWork.PriceFinal.Get(id);
             if (priceFinal == null)
             {
                 return NotFound();
@@ -50,11 +58,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(priceFinal).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.PriceFinal.Update(priceFinal);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.PriceFinals.Add(priceFinal);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.PriceFinal.Add(priceFinal);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = priceFinal.ID }, priceFinal);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(PriceFinal))]
         public IHttpActionResult DeletePriceFinal(int id)
         {
-            PriceFinal priceFinal = db.PriceFinals.Find(id);
+            PriceFinal priceFinal = unitOfWork.PriceFinal.Get(id);
             if (priceFinal == null)
             {
                 return NotFound();
             }
 
-            db.PriceFinals.Remove(priceFinal);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.PriceFinal.Add(priceFinal);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(priceFinal);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool PriceFinalExists(int id)
         {
-            return db.PriceFinals.Count(e => e.ID == id) > 0;
+            return unitOfWork.PriceFinal.Find(e => e.ID == id).Count() > 0;
         }
     }
 }

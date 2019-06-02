@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class TransportLinesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public TransportLinesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/TransportLines
-        public IQueryable<TransportLine> GetTransportLines()
+        public IEnumerable<TransportLine> GetTransportLines()
         {
-            return db.TransportLines;
+            return unitOfWork.TransportLine.GetAll();
         }
 
         // GET: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
         public IHttpActionResult GetTransportLine(int id)
         {
-            TransportLine transportLine = db.TransportLines.Find(id);
+            TransportLine transportLine = unitOfWork.TransportLine.Get(id);
             if (transportLine == null)
             {
                 return NotFound();
@@ -50,11 +58,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(transportLine).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.TransportLine.Update(transportLine);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.TransportLines.Add(transportLine);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.TransportLine.Add(transportLine);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = transportLine.TransportLineID }, transportLine);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(TransportLine))]
         public IHttpActionResult DeleteTransportLine(int id)
         {
-            TransportLine transportLine = db.TransportLines.Find(id);
+            TransportLine transportLine = unitOfWork.TransportLine.Get(id);
             if (transportLine == null)
             {
                 return NotFound();
             }
 
-            db.TransportLines.Remove(transportLine);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.TransportLine.Remove(transportLine);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(transportLine);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TransportLineExists(int id)
         {
-            return db.TransportLines.Count(e => e.TransportLineID == id) > 0;
+            return unitOfWork.TransportLine.Find(e => e.TransportLineID == id).Count() > 0;
         }
     }
 }

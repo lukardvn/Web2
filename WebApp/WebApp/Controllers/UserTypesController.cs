@@ -10,24 +10,25 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class UserTypesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
 
         // GET: api/UserTypes
-        public IQueryable<UserType> GetUserTypes()
+        public IEnumerable<UserType> GetUserTypes()
         {
-            return db.UserTypes;
+            return unitOfWork.UserType.GetAll();
         }
 
         // GET: api/UserTypes/5
         [ResponseType(typeof(UserType))]
         public IHttpActionResult GetUserType(int id)
         {
-            UserType userType = db.UserTypes.Find(id);
+            UserType userType = unitOfWork.UserType.Get(id);
             if (userType == null)
             {
                 return NotFound();
@@ -50,11 +51,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(userType).State = EntityState.Modified;
+           
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.UserType.Update(userType);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +82,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.UserTypes.Add(userType);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.UserType.Add(userType);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = userType.UserTypeID }, userType);
         }
@@ -90,14 +99,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(UserType))]
         public IHttpActionResult DeleteUserType(int id)
         {
-            UserType userType = db.UserTypes.Find(id);
+            UserType userType = unitOfWork.UserType.Get(id);
             if (userType == null)
             {
                 return NotFound();
             }
 
-            db.UserTypes.Remove(userType);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.UserType.Remove(userType);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(userType);
         }
@@ -106,14 +122,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool UserTypeExists(int id)
         {
-            return db.UserTypes.Count(e => e.UserTypeID == id) > 0;
+            return unitOfWork.UserType.Find(e => e.UserTypeID == id).Count() > 0;
         }
     }
 }

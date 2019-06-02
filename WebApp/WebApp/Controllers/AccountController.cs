@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -50,6 +53,111 @@ namespace WebApp.Controllers
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+
+
+        /// <summary>
+        /// GetAll()
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles ="Admin")]
+        //mozda bude zezalo konverzija iquer to ienumer----
+        public IEnumerable<ApplicationUser> GetUsers()
+        {
+            return UserManager.Users.ToList();
+        }
+
+        /// <summary>
+        /// Get()
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(ApplicationUser))]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult GetUser(string id)
+        {
+            ApplicationUser user = UserManager.Users.ToList().Find(x => x.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
+        ///// <summary>
+        ///// Put()
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="user"></param>
+        ///// <returns></returns>
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutUser(string id, ApplicationUser user)
+        //{
+        //    if (!ModelState.IsValid || user == null)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != user.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    ApplicationUser existingUser = UserManager.Users.Where(x => x.Id == id).FirstOrDefault();
+
+        //    if (existingUser == null)
+        //    {
+        //        return BadRequest("Korisnik ne postoji");
+        //    }
+
+        //    //da li ovo treba ovako pitati ?
+        //    existingUser.Email = user.Email;
+        //    existingUser.EmailConfirmed = user.EmailConfirmed;
+        //    existingUser.AccessFailedCount = user.AccessFailedCount;
+        //    //??
+        //    existingUser.Id = user.Id;
+        //    //videti da li treba uopste ovo ovako?? ako treba nastaviti tamo
+
+        //    IdentityResult result = await UserManager.UpdateAsync(existingUser);
+
+        //    if (!result.Succeeded)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+
+        /// <summary>
+        /// Delete()
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(ApplicationUser))]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult DeleteUser(string id)
+        {
+            ApplicationUser user = UserManager.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            UserManager.Delete(user);
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
+        public bool UserExists(string email)
+        {
+            return UserManager.Users.FirstOrDefault(x => x.Email == email) != null;
+        }
+
+        ///
+
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

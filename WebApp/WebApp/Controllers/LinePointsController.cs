@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class LinePointsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public LinePointsController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/LinePoints
-        public IQueryable<LinePoint> GetLinePoints()
+        public IEnumerable<LinePoint> GetLinePoints()
         {
-            return db.LinePoints;
+            return unitOfWork.LinePoint.GetAll();
         }
 
         // GET: api/LinePoints/5
         [ResponseType(typeof(LinePoint))]
         public IHttpActionResult GetLinePoint(int id)
         {
-            LinePoint linePoint = db.LinePoints.Find(id);
+            LinePoint linePoint = unitOfWork.LinePoint.Get(id);
             if (linePoint == null)
             {
                 return NotFound();
@@ -50,11 +58,11 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(linePoint).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.LinePoint.Update(linePoint);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +88,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.LinePoints.Add(linePoint);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.LinePoint.Add(linePoint);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = linePoint.LinePointID }, linePoint);
         }
@@ -90,14 +105,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(LinePoint))]
         public IHttpActionResult DeleteLinePoint(int id)
         {
-            LinePoint linePoint = db.LinePoints.Find(id);
+            LinePoint linePoint = unitOfWork.LinePoint.Get(id);
             if (linePoint == null)
             {
                 return NotFound();
             }
 
-            db.LinePoints.Remove(linePoint);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.LinePoint.Remove(linePoint);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(linePoint);
         }
@@ -106,14 +128,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool LinePointExists(int id)
         {
-            return db.LinePoints.Count(e => e.LinePointID == id) > 0;
+            return unitOfWork.LinePoint.Find(e => e.LinePointID == id).Count() > 0;
         }
     }
 }

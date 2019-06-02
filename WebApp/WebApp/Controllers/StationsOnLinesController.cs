@@ -10,24 +10,32 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
+using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
     public class StationsOnLinesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork;
+
+        public StationsOnLinesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: api/StationsOnLines
-        public IQueryable<StationsOnLine> GetStationsOnLines()
+        public IEnumerable<StationsOnLine> GetStationsOnLines()
         {
-            return db.StationsOnLines;
+            return unitOfWork.StationsOnLine.GetAll();
         }
 
         // GET: api/StationsOnLines/5
         [ResponseType(typeof(StationsOnLine))]
         public IHttpActionResult GetStationsOnLine(int id)
         {
-            StationsOnLine stationsOnLine = db.StationsOnLines.Find(id);
+            StationsOnLine stationsOnLine = unitOfWork.StationsOnLine.Get(id);
             if (stationsOnLine == null)
             {
                 return NotFound();
@@ -50,11 +58,12 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(stationsOnLine).State = EntityState.Modified;
+            
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.StationsOnLine.Update(stationsOnLine);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +89,15 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.StationsOnLines.Add(stationsOnLine);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.StationsOnLine.Add(stationsOnLine);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = stationsOnLine.StationsOnLineID }, stationsOnLine);
         }
@@ -90,14 +106,21 @@ namespace WebApp.Controllers
         [ResponseType(typeof(StationsOnLine))]
         public IHttpActionResult DeleteStationsOnLine(int id)
         {
-            StationsOnLine stationsOnLine = db.StationsOnLines.Find(id);
+            StationsOnLine stationsOnLine = unitOfWork.StationsOnLine.Get(id);
             if (stationsOnLine == null)
             {
                 return NotFound();
             }
 
-            db.StationsOnLines.Remove(stationsOnLine);
-            db.SaveChanges();
+            try
+            {
+                unitOfWork.StationsOnLine.Remove(stationsOnLine);
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Ok(stationsOnLine);
         }
@@ -106,14 +129,14 @@ namespace WebApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool StationsOnLineExists(int id)
         {
-            return db.StationsOnLines.Count(e => e.StationsOnLineID == id) > 0;
+            return unitOfWork.StationsOnLine.Find(e => e.StationID == id).Count() > 0;
         }
     }
 }
