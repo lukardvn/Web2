@@ -18,6 +18,13 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
+        public TicketsController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
+
         // GET: api/Tickets
         public IEnumerable<Ticket> GetTickets()
         {

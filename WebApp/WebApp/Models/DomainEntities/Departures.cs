@@ -10,6 +10,8 @@ namespace WebApp.Models.DomainEntities
     {
         public int ID { get; set; }
 
+        //public bool Type {get;set;} //gradski ili prigradski ??
+
         //mozda moze i kao poseban tip,ali recimo da su 0,1,2 vrednosti da ne komplikujemo bar za sada
         public int DayInWeek { get; set; }
 

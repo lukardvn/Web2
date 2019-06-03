@@ -18,6 +18,14 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
+        public VehiclesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
+
+
         // GET: api/Vehicles
         public IEnumerable<Vehicle> GetVehicles()
         {

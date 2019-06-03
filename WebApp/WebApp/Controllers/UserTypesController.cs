@@ -18,6 +18,13 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
+        public UserTypesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
+
+
         // GET: api/UserTypes
         public IEnumerable<UserType> GetUserTypes()
         {
