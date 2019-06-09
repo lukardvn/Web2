@@ -33,7 +33,7 @@ namespace WebApp.Controllers
 
         // GET: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
-        public IHttpActionResult GetTransportLine(int id)
+        public IHttpActionResult GetTransportLine(string id)
         {
             TransportLine transportLine = unitOfWork.TransportLine.Get(id);
             if (transportLine == null)
@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 
         // PUT: api/TransportLines/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTransportLine(int id, TransportLine transportLine)
+        public IHttpActionResult PutTransportLine(string id, TransportLine transportLine)
         {
             if (!ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
-        public IHttpActionResult DeleteTransportLine(int id)
+        public IHttpActionResult DeleteTransportLine(string id)
         {
             TransportLine transportLine = unitOfWork.TransportLine.Get(id);
             if (transportLine == null)
@@ -134,7 +134,7 @@ namespace WebApp.Controllers
             base.Dispose(disposing);
         }
 
-        private bool TransportLineExists(int id)
+        private bool TransportLineExists(string id)
         {
             return unitOfWork.TransportLine.Find(e => e.TransportLineID == id).Count() > 0;
         }

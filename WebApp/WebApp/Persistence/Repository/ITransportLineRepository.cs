@@ -7,7 +7,7 @@ using WebApp.Models.DomainEntities;
 
 namespace WebApp.Persistence.Repository
 {
-    public interface ITransportLineRepository : IRepository<TransportLine,int>
+    public interface ITransportLineRepository : IRepository<TransportLine,string>
     {
 
     }

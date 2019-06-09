@@ -7,7 +7,7 @@ using WebApp.Models.DomainEntities;
 
 namespace WebApp.Persistence.Repository
 {
-    public class TransportLineRepository : Repository<TransportLine,int> , ITransportLineRepository
+    public class TransportLineRepository : Repository<TransportLine,string> , ITransportLineRepository
     {
         public TransportLineRepository(DbContext context) : base(context)
         {

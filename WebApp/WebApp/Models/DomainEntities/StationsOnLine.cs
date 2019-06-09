@@ -16,7 +16,8 @@ namespace WebApp.Models.DomainEntities
         public virtual Station Station { get; set; }
 
         [Required]
-        public int TransportLineID { get; set; }
+        public string TransportLineID { get; set; }
+
 
         public virtual TransportLine TransportLine { get; set; }
     }
