@@ -269,9 +269,9 @@
     <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906091427164_ffgghh.cs" />
-    <Compile Include="Migrations\201906091427164_ffgghh.Designer.cs">
-      <DependentUpon>201906091427164_ffgghh.cs</DependentUpon>
+    <Compile Include="Migrations\201906091514197_glavoboljaOdMigracija2.cs" />
+    <Compile Include="Migrations\201906091514197_glavoboljaOdMigracija2.Designer.cs">
+      <DependentUpon>201906091514197_glavoboljaOdMigracija2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -415,8 +415,8 @@
     <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906091427164_ffgghh.resx">
-      <DependentUpon>201906091427164_ffgghh.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906091514197_glavoboljaOdMigracija2.resx">
+      <DependentUpon>201906091514197_glavoboljaOdMigracija2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
