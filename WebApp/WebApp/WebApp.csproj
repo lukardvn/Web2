@@ -269,9 +269,17 @@
     <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906111612235_glavobolja4.cs" />
-    <Compile Include="Migrations\201906111612235_glavobolja4.Designer.cs">
-      <DependentUpon>201906111612235_glavobolja4.cs</DependentUpon>
+    <Compile Include="Migrations\201906112152288_BozeTiPomozi.cs" />
+    <Compile Include="Migrations\201906112152288_BozeTiPomozi.Designer.cs">
+      <DependentUpon>201906112152288_BozeTiPomozi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906112205220_BozeTiPomozi2.cs" />
+    <Compile Include="Migrations\201906112205220_BozeTiPomozi2.Designer.cs">
+      <DependentUpon>201906112205220_BozeTiPomozi2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906112216502_BozeTiPomozi123.cs" />
+    <Compile Include="Migrations\201906112216502_BozeTiPomozi123.Designer.cs">
+      <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -415,8 +423,14 @@
     <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
       <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906111612235_glavobolja4.resx">
-      <DependentUpon>201906111612235_glavobolja4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906112152288_BozeTiPomozi.resx">
+      <DependentUpon>201906112152288_BozeTiPomozi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906112205220_BozeTiPomozi2.resx">
+      <DependentUpon>201906112205220_BozeTiPomozi2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906112216502_BozeTiPomozi123.resx">
+      <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

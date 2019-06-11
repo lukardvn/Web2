@@ -19,6 +19,8 @@
             AutomaticMigrationsEnabled = false;
         }
 
+
+
         protected override void Seed(WebApp.Persistence.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
@@ -56,40 +58,73 @@
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
+            ////////////
+            //regularan korisnik
+            UserType regularanKorisnik = new UserType() { TypeOfUser = 0, Coefficient = 1 };
+
+            context.UserTypes.Add(regularanKorisnik);
+            //student
+            UserType studentKorisnik = new UserType() { TypeOfUser = 1, Coefficient = 0.8 };
+
+            context.UserTypes.Add(studentKorisnik);
+            //penzioner
+            UserType penzionerKorisnik = new UserType() { TypeOfUser = 2, Coefficient = 0.6 };
+            context.UserTypes.Add(penzionerKorisnik);
+
+            context.SaveChanges();
+            ////////////
+
+
             if (!context.Users.Any(u => u.UserName == "admin@yahoo.com"))
             {
-                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!")/*, UserTypeID = 1*/ };
+                var user = new ApplicationUser() { Id = "admin", UserName = "admin@yahoo", Email = "admin@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Admin123!"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01)/*, UserTypeID = 1*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "Admin");
             }
 
             if (!context.Users.Any(u => u.UserName == "appu@yahoo.com"))
             { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!")/*,UserTypeID = 2*/ };
+                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!"),DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01)/*,UserTypeID = 2*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
 
-            //////////////
-            ////regularan korisnik
-            //context.UserTypes.Add(new UserType() { TypeOfUser = 0, Coefficient = 1 });
-            ////student
-            //context.UserTypes.Add(new UserType() { TypeOfUser = 1, Coefficient = 0.8 });
-            ////penzioner
-            //context.UserTypes.Add(new UserType() { TypeOfUser = 2, Coefficient = 0.6 });
-            //////////////
-            
 
-            /////////////
-            //DateTime priceValidFrom = new DateTime(2019, 05, 25);
-            //Pricelist pricelist = new Pricelist() { From = priceValidFrom };
+            if (!context.Users.Any(u => u.UserName == "anonymus@anonymus.com"))
+            {
+                var user = new ApplicationUser() { Id = "anonymus", UserName = "anonymus@anonymus", Email = "anonymus@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01) ,UserTypeID = 1 };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "AppUser");
+            }
+            //ovde ovo jer se koristi kasnije userID,a mora da postoji da se ne bi bunilo zbog referencijalno int
+            context.SaveChanges();
 
-            //context.Pricelists.Add(pricelist);
-            /////////////
-            /////
-            ///// 
-            /////
-            //context.PriceFinals.Add(new PriceFinal() { Price = 65, PricelistID = pricelist.ID, TicketID = });
+
+
+            ///////////
+            DateTime priceValidFrom = new DateTime(2019, 05, 25);
+            Pricelist pricelist = new Pricelist() { From = priceValidFrom, To = priceValidFrom.AddDays(100)};
+
+            context.Pricelists.Add(pricelist);
+            context.SaveChanges();
+            /////////
+
+            //za neregistrovanog korisnika
+            //jako ruzno ovo za userid sto je hardkodovano ali sta bi sada...
+            Ticket ticketRegular = new Ticket() { TicketType = "regularna",UserID = "anonymus" };
+            context.SaveChanges();
+            ///
+            //za sada ovde pravi problem neki ?
+            PriceFinal priceFinal = new PriceFinal()
+            {
+                Price = 65,
+                PricelistID = pricelist.ID,
+                Ticket = ticketRegular
+            };
+
+            context.PriceFinals.Add(priceFinal);
+
+            context.SaveChanges();
 
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +9,7 @@ namespace WebApp.Models.DomainEntities
 {
     public class PriceFinal
     {
-
+        [ForeignKey("Ticket")]
         public int ID { get; set; }
         [Required]
         public double Price { get; set; }
@@ -23,9 +24,10 @@ namespace WebApp.Models.DomainEntities
         //veza obicna
 
         //public virtual ICollection<Ticket> Tickets { get; set; }
-        public int TicketID { get; set; }
 
-        [Required]
+        //public int TicketID { get; set; }
+
+        //[Required]
         public virtual Ticket Ticket { get; set; }
     }
 }
