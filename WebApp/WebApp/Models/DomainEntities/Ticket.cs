@@ -13,7 +13,7 @@ namespace WebApp.Models.DomainEntities
         [Required]
         public string TicketType { get; set; }//string to int,its easier to recognize than enums
 
-        [Required]
+        //zbog inicijalnog dodavanja u bazu sklonjen required
         public DateTime BoughtAt { get; set; }
 
         [Required]

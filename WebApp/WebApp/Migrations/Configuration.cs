@@ -70,6 +70,29 @@
                 userManager.AddToRole(user.Id, "AppUser");
             }
 
+            //////////////
+            ////regularan korisnik
+            //context.UserTypes.Add(new UserType() { TypeOfUser = 0, Coefficient = 1 });
+            ////student
+            //context.UserTypes.Add(new UserType() { TypeOfUser = 1, Coefficient = 0.8 });
+            ////penzioner
+            //context.UserTypes.Add(new UserType() { TypeOfUser = 2, Coefficient = 0.6 });
+            //////////////
+            
+
+            /////////////
+            //DateTime priceValidFrom = new DateTime(2019, 05, 25);
+            //Pricelist pricelist = new Pricelist() { From = priceValidFrom };
+
+            //context.Pricelists.Add(pricelist);
+            /////////////
+            /////
+            ///// 
+            /////
+            //context.PriceFinals.Add(new PriceFinal() { Price = 65, PricelistID = pricelist.ID, TicketID = });
+
+
+
             //gradski za ns
             context.TransportLines.Add(new TransportLine() { FromTo = "KLISA - CENTAR - LIMAN I", TransportLineID = "1A" });
             context.TransportLines.Add(new TransportLine() { FromTo = "LIMAN I - CENTAR - KLISA", TransportLineID = "1B" });

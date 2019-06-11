@@ -25,6 +25,24 @@ namespace WebApp.Controllers
 
 
 
+        //[Route("api/Tickets/BuyAnonymus")]
+        //[HttpPost]
+        //[ResponseType(typeof(Ticket))]
+        //public IHttpActionResult BuyTicket()
+        //{
+        //    //UserType userType = new UserType()
+        //    //{
+        //    //    TypeOfUser = 0,
+        //    //    Coefficient = 1
+        //    //};
+
+
+        //}
+
+        /// <summary>
+        /// gotove metode
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Tickets
         public IEnumerable<Ticket> GetTickets()
         {

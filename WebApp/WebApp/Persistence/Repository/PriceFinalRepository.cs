@@ -20,7 +20,7 @@ namespace WebApp.Persistence.Repository
 
         new public PriceFinal Get(int id)
         {
-            return context.Set<PriceFinal>().Include("Tickets").Include("Ticket").FirstOrDefault(x => x.ID == id);
+            return context.Set<PriceFinal>().Include("Pricelist").Include("Ticket").FirstOrDefault(x => x.ID == id);
         }
     }
 }
