@@ -1,20 +1,40 @@
-mat-fab {
-  width: 100%;
-  color : aquamarine;
-  text-align: center;
-  height: 100%;
-  margin: auto;
-}
-
-h1 {
-  width : 40%;
-  height: 15%;
-  margin: auto;
-  font-size: 300px;
-}
-
-app-header {
+mat-card {
   width: 80%;
   margin : auto;
+  margin-top : 1rem;
+  height: 80%;
 }
+
+mat-fab {
+  width: 20%;
+  height: 60%;
+  margin: auto;
+}
+
+.prvo-dugme {
+  margin-top: 5rem;
+  margin-left: 3rem;
+}
+
+.drugo-dugme {
+  margin-top: 10rem;
+  margin-left: 6rem;
+}
+
+.trece-dugme {
+  margin-top: 5rem;
+  margin-left: 9rem;
+}
+
+.cetvrto-dugme {
+  margin-top: 10rem;
+  margin-left: 12rem;
+}
+
+.peto-dugme {
+  margin-top: 5rem;
+  margin-left: 15rem;
+}
+
+
 
