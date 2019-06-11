@@ -13,5 +13,15 @@ namespace WebApp.Persistence.Repository
         {
 
         }
+
+        new public IEnumerable<Pricelist> GetAll()
+        {
+            return context.Set<Pricelist>().Include("PriceFinals").ToList();
+        }
+
+        new public Pricelist Get(int id)
+        {
+            return context.Set<Pricelist>().Include("PriceFinals").FirstOrDefault(x => x.ID == id);
+        }
     }
 }

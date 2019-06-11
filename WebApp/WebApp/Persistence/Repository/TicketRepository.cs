@@ -13,5 +13,15 @@ namespace WebApp.Persistence.Repository
         {
 
         }
+
+        new public IEnumerable<Ticket> GetAll()
+        {
+            return context.Set<Ticket>().Include("PriceFinal").Include("User").ToList();
+        }
+
+        new public Ticket Get(int id)
+        {
+            return context.Set<Ticket>().Include("PriceFinal").Include("User").FirstOrDefault(x => x.TicketID == id);
+        }
     }
 }

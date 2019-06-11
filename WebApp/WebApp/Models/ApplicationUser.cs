@@ -18,6 +18,18 @@ namespace WebApp.Models
     {
         #region Properties
         public int? UserTypeID { get; set; }
+        
+        public string Name { get; set; }
+
+        public string Surname { get; set; }
+
+        public string Adress { get; set; }
+
+        public string Password { get; set; }
+
+        public string ConfirmedPassword { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
 
         public virtual UserType UserType { get; set; }
 

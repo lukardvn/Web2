@@ -20,6 +20,12 @@ namespace WebApp.Models.DomainEntities
 
         public virtual Pricelist Pricelist { get; set; }
 
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        //veza obicna
+
+        //public virtual ICollection<Ticket> Tickets { get; set; }
+        public int TicketID { get; set; }
+
+        [Required]
+        public virtual Ticket Ticket { get; set; }
     }
 }

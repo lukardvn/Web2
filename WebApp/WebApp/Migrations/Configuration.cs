@@ -2,12 +2,15 @@
 {
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Newtonsoft.Json;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.IO;
     using System.Linq;
     using WebApp.Models;
     using WebApp.Models.DomainEntities;
+    using WebApp.Persistence;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebApp.Persistence.ApplicationDbContext>
     {
@@ -309,6 +312,85 @@
 
 
             context.SaveChanges();
+
+            //
+
+            //AddStations(context);
+        }
+
+        private void AddStations(ApplicationDbContext context)
+        {
+            string addr = System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/busStopsPointsCorrected1.json");
+
+            string json = "";
+            using (StreamReader reader = new StreamReader(addr))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            dynamic niz = JsonConvert.DeserializeObject(json);
+
+
+            for (int i = 0; i < Enumerable.Count(niz); i++)
+            {
+                for (int j = 0; j < Enumerable.Count(niz[i]); j++)
+                {
+                    string item = string.Empty;
+                    string[] items = null;
+                    string[] linesOnThisStation = null;
+                    double longitude = 0.0;
+                    double latitude = 0.0;
+                    string nameOfStation = string.Empty;
+
+                    if (j > 0)
+                    {
+                        item = niz[i][j];
+                        items = item.Split('|');
+                        ///////
+                        ///
+                        linesOnThisStation = items[0].Trim().Split(',');
+
+                        longitude = Double.Parse(items[1].Trim());
+                        latitude = Double.Parse(items[2].Trim());
+                        nameOfStation = items[3].Trim();
+                    }
+                    else
+                    {
+                         item = niz[i][j];
+                         items = item.Split('|');
+                         linesOnThisStation = items[1].Trim().Split(',');
+
+                         longitude = Double.Parse(items[2].Trim());
+                         latitude = Double.Parse(items[3].Trim());
+                         nameOfStation = items[4].Trim();
+
+                    }
+                    var station = new Station()
+                    {
+                        Name = nameOfStation,
+                        Address = nameOfStation,
+                        Y = longitude,
+                        X = latitude
+                    };
+                    context.Stations.Add(station);
+                    for (int k = 0; k < linesOnThisStation.Length; k++) {
+                        
+                        string lineID = linesOnThisStation[k].Replace('[', ' ').Replace(']', ' ').Trim();
+
+                        if (!context.TransportLines.Any(l => l.TransportLineID == lineID))
+                        {
+                            continue;
+                        }
+
+                        context.StationsOnLines.Add(new StationsOnLine()
+                        {
+                            StationID = station.StationID, TransportLineID = lineID
+                        });
+                    }
+                }
+            }
+            context.SaveChanges();
+
         }
     }
 }

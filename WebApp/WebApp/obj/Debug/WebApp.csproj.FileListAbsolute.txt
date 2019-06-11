@@ -250,4 +250,4 @@ C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
-C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.glavoboljaOdMigracija2.resources
+C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.glavobolja4.resources

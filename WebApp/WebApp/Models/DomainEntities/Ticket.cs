@@ -24,7 +24,7 @@ namespace WebApp.Models.DomainEntities
         public DateTime Expires { get; set; }
 
         //pricefinal veza?
-        public int PriceFinalID { get; set; }
+        public int? PriceFinalID { get; set; }
         
         public virtual PriceFinal PriceFinal { get; set; }
 
