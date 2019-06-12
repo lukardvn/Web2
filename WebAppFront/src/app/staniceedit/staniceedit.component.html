@@ -1,0 +1,21 @@
+<form>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/">Dodaj</a>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/redvoznje">Obrisi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/mrezalinija">Osvezi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/adminview">Pocetna</a>
+
+  <br><br><br>
+  <div class="form-group">
+    <label for="linija"><b>
+      Linija
+      </b>
+    </label>
+    <br>
+    <select id="id" name="linija"
+            [(ngModel)]="linija" class="form-control">
+          <option value="1">Djacka</option>
+          <option value="2">Penzionerska</option>
+          <option value="3">Regularna</option>
+          </select>
+  </div>
+  </form>

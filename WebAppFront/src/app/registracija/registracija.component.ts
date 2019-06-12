@@ -21,8 +21,10 @@ export class RegistracijaComponent implements OnInit {
   login(user: User, form: NgForm){
     let l = this.http.logIn(user.username, user.password);
     // form.reset();
+    console.log(l);
     if(l){
-      this.router.navigate(["/home"]);
+      console.log("pusi ga ");
+      this.router.navigate(["/adminview"]);
     }
   }
 

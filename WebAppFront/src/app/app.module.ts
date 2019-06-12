@@ -24,6 +24,13 @@ import { HomeComponent } from './home/home.component';
 import { analyzeNgModules } from '@angular/compiler';
 import { FooterComponent } from './footer/footer.component';
 import { InterceptorsComponent } from './interceptors/interceptors.component';
+import { AdminviewComponent } from './adminview/adminview.component';
+import { LinijeeditComponent } from './linijeedit/linijeedit.component';
+import { RedvoznjeeditComponent } from './redvoznjeedit/redvoznjeedit.component';
+import { StaniceeditComponent } from './staniceedit/staniceedit.component';
+import { StaniceeditdvaComponent } from './staniceeditdva/staniceeditdva.component';
+import { LinijeeditdvaComponent } from './linijeeditdva/linijeeditdva.component';
+import { RedvoznjeeditdvaComponent } from './redvoznjeeditdva/redvoznjeeditdva.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -33,6 +40,14 @@ const routes: Routes = [
   { path: 'lokacijavozila', component: LokacijavozilaComponent },
   { path: 'cenovnik', component: CenovnikComponent },
   { path: 'mrezalinija', component: MrezalinijaComponent },
+  { path: 'adminview', component: AdminviewComponent },
+  { path: 'linijeedit', component: LinijeeditComponent },
+  { path: 'redvoznjeedit', component: RedvoznjeeditComponent },
+  { path: 'staniceedit', component: StaniceeditComponent },
+  { path: 'linijeeditdva', component: LinijeeditdvaComponent },
+  { path: 'redvoznjeeditdva', component: RedvoznjeeditdvaComponent },
+  { path: 'staniceeditdva', component: StaniceeditdvaComponent },
+
   { path: '**', redirectTo: 'home' }
 ]
 
@@ -47,7 +62,14 @@ const routes: Routes = [
     RegistracijaComponent,
     HomeComponent,
     FooterComponent,
-    InterceptorsComponent
+    InterceptorsComponent,
+    AdminviewComponent,
+    LinijeeditComponent,
+    RedvoznjeeditComponent,
+    StaniceeditComponent,
+    StaniceeditdvaComponent,
+    LinijeeditdvaComponent,
+    RedvoznjeeditdvaComponent
     ],
   imports: [
     BrowserModule,
