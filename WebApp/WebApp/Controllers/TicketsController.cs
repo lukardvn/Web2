@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApp.App_Start;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
@@ -42,7 +43,50 @@ namespace WebApp.Controllers
             if (priceFinal == null)
                 return BadRequest("trenutno ne postoji cena za regularni tip karne i trenutni cenovnik");
 
-            return Ok();
+
+            //double cena = userType.Coefficient * priceFinal.Price;
+            priceFinal.Price = userType.Coefficient * priceFinal.Price;
+            unitOfWork.PriceFinal.Update(priceFinal);
+            unitOfWork.Complete();
+
+            Ticket templateTicket = unitOfWork.Ticket.Find(t => t.TicketType == "regularna").FirstOrDefault();
+
+            DateTime bouthtAt = DateTime.Now;
+
+            Ticket buyTicket = new Ticket()
+            {
+                TicketType = templateTicket.TicketType,
+                UserID = templateTicket.UserID,
+                BoughtAt = bouthtAt,
+                Expires = bouthtAt.AddHours(1),
+                PriceFinal = priceFinal
+            };
+
+            string appended = $"TicketID:{buyTicket.TicketID}\nUserID:{buyTicket.UserID}\n" +
+                $"BoughtAt:{buyTicket.BoughtAt.Value}\nExpires:{buyTicket.Expires.Value}\n" +
+                $"Price:{buyTicket.PriceFinal.Price}";
+
+
+            try
+            {
+                unitOfWork.Ticket.Add(buyTicket);
+                unitOfWork.Complete();
+                //SendEMailHelper.Send(appended,)
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TicketExists(buyTicket.TicketID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+
+            return Ok(buyTicket);
         }
 
         /// <summary>
