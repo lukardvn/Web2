@@ -1,3 +1,5 @@
+
+
 <app-header></app-header>
 <mat-card>
         <a  mat-fab class="prvo-dugme" color="primary" routerLink="/">Pocetna</a>
@@ -7,6 +9,9 @@
         <a  mat-fab class="prvo-dugme" color="accent" routerLink="/cenovnik">Cenovnik</a>
         <a  mat-fab class="prvo-dugme" color="warm" routerLink="/registracija" >Prijava</a>
 </mat-card>
-<mat-card class="routingMeni">
-<router-outlet></router-outlet>
-</mat-card>
+<!-- <mat-card class="routingMeni"> -->
+  <form class="routingMeni">
+      <router-outlet ></router-outlet>
+  </form>
+<app-footer></app-footer>
+

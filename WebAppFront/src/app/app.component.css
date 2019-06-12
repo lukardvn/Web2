@@ -21,42 +21,8 @@ mat-card {
   margin : auto;
   margin-top : 1rem;
 }
-/* 
-/* .drugo-dugme {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  width: 5rem;
-  height: 5rem;
-  size: 100%;
+
+.bgImg {
+  background-image: url('C:\Users\mbogd\Documents\GitHub\Web2\WebAppFront\src\assets\main-banner1.jpg');
+  background-size: 100%;
 }
-
-.trece-dugme {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  width: 5rem;
-  height: 5rem;
-  place-content: center;
-}
-
-.cetvrto-dugme {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  width: 5rem;
-  height: 5rem;
-}
-
-.peto-dugme {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  width: 5rem;
-  height: 5rem;
-}
-
-.sesto-dugme {
-  /* margin-top: 1rem;
-  margin-left: 1rem;
-  width: 5rem;
-  height: 5rem; */
-
-
-

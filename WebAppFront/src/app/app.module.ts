@@ -4,6 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatInputModule, MatCardModule} from '@angular/material';
 import { FormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
+import { AgmCoreModule } from '@agm/core'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,8 @@ import { LokacijavozilaComponent } from './lokacijavozila/lokacijavozila.compone
 import { CenovnikComponent } from './cenovnik/cenovnik.component';
 import { RegistracijaComponent } from './registracija/registracija.component';
 import { HomeComponent } from './home/home.component';
+import { analyzeNgModules } from '@angular/compiler';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -36,7 +39,8 @@ const routes: Routes = [
     LokacijavozilaComponent,
     CenovnikComponent,
     RegistracijaComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,12 @@ const routes: Routes = [
     MatInputModule,
     FormsModule,
     MatCardModule,
-    RouterModule.forRoot(routes) 
+    RouterModule.forRoot(routes),
+     AgmCoreModule.forRoot(
+     {
+       apiKey: 'AIzaSyDEcXc-akV1qndV5LW7eWlPrLYMeHJZ-NU'
+    })
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

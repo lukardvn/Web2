@@ -1,0 +1,12 @@
+.textFooter {
+    font-size: 30;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: blue;
+}
+
+mat-toolbar {
+    text-align: center;
+    text-shadow: 20%;
+    text-size-adjust: cover;
+    float: bottom;
+}

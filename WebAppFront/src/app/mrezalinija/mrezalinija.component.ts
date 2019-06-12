@@ -12,4 +12,7 @@ export class MrezalinijaComponent implements OnInit {
   ngOnInit() {
   }
 
+  latitude = 45.267136;
+  longitude = 19.833549;
+
 }

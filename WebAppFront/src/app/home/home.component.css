@@ -1,4 +1,5 @@
-div{
-    background-image: url('C:\Users\mbogd\Documents\GitHub\Web2\WebAppFront\src\assets\jgspns2.png');
+.bgImg {
+    background-image: url('C:\Users\mbogd\Documents\GitHub\Web2\WebAppFront\src\assets\main-banner1.jpg');
     background-size: cover;
-}
+  }
+  
