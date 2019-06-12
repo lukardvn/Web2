@@ -47,6 +47,7 @@ namespace WebApp.Controllers
 
         // PUT: api/Departures/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutDepartures(int id, Departures departures)
         {
             if (!ModelState.IsValid)
@@ -62,7 +63,15 @@ namespace WebApp.Controllers
 
             try
             {
-                unitOfWork.Departures.Update(departures);
+                //bez dto, ako bude vremena ubacicu,ne bi trebalo da se menja bilo sta ovako ali ajde
+                var findExistingDeparture = unitOfWork.Departures.Get(departures.ID);
+                if (findExistingDeparture == null)
+                    return NotFound();
+                //menjanje tabele i linije na tabeli
+                findExistingDeparture.TimeTable = departures.TimeTable;
+                findExistingDeparture.TransportLineID = departures.TransportLineID;
+
+                unitOfWork.Departures.Update(findExistingDeparture);
                 unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
@@ -82,6 +91,7 @@ namespace WebApp.Controllers
 
         // POST: api/Departures
         [ResponseType(typeof(Departures))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostDepartures(Departures departures)
         {
             if (!ModelState.IsValid)
@@ -91,6 +101,8 @@ namespace WebApp.Controllers
 
             try
             {
+
+                departures.ValidFrom = DateTime.Now;
                 unitOfWork.Departures.Add(departures);
                 unitOfWork.Complete();
             }
@@ -104,6 +116,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/Departures/5
         [ResponseType(typeof(Departures))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteDepartures(int id)
         {
             Departures departures = unitOfWork.Departures.Get(id);

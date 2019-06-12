@@ -25,6 +25,15 @@ namespace WebApp.Controllers
 
 
 
+        //trenutni cenovnik
+        [Route("api/Pricelists/Current")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection<Pricelist>))]
+        public IEnumerable<Pricelist> GetCurrentPriceHistories()
+        {
+            return unitOfWork.Pricelist.GetAll().Where(x => x.From < DateTime.Now && x.To > DateTime.Now);
+        }
+
         // GET: api/Pricelists
         public IEnumerable<Pricelist> GetPricelists()
         {

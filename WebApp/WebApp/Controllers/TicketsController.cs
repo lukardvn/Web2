@@ -25,19 +25,25 @@ namespace WebApp.Controllers
 
 
 
-        //[Route("api/Tickets/BuyAnonymus")]
-        //[HttpPost]
-        //[ResponseType(typeof(Ticket))]
-        //public IHttpActionResult BuyTicket()
-        //{
-        //    //UserType userType = new UserType()
-        //    //{
-        //    //    TypeOfUser = 0,
-        //    //    Coefficient = 1
-        //    //};
+        [Route("api/Tickets/BuyTicketAnonymus")]
+        [HttpPost]
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult BuyTicket()
+        {
+            UserType userType = unitOfWork.UserType.Find(u => u.TypeOfUser == 0).FirstOrDefault();
+            if (userType == null)
+                return BadRequest("regularan korisnik ne postoji u sistemu");
 
+            Pricelist pricelist = unitOfWork.Pricelist.Find(x => x.From <= DateTime.Now && x.To >= DateTime.Now).FirstOrDefault();
+            if (pricelist == null)
+                return BadRequest("trenutno ne postoji cenovnik");
 
-        //}
+            PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID &&z.Ticket.TicketType== "regularna").FirstOrDefault();
+            if (priceFinal == null)
+                return BadRequest("trenutno ne postoji cena za regularni tip karne i trenutni cenovnik");
+
+            return Ok();
+        }
 
         /// <summary>
         /// gotove metode

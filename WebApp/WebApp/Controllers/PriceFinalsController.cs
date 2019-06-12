@@ -25,6 +25,16 @@ namespace WebApp.Controllers
 
 
 
+
+        //finalne cene za trenutni cenovnik
+        [Route("api/PriceFinals/Current")]
+        [HttpGet]
+        [ResponseType(typeof(ICollection<PriceFinal>))]
+        public IEnumerable<PriceFinal> GetCurrentPriceHistories()
+        {
+            return unitOfWork.PriceFinal.GetAll().Where(x=>x.Pricelist.From <= DateTime.Now && x.Pricelist.To >= DateTime.Now);
+        }
+
         // GET: api/PriceFinals
         public IEnumerable<PriceFinal> GetPriceFinals()
         {
