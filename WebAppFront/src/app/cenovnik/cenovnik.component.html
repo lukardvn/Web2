@@ -1,3 +1,64 @@
-<p>
-  cenovnik works!
-</p>
+<form class="formaCenovnik">
+  <br>
+  <br>
+    <div class="form-group">
+      <label for="korisnik"><b>
+        Tip korisnika
+        </b>
+      </label>
+      <br>
+      <select id="tip" name="korisnik"
+              [(ngModel)]="korisnik" class="form-control">
+            <option value="1">Djacka</option>
+            <option value="2">Penzionerska</option>
+            <option value="3">Regularna</option>
+            </select>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group">
+        <label for="vreme"><b>
+          Tip karte
+          </b>
+        </label>
+        <br>
+        <select id="tip" name="vreme"
+                [(ngModel)]="vreme" class="form-control">
+              <option value="1">Vremenska</option>
+              <option value="2">Dnevna</option>
+              <option value="3">Mesecna</option>
+              <option value="3">Godisnja</option>
+              </select>
+      </div>
+      <br>
+      <br>
+      <br>
+      <label>
+        <b>Cena</b>
+      </label>
+      <label>
+          <b>{{Cena}}</b>
+      </label>
+      <br>
+      <br>
+      <br>
+      <form (submit)="logIn(accDetail)" #postForm="ngForm" class="formaCenovnik2">
+          <mat-form-field>
+           <input
+              matInput
+              type="email"
+              name="email"
+              ngModel
+              required
+              #email="ngModel"
+              placeholder="Email">
+      
+              <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
+          </mat-form-field>
+          <br><br><br>
+          <button mat-raised-button
+            color="primary">Kupi kartu</button> 
+      </form>
+
+</form>

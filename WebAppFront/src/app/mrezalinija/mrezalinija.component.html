@@ -1,3 +1,23 @@
-<agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14">
+<form>
+    <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14">
 
-</agm-map>
+      </agm-map>
+
+      <br><br><br><br><br><br>
+      <div class="form-group">
+        <label for="korisnik"><b>
+          Linije
+          </b>
+        </label>
+        <br>
+        <select id="tip" name="korisnik"
+                [(ngModel)]="korisnik" class="form-control">
+              <option value="1">Djacka</option>
+              <option value="2">Penzionerska</option>
+              <option value="3">Regularna</option>
+              </select> 
+      </div>
+      <br><br>
+      <button mat-raised-button
+      color="primary">Registruj se</button>
+  </form>

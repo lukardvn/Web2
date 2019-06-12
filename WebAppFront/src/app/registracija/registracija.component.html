@@ -1,5 +1,5 @@
 <!-- <mat-card> -->
- 
+ <form class="glavnaForma">
   <form (submit)="logIn(accDetail)" #postForm="ngForm" class="form2">
     <mat-form-field>
      <input
@@ -67,7 +67,7 @@
             name="pass"
             ngModel
             required
-            placeholder="Password"
+            placeholder="Confirm Password"
             #pass="ngModel">
           
             <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
@@ -133,6 +133,6 @@
         color="primary">Registruj se</button>
         
     </form>
-
+  </form>
 
 <!-- </mat-card> -->

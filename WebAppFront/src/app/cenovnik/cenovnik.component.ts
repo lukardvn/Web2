@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CenovnikComponent implements OnInit {
 
   constructor() { }
-
+  Cena : 2000;
   ngOnInit() {
   }
 

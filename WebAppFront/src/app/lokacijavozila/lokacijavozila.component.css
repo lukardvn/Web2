@@ -1,5 +1,14 @@
 agm-map{
-    height: 550px;
+    height: 590px;
     width: 800px;
     float : right;
+    margin-top: 0%;
+  }
+
+  div {
+      margin-left: 30%;
+  }
+
+  button {
+      margin-left: 30%;
   }

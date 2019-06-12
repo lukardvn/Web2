@@ -10,3 +10,8 @@ mat-toolbar {
     text-size-adjust: cover;
     float: bottom;
 }
+
+.left {
+    float : left;
+    margin-left : 73rem;
+} 

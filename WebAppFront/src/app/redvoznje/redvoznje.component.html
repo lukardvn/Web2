@@ -1,0 +1,27 @@
+<form class="formaCenovnik">
+    <br>
+    <br>
+      <div class="form-group">
+        <label for="linija"><b>
+          Linija
+          </b>
+        </label>
+        <br>
+        <select id="id" name="linija"
+                [(ngModel)]="linija" class="form-control">
+              <option value="1">Djacka</option>
+              <option value="2">Penzionerska</option>
+              <option value="3">Regularna</option>
+              </select>
+      </div>
+      <br>
+      <br>
+      
+            <button mat-raised-button
+              color="primary">Kupi kartu</button> 
+
+      <br>
+      <br>
+      <br>
+      <textarea rows="15" disabled></textarea>
+ </form>

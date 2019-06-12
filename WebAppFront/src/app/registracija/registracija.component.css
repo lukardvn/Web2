@@ -9,13 +9,20 @@
 .form1 {
     
     float: right;
-    
-    margin-right: 10rem;
+    margin-right: 20%;
+    margin-top: 5%; 
 }
 
 
 .form2 {
-    margin-left: 10rem;
-    
+    margin-left: 20%;
+    margin-top: 5%;
     float: left;
+}
+
+.glavnaForma {
+    width : 70%;
+    height: 100%;
+    margin : auto;
+    background-color:silver;
 }

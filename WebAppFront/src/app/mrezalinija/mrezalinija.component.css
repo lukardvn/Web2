@@ -1,0 +1,13 @@
+agm-map{
+    height: 590px;
+    width: 800px;
+    float : right;
+  }
+
+  div {
+    margin-left: 30%;
+}
+
+button {
+    margin-left: 30%;
+}
