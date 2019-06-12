@@ -5,6 +5,11 @@ import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatInputModule, Ma
 import { FormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { AgmCoreModule } from '@agm/core'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpService } from './services/http.service';
+import { AuthHttpService } from './services/auth.service';
+import { from } from 'rxjs';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +23,7 @@ import { RegistracijaComponent } from './registracija/registracija.component';
 import { HomeComponent } from './home/home.component';
 import { analyzeNgModules } from '@angular/compiler';
 import { FooterComponent } from './footer/footer.component';
+import { InterceptorsComponent } from './interceptors/interceptors.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -40,8 +46,9 @@ const routes: Routes = [
     CenovnikComponent,
     RegistracijaComponent,
     HomeComponent,
-    FooterComponent
-  ],
+    FooterComponent,
+    InterceptorsComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,10 +63,12 @@ const routes: Routes = [
      AgmCoreModule.forRoot(
      {
        apiKey: 'AIzaSyDEcXc-akV1qndV5LW7eWlPrLYMeHJZ-NU'
-    })
+    }),
+    HttpClientModule
+
    
   ],
-  providers: [],
+  providers: [HttpService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

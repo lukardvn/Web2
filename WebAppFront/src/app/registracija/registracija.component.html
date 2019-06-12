@@ -1,35 +1,40 @@
-<!-- <mat-card> -->
+<!-- <mat-card>
+        name="username"
+        ngModel
+        #username="ngModel"  
+-->
  <form class="glavnaForma">
-  <form (submit)="logIn(accDetail)" #postForm="ngForm" class="form2">
+  <form  #f="ngForm" (submit)="login(f.value, f)" class="form2">
     <mat-form-field>
      <input
         matInput
         type="email"
-        name="email"
+        name="username"
         ngModel
         required
-        #email="ngModel"
+        #username="ngModel"
         placeholder="Email">
 
-        <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
+        <mat-error *ngIf="username.invalid">Unesi svoj mail!</mat-error>
       </mat-form-field>
+
       <br>
       <br>
       <mat-form-field>
       <input
         matInput
         type="password"
-        name="pass"
+        name="password"
         ngModel
         required
         placeholder="Password"
-        #pass="ngModel">
+        #password="ngModel">
       
-        <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
+        <mat-error *ngIf="password.invalid">Unesi svoj password!</mat-error>
     </mat-form-field>
     <br><br>
     <button mat-raised-button
-      color="accent">Prijavi se</button>
+      color="accent" type="submit" >Prijavi se</button>
       
   </form>
 
