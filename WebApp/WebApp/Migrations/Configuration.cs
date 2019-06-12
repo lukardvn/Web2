@@ -83,8 +83,8 @@
             }
 
             if (!context.Users.Any(u => u.UserName == "appu@yahoo.com"))
-            { 
-                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!"),DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01)/*,UserTypeID = 2*/ };
+            {
+                var user = new ApplicationUser() { Id = "appu", UserName = "appu@yahoo", Email = "appu@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Appu123!"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01)/*,UserTypeID = 2*/ };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
@@ -92,7 +92,7 @@
 
             if (!context.Users.Any(u => u.UserName == "anonymus@anonymus.com"))
             {
-                var user = new ApplicationUser() { Id = "anonymus", UserName = "anonymus@anonymus", Email = "anonymus@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01) ,UserTypeID = 1 };
+                var user = new ApplicationUser() { Id = "anonymus", UserName = "anonymus@anonymus", Email = "anonymus@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01), UserTypeID = 1 };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
@@ -103,7 +103,7 @@
 
             ///////////
             DateTime priceValidFrom = new DateTime(2019, 05, 25);
-            Pricelist pricelist = new Pricelist() { From = priceValidFrom, To = priceValidFrom.AddDays(100)};
+            Pricelist pricelist = new Pricelist() { From = priceValidFrom, To = priceValidFrom.AddDays(100) };
 
             context.Pricelists.Add(pricelist);
             context.SaveChanges();
@@ -111,7 +111,8 @@
 
             //za neregistrovanog korisnika
             //jako ruzno ovo za userid sto je hardkodovano ali sta bi sada...
-            Ticket ticketRegular = new Ticket() { TicketType = "regularna",UserID = "anonymus" };
+            Ticket ticketRegular = new Ticket() { TicketType = "regularna", UserID = "anonymus" };
+            context.Tickets.Add(ticketRegular);
             context.SaveChanges();
             ///
             //za sada ovde pravi problem neki ?
@@ -120,12 +121,65 @@
                 //u kontroleru cu da ovo uradim,makar malo nekog finog koda...
                 //Price = 65*regularanKorisnik.Coefficient,
                 Price = 65,
+                Pricelist = pricelist,
                 PricelistID = pricelist.ID,
                 Ticket = ticketRegular
             };
 
             context.PriceFinals.Add(priceFinal);
 
+            context.SaveChanges();
+
+
+
+            //zameniti userid
+            Ticket ticketDaily = new Ticket() { TicketType = "dnevna", UserID = "anonymus" };
+            context.Tickets.Add(ticketDaily);
+            context.SaveChanges();
+
+            PriceFinal priceFinalDaily = new PriceFinal()
+            {
+                Price = 150,
+                Pricelist = pricelist,
+                PricelistID = pricelist.ID,
+                Ticket = ticketDaily
+            };
+
+            context.PriceFinals.Add(priceFinalDaily);
+            context.SaveChanges();
+
+
+
+            Ticket ticketMonthly = new Ticket() { TicketType = "mesecna", UserID = "anonymus" };
+            context.Tickets.Add(ticketMonthly);
+            context.SaveChanges();
+
+
+            PriceFinal priceFinalMonthly = new PriceFinal()
+            {
+                Price = 935,
+                Pricelist = pricelist,
+                PricelistID = pricelist.ID,
+                Ticket = ticketMonthly
+            };
+
+            context.PriceFinals.Add(priceFinalMonthly);
+            context.SaveChanges();
+
+
+            Ticket ticketYearly = new Ticket() { TicketType = "godisnja", UserID = "anonymus" };
+            context.Tickets.Add(ticketYearly);
+            context.SaveChanges();
+
+            PriceFinal priceFinalYearly = new PriceFinal()
+            {
+                Price = 16000,
+                Pricelist = pricelist,
+                PricelistID = pricelist.ID,
+                Ticket = ticketYearly
+            };
+
+            context.PriceFinals.Add(priceFinalYearly);
             context.SaveChanges();
 
 

@@ -12,5 +12,10 @@ namespace WebApp.Persistence.Repository
         public UserTypeRepository(DbContext context) : base(context)
         {
         }
+
+        new public IEnumerable<UserType> GetAll()
+        {
+            return context.Set<UserType>().ToList();
+        }
     }
 }

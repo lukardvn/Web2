@@ -18,6 +18,8 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
+        public StationsOnLinesController() { }
+
         public StationsOnLinesController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;

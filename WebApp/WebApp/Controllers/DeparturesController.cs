@@ -14,22 +14,25 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
+    //[AllowAnonymous]
     public class DeparturesController : ApiController
     {
         private IUnitOfWork unitOfWork;
+        private ApplicationDbContext context = new ApplicationDbContext();
 
         public DeparturesController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-
+        public DeparturesController() { }
 
 
         // GET: api/Departures
         public IEnumerable<Departures> GetDepartures()
         {
             return unitOfWork.Departures.GetAll();
+            //return context.Departures;
         }
 
         // GET: api/Departures/5

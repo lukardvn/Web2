@@ -16,7 +16,9 @@ namespace WebApp.Controllers
 {
     public class UserTypesController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork { get; set; }
+
+        public UserTypesController() { }
 
         public UserTypesController(IUnitOfWork unitOfWork)
         {

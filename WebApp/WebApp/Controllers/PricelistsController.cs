@@ -16,7 +16,7 @@ namespace WebApp.Controllers
 {
     public class PricelistsController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork { get; set; }
 
         public PricelistsController(IUnitOfWork unitOfWork)
         {
@@ -24,6 +24,8 @@ namespace WebApp.Controllers
         }
 
 
+
+        public PricelistsController() { }
 
         //trenutni cenovnik
         [Route("api/Pricelists/Current")]

@@ -17,7 +17,9 @@ namespace WebApp.Controllers
 {
     public class TicketsController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork { get; set; }
+
+        public TicketsController() { }
 
         public TicketsController(IUnitOfWork unitOfWork)
         {
@@ -28,6 +30,7 @@ namespace WebApp.Controllers
 
         [Route("api/Tickets/BuyTicketAnonymus")]
         [HttpPost]
+        [AllowAnonymous]
         [ResponseType(typeof(Ticket))]
         public IHttpActionResult BuyTicket()
         {

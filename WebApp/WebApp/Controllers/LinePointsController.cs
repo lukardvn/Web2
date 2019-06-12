@@ -18,6 +18,8 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
+        public LinePointsController() { }
+
         public LinePointsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;

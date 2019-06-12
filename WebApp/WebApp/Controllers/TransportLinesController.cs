@@ -16,7 +16,9 @@ namespace WebApp.Controllers
 {
     public class TransportLinesController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork { get; set; }
+
+        public TransportLinesController() { }
 
         public TransportLinesController(IUnitOfWork unitOfWork)
         {

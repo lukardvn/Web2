@@ -16,14 +16,14 @@ namespace WebApp.Controllers
 {
     public class PriceFinalsController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork { get; set; }
 
         public PriceFinalsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-
+        public PriceFinalsController() { }
 
 
         //finalne cene za trenutni cenovnik

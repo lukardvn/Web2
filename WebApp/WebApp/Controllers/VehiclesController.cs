@@ -17,6 +17,7 @@ namespace WebApp.Controllers
     public class VehiclesController : ApiController
     {
         private IUnitOfWork unitOfWork;
+        public VehiclesController() { }
 
         public VehiclesController(IUnitOfWork unitOfWork)
         {

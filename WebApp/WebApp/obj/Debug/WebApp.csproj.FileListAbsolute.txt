@@ -244,12 +244,12 @@ C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\bin\Microsoft.Owin.Security.Microsoft
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\bin\System.Web.Http.Owin.xml
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
+C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi.resources
+C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi2.resources
+C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi123.resources
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csproj.GenerateResource.cache
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csproj.CoreCompileInputs.cache
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
-C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi.resources
-C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi2.resources
-C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi123.resources

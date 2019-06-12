@@ -8,6 +8,8 @@ namespace WebApp.Models.DomainEntities
 {
     public class Departures
     {
+        public Departures() { }
+
         public int ID { get; set; }
 
         //public bool Type {get;set;} //gradski ili prigradski ??
