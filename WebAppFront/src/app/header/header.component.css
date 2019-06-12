@@ -1,3 +1,5 @@
 mat-toolbar {
     text-align: center;
+    text-shadow: 20%;
+    text-size-adjust: cover;
 }

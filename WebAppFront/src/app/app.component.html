@@ -1,8 +1,12 @@
 <app-header></app-header>
 <mat-card>
-        <a  mat-fab class="prvo-dugme" color="primary" (click)="onClick()">Red voznje</a>
-        <a  mat-fab flex="30">Mreza linija</a>
-        <a  mat-fab>Lokacija vozila</a>
-        <a  mat-fab>Cenovnik</a>
-        <a  mat-fab>Registracija/Prijava</a>
+        <a  mat-fab class="prvo-dugme" color="primary" routerLink="/">Pocetna</a>
+        <a  mat-fab class="prvo-dugme" color="accent" routerLink="/redvoznje">Red voznje</a>
+        <a  mat-fab class="prvo-dugme" color="warm" routerLink="/mrezalinija">Mreza linija</a>
+        <a  mat-fab class="prvo-dugme" color="primary" routerLink="/lokacijavozila">Vozila</a>
+        <a  mat-fab class="prvo-dugme" color="accent" routerLink="/cenovnik">Cenovnik</a>
+        <a  mat-fab class="prvo-dugme" color="warm" routerLink="/registracija" >Prijava</a>
+</mat-card>
+<mat-card class="routingMeni">
+<router-outlet></router-outlet>
 </mat-card>

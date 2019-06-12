@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatInputModule, MatCardModule} from '@angular/material';
 import { FormsModule } from '@angular/forms'
+import { RouterModule, Routes } from '@angular/router'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +14,18 @@ import { MrezalinijaComponent } from './mrezalinija/mrezalinija.component';
 import { LokacijavozilaComponent } from './lokacijavozila/lokacijavozila.component';
 import { CenovnikComponent } from './cenovnik/cenovnik.component';
 import { RegistracijaComponent } from './registracija/registracija.component';
+import { HomeComponent } from './home/home.component';
+
+const routes: Routes = [
+  { path: "", component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'registracija', component: RegistracijaComponent },
+  { path: 'redvoznje', component: RedvoznjeComponent },
+  { path: 'lokacijavozila', component: LokacijavozilaComponent },
+  { path: 'cenovnik', component: CenovnikComponent },
+  { path: 'mrezalinija', component: MrezalinijaComponent },
+  { path: '**', redirectTo: 'home' }
+]
 
 @NgModule({
   declarations: [
@@ -22,7 +35,8 @@ import { RegistracijaComponent } from './registracija/registracija.component';
     MrezalinijaComponent,
     LokacijavozilaComponent,
     CenovnikComponent,
-    RegistracijaComponent
+    RegistracijaComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +47,8 @@ import { RegistracijaComponent } from './registracija/registracija.component';
     MatToolbarModule,
     MatInputModule,
     FormsModule,
-    MatCardModule 
+    MatCardModule,
+    RouterModule.forRoot(routes) 
   ],
   providers: [],
   bootstrap: [AppComponent]

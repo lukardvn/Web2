@@ -1,0 +1,21 @@
+.vl {
+    width : 3px;
+    height : 100%;
+    background-color: green;
+    margin-left: 30%;
+    
+}
+
+.form1 {
+    
+    float: right;
+    
+    margin-right: 10rem;
+}
+
+
+.form2 {
+    margin-left: 10rem;
+    
+    float: left;
+}

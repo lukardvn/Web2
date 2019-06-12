@@ -1,3 +1,138 @@
-<p>
-  registracija works!
-</p>
+<!-- <mat-card> -->
+ 
+  <form (submit)="logIn(accDetail)" #postForm="ngForm" class="form2">
+    <mat-form-field>
+     <input
+        matInput
+        type="email"
+        name="email"
+        ngModel
+        required
+        #email="ngModel"
+        placeholder="Email">
+
+        <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
+      </mat-form-field>
+      <br>
+      <br>
+      <mat-form-field>
+      <input
+        matInput
+        type="password"
+        name="pass"
+        ngModel
+        required
+        placeholder="Password"
+        #pass="ngModel">
+      
+        <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
+    </mat-form-field>
+    <br><br>
+    <button mat-raised-button
+      color="accent">Prijavi se</button>
+      
+  </form>
+
+  <form (submit)="logIn(accDetail)" #postForm2="ngForm" class="form1">
+      <mat-form-field>
+       <input
+          matInput
+          type="email"
+          name="email"
+          ngModel
+          required
+          #email="ngModel"
+          placeholder="Email">
+  
+          <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+        <input
+          matInput
+          type="password"
+          name="pass"
+          ngModel
+          required
+          placeholder="Password"
+          #pass="ngModel">
+        
+          <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+          <input
+            matInput
+            type="password"
+            name="pass"
+            ngModel
+            required
+            placeholder="Password"
+            #pass="ngModel">
+          
+            <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
+        </mat-form-field>
+      <br>
+
+      <mat-form-field>
+          <input
+             matInput
+             type="text"
+             name="ime"
+             ngModel
+             required
+             #ime="ngModel"
+             placeholder="Ime">
+     
+             <mat-error *ngIf="ime.invalid">Unesi svoje ime!</mat-error>
+           </mat-form-field>
+           <br>
+
+           <mat-form-field>
+              <input
+                 matInput
+                 type="text"
+                 name="prezime"
+                 ngModel
+                 required
+                 #prezime="ngModel"
+                 placeholder="Prezime">
+         
+                 <mat-error *ngIf="prezime.invalid">Unesi svoje prezime!</mat-error>
+               </mat-form-field>
+               <br>
+
+               <mat-form-field>
+                  <input
+                     matInput
+                     type="text"
+                     name="adresa"
+                     ngModel
+                     required
+                     #adresa="ngModel"
+                     placeholder="Adresa">
+             
+                     <mat-error *ngIf="adresa.invalid">Unesi svoju adresu!</mat-error>
+                   </mat-form-field>
+                   <br>
+
+                   <mat-form-field>
+                      <input
+                         matInput
+                         type="date"
+                         name="adresa"
+                         ngModel
+                         required
+                         #datum="ngModel"
+                         placeholder="Datum rodjenja">
+                 
+                         <mat-error *ngIf="datum.invalid">Unesi svoj datum rodjenja!</mat-error>
+                       </mat-form-field>
+                       <br>
+      <button mat-raised-button
+        color="primary">Registruj se</button>
+        
+    </form>
+
+
+<!-- </mat-card> -->
