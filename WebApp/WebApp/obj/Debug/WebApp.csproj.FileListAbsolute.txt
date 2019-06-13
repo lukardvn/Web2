@@ -395,7 +395,6 @@ C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\bin\Microsoft.Owin.Security.T
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\bin\System.Web.Http.Owin.xml
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi.resources
 C:\Users\mbogd\Documents\GitHub\Web2\WebApp\WebApp\obj\Debug\WebApp.Migrations.BozeTiPomozi2.resources

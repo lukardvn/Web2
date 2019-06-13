@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegUser } from 'src/app/modeli';
 import { Observable } from 'rxjs/internal/Observable';
+import { JsonPipe } from '@angular/common';
 
 @Injectable()
 export class AuthHttpService{
@@ -10,6 +11,7 @@ export class AuthHttpService{
       
     }
   user: string
+  tempStr : string[]
     logIn(username: string, password: string): Observable<boolean> | boolean{
         let isDone: boolean = false;
         let data = `username=${username}&password=${password}&grant_type=password`;
@@ -60,12 +62,15 @@ export class AuthHttpService{
     }
 
     GetCenaKarte(tip: string, tipPutnika: string): Observable<any>{
+        console.log(tip);
+        console.log(tipPutnika);
         return this.http.get<any>(this.base_url + "/api/tickets/getCena/" + tipPutnika + "/" + tip);
     }
     
     GetKupiKartu(email: string): Observable<any>{
-       
-        return this.http.get<any>(this.base_url + "/api/tickets/BuyTicketAnonymus/" + email );
+       console.log(email);
+        this.tempStr = JSON.stringify(email).split('"');
+        return this.http.get<any>(this.base_url + "/api/tickets/BuyTicketAnonymus/" + this.tempStr[3]);
     }
 
     GetStanicaCord(idStanice: string): Observable<any>{

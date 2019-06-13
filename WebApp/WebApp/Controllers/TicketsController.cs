@@ -15,6 +15,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class TicketsController : ApiController
     {
         private IUnitOfWork unitOfWork { get; set; }
@@ -92,9 +93,9 @@ namespace WebApp.Controllers
 
 
         [Route("api/tickets/BuyTicketAnonymus/{email}")]
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
-        [ResponseType(typeof(Ticket))]
+        [ResponseType(typeof(bool))]
         public IHttpActionResult BuyTicket(string email)
         {
             //0---- regularan
@@ -131,6 +132,11 @@ namespace WebApp.Controllers
                 Expires = bouthtAt.AddHours(1),
                 PriceFinal = priceFinal
             };
+            templateTicket.BoughtAt = bouthtAt;
+            templateTicket.Expires = bouthtAt.AddHours(1);
+            templateTicket.PriceFinal = priceFinal;
+            unitOfWork.Ticket.Update(templateTicket);
+            unitOfWork.Complete();
 
             string appended = $"TicketID:{buyTicket.TicketID}\nUserID:{buyTicket.UserID}\n" +
                 $"BoughtAt:{buyTicket.BoughtAt.Value}\nExpires:{buyTicket.Expires.Value}\n" +
@@ -139,8 +145,8 @@ namespace WebApp.Controllers
 
             try
             {
-                unitOfWork.Ticket.Add(buyTicket);
-                unitOfWork.Complete();
+                //unitOfWork.Ticket.Add(buyTicket);
+                //unitOfWork.Complete();
                 SendEMailHelper.Send(email,"Podaci o Vasoj karti",appended);
             }
             catch (DbUpdateConcurrencyException)
@@ -156,7 +162,7 @@ namespace WebApp.Controllers
             }
 
 
-            return Ok(buyTicket);
+            return Ok(true);
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ export class CenovnikComponent implements OnInit {
   tipKarte : string;
   tipKupca : string;
   email : string;
+  retVal : boolean;
 
   cenaTemp : number = 1000;
 
@@ -33,8 +34,14 @@ export class CenovnikComponent implements OnInit {
     console.log(this.cenaTemp);
   }
 
-  kupiKartu(email, form : NgForm) {
-
+  kupiKartu(email : string, form : NgForm) {
+    console.log(email);
+    this.http.GetKupiKartu(email).subscribe((cena)=>{
+      this.retVal = cena;
+     
+      err => console.log(err);
+    });
+    console.log(this.retVal);
   }
 // regularna,
 // dnevna,
