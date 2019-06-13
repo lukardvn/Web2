@@ -11,10 +11,9 @@ namespace WebApp.Models.DomainEntities
         [Key]
         public int UserTypeID { get; set; }
 
-        //1---- regularan
-        //2---- student
-        //3---- penzioner
-        //jer ef kada dodaje krece od 1
+        //0---- regularan
+        //1---- student
+        //2---- penzioner
         public int TypeOfUser { get; set; } //penzioner,student ,regularni
 
         public double Coefficient{ get; set; }

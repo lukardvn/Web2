@@ -26,8 +26,12 @@ namespace WebApp.Controllers
         public PriceFinalsController() { }
 
 
+
+
+
+
         //finalne cene za trenutni cenovnik
-        [Route("api/PriceFinals/Current")]
+        [Route("api/pricefinals/Current")]
         [HttpGet]
         //[ResponseType(typeof(ICollection<PriceFinal>))]
         [AllowAnonymous]

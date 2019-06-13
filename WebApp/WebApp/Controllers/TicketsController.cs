@@ -27,13 +27,80 @@ namespace WebApp.Controllers
         }
 
 
+        [NonAction]
+        private int ConvertStringToInt(string tipKorisnika)
+        {
+            if (tipKorisnika.Equals("regularan"))
+            {
+                return 0;
+            }else if (tipKorisnika.Equals("student"))
+            {
+                return 1;
+            }
+            else if (tipKorisnika.Equals("penzioner"))
+            {
+                return 2;
+            }
+            else
+            {
+                return -1;
+            }
 
-        [Route("api/Tickets/BuyTicketAnonymus")]
+        }
+
+
+
+        [Route("api/tickets/getCena/{tipKorisnika}/{tipKarte}")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IHttpActionResult GetCena(string tipKorisnika, string tipKarte)
+        {
+            //0---- regularan
+            //1---- student
+            //2---- penzioner
+            var typeUserInDB = ConvertStringToInt(tipKorisnika);
+            
+
+
+            UserType userType = unitOfWork.UserType.Find(u => u.TypeOfUser == typeUserInDB).FirstOrDefault();
+            if (userType == null)
+                return BadRequest("regularan korisnik ne postoji u sistemu");
+
+            Pricelist pricelist = unitOfWork.Pricelist.Find(x => x.From <= DateTime.Now && x.To >= DateTime.Now).FirstOrDefault();
+            if (pricelist == null)
+                return BadRequest("trenutno ne postoji cenovnik");
+
+
+
+            PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketType == tipKarte &&
+                                                                z.Ticket.User.UserType.TypeOfUser== typeUserInDB).FirstOrDefault();
+
+            PriceFinal priceFinal2 = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketID == 2 &&
+                                                    z.Ticket.User.UserType.TypeOfUser == typeUserInDB).FirstOrDefault();
+
+            if (priceFinal == null)
+                return BadRequest("trenutno ne postoji cena za regularni tip karne i trenutni cenovnik");
+
+            priceFinal.Price = userType.Coefficient * priceFinal.Price;
+            unitOfWork.PriceFinal.Update(priceFinal);
+            unitOfWork.Complete();
+
+            return Ok(priceFinal.Price);
+        }
+
+
+
+
+        [Route("api/tickets/BuyTicketAnonymus/{email}")]
         [HttpPost]
         [AllowAnonymous]
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult BuyTicket()
+        public IHttpActionResult BuyTicket(string email)
         {
+            //0---- regularan
+            //1---- student
+            //2---- penzioner
+
             UserType userType = unitOfWork.UserType.Find(u => u.TypeOfUser == 0).FirstOrDefault();
             if (userType == null)
                 return BadRequest("regularan korisnik ne postoji u sistemu");
@@ -74,7 +141,7 @@ namespace WebApp.Controllers
             {
                 unitOfWork.Ticket.Add(buyTicket);
                 unitOfWork.Complete();
-                //SendEMailHelper.Send(appended,)
+                SendEMailHelper.Send(email,"Podaci o Vasoj karti",appended);
             }
             catch (DbUpdateConcurrencyException)
             {
