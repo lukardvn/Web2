@@ -7,12 +7,10 @@
         </b>
       </label>
       <br>
-      <select id="tip" name="korisnik"
-              [(ngModel)]="korisnik" class="form-control">
-            <option value="1">Djacka</option>
-            <option value="2">Penzionerska</option>
-            <option value="3">Regularna</option>
-            </select>
+      <select [(ngModel)] = "tipKarte" name="korisnik"
+               class="form-control">
+            <option *ngFor = "let k of karte">{{k}}</option>
+      </select>
     </div>
     <br>
     <br>
@@ -23,13 +21,10 @@
           </b>
         </label>
         <br>
-        <select id="tip" name="vreme"
-                [(ngModel)]="vreme" class="form-control">
-              <option value="1">Vremenska</option>
-              <option value="2">Dnevna</option>
-              <option value="3">Mesecna</option>
-              <option value="3">Godisnja</option>
-              </select>
+        <select name="vreme"
+                [(ngModel)]="tipKupca" class="form-control">
+              <option *ngFor="let k2 of kupci">{{k2}}</option>
+        </select>
       </div>
       <br>
       <br>
@@ -37,17 +32,17 @@
       <label>
         <b>Cena</b>
       </label>
-      <label>
-          <b>{{Cena}}</b>
+      <label class="cenaLabel">
+          <b>{{cenaTemp}}</b>
       </label>
       <br>
       <br>
       <button mat-raised-button
-      color="primary" class="dugme2">Proveri cenu</button> 
+      color="primary" (click)="proveriCenu()" class="dugme2">Proveri cenu</button> 
       <br>
       <br>
 
-      <form (submit)="logIn(accDetail)" #postForm="ngForm" class="formaCenovnik2">
+      <form (submit)="kupiKartu(f.value, f)" #f="ngForm" class="formaCenovnik2">
           <mat-form-field>
            <input
               matInput
@@ -62,9 +57,42 @@
           </mat-form-field>
           <br><br><br>
           <button mat-raised-button
-            color="primary">Kupi kartu</button> 
-
-         
+            color="primary" type="submit">Kupi kartu</button> 
       </form>
 
 </form>
+
+<!-- <form class="glavnaForma">
+    <form  #f="ngForm" (submit)="login(f.value, f)" class="form2">
+      <mat-form-field>
+       <input
+          matInput
+          type="email"
+          name="username"
+          ngModel
+          required
+          #username="ngModel"
+          placeholder="Email">
+  
+          <mat-error *ngIf="username.invalid">Unesi svoj mail!</mat-error>
+        </mat-form-field>
+  
+        <br>
+        <br>
+        <mat-form-field>
+        <input
+          matInput
+          type="password"
+          name="password"
+          ngModel
+          required
+          placeholder="Password"
+          #password="ngModel">
+        
+          <mat-error *ngIf="password.invalid">Unesi svoj password!</mat-error>
+      </mat-form-field>
+      <br><br>
+      <button mat-raised-button
+        color="accent" type="submit" >Prijavi se</button>
+        
+    </form> -->

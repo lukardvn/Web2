@@ -25,6 +25,10 @@ label {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.cenaLabel {
+    margin-left : 20%;
+}
+
 mat-form-field {
     width: 70%;
 }

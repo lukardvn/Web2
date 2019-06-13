@@ -60,12 +60,12 @@ export class AuthHttpService{
     }
 
     GetCenaKarte(tip: string, tipPutnika: string): Observable<any>{
-        return this.http.get<any>(this.base_url + "/api/Kartas/GetKarta/" + tip);
+        return this.http.get<any>(this.base_url + "/api/tickets/getCena/" + tipPutnika + "/" + tip);
     }
     
-    GetKupiKartu(tipKarte: string): Observable<any>{
+    GetKupiKartu(email: string): Observable<any>{
        
-        return this.http.get<any>(this.base_url + "/api/Kartas/GetKartaKupi2/" + tipKarte );
+        return this.http.get<any>(this.base_url + "/api/tickets/BuyTicketAnonymus/" + email );
     }
 
     GetStanicaCord(idStanice: string): Observable<any>{
