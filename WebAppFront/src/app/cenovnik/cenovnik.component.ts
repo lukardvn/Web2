@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Kupac, Karta } from '../modeli';
 
 @Component({
   selector: 'app-cenovnik',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CenovnikComponent implements OnInit {
 
+  kupci = new Kupac();
+  karte = new Karta();
+  cena : number = 0;
+
   constructor() { }
-  Cena : 2000;
+  
   ngOnInit() {
   }
+
+  
 
 }

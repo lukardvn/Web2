@@ -32,3 +32,15 @@ export class dani{
     id : number
     dan : string
 }
+
+export class Karta{
+    id : number
+    tip : string
+    cena : number
+}
+
+export class Kupac {
+    id : number
+    tip : string
+    koeficijent : number
+}
