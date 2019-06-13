@@ -295,8 +295,8 @@
             //context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz BEOČIN SELO", TransportLineID = "78B" });
             //context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za ČEREVIĆ", TransportLineID = "79A" });
             //context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz ČEREVIĆ", TransportLineID = "79B" });
-            context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za B.A.S.", TransportLineID = "80A" });
-            context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz B.A.S.", TransportLineID = "80B" });
+            //context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za B.A.S.", TransportLineID = "80A" });
+            //context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz B.A.S.", TransportLineID = "80B" });
             context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za BANOŠTOR", TransportLineID = "81A" });
             context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz BANOŠTOR", TransportLineID = "81B" });
             context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za LUG", TransportLineID = "84A" });
