@@ -31,12 +31,14 @@ namespace WebApp.Controllers
         [Route("api/Pricelists/Current")]
         [HttpGet]
         [ResponseType(typeof(ICollection<Pricelist>))]
+        [AllowAnonymous]
         public IEnumerable<Pricelist> GetCurrentPriceHistories()
         {
             return unitOfWork.Pricelist.GetAll().Where(x => x.From < DateTime.Now && x.To > DateTime.Now);
         }
 
         // GET: api/Pricelists
+        [AllowAnonymous]
         public IEnumerable<Pricelist> GetPricelists()
         {
             return unitOfWork.Pricelist.GetAll();
@@ -44,6 +46,7 @@ namespace WebApp.Controllers
 
         // GET: api/Pricelists/5
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult GetPricelist(int id)
         {
             Pricelist pricelist = unitOfWork.Pricelist.Get(id);
@@ -57,6 +60,7 @@ namespace WebApp.Controllers
 
         // PUT: api/Pricelists/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutPricelist(int id, Pricelist pricelist)
         {
             if (!ModelState.IsValid)
@@ -93,6 +97,7 @@ namespace WebApp.Controllers
 
         // POST: api/Pricelists
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostPricelist(Pricelist pricelist)
         {
             if (!ModelState.IsValid)
@@ -115,6 +120,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/Pricelists/5
         [ResponseType(typeof(Pricelist))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeletePricelist(int id)
         {
             Pricelist pricelist = unitOfWork.Pricelist.Get(id);

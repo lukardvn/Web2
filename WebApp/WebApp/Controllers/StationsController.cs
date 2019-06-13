@@ -48,6 +48,7 @@ namespace WebApp.Controllers
 
         // PUT: api/Stations/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutStation(int id, Station station)
         {
             if (!ModelState.IsValid)
@@ -84,6 +85,7 @@ namespace WebApp.Controllers
 
         // POST: api/Stations
         [ResponseType(typeof(Station))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostStation(Station station)
         {
             if (!ModelState.IsValid)
@@ -106,6 +108,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/Stations/5
         [ResponseType(typeof(Station))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteStation(int id)
         {
             Station station = unitOfWork.Station.Get(id);

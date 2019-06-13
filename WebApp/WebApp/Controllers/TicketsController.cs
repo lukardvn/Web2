@@ -117,6 +117,7 @@ namespace WebApp.Controllers
 
         // PUT: api/Tickets/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutTicket(int id, Ticket ticket)
         {
             if (!ModelState.IsValid)
@@ -153,6 +154,7 @@ namespace WebApp.Controllers
 
         // POST: api/Tickets
         [ResponseType(typeof(Ticket))]
+        [Authorize(Roles = "Admin,AppUser")]
         public IHttpActionResult PostTicket(Ticket ticket)
         {
             if (!ModelState.IsValid)
@@ -175,6 +177,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/Tickets/5
         [ResponseType(typeof(Ticket))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteTicket(int id)
         {
             Ticket ticket = unitOfWork.Ticket.Get(id);

@@ -1,5 +1,6 @@
 .bgImg {
-    background-image: url('C:\Users\mbogd\Documents\GitHub\Web2\WebAppFront\src\assets\main-banner1.jpg');
+    /* background-image: url('C:\Users\mbogd\Documents\GitHub\Web2\WebAppFront\src\assets\main-banner1.jpg'); */
+    background-image: url('../../assets/main-banner1.jpg');
     background-size: cover;
   }
   

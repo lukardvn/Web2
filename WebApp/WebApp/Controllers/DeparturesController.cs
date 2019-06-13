@@ -29,6 +29,7 @@ namespace WebApp.Controllers
 
 
         // GET: api/Departures
+        [AllowAnonymous]
         public IEnumerable<Departures> GetDepartures()
         {
             return unitOfWork.Departures.GetAll();
@@ -37,6 +38,7 @@ namespace WebApp.Controllers
 
         // GET: api/Departures/5
         [ResponseType(typeof(Departures))]
+        [AllowAnonymous]
         public IHttpActionResult GetDepartures(int id)
         {
             Departures departures = unitOfWork.Departures.Get(id);

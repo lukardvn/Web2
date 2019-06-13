@@ -29,13 +29,15 @@ namespace WebApp.Controllers
         //finalne cene za trenutni cenovnik
         [Route("api/PriceFinals/Current")]
         [HttpGet]
-        [ResponseType(typeof(ICollection<PriceFinal>))]
+        //[ResponseType(typeof(ICollection<PriceFinal>))]
+        [AllowAnonymous]
         public IEnumerable<PriceFinal> GetCurrentPriceHistories()
         {
             return unitOfWork.PriceFinal.GetAll().Where(x=>x.Pricelist.From <= DateTime.Now && x.Pricelist.To >= DateTime.Now);
         }
 
         // GET: api/PriceFinals
+        [AllowAnonymous]
         public IEnumerable<PriceFinal> GetPriceFinals()
         {
             return unitOfWork.PriceFinal.GetAll();
@@ -43,6 +45,7 @@ namespace WebApp.Controllers
 
         // GET: api/PriceFinals/5
         [ResponseType(typeof(PriceFinal))]
+        [AllowAnonymous]
         public IHttpActionResult GetPriceFinal(int id)
         {
             PriceFinal priceFinal = unitOfWork.PriceFinal.Get(id);
@@ -56,6 +59,7 @@ namespace WebApp.Controllers
 
         // PUT: api/PriceFinals/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutPriceFinal(int id, PriceFinal priceFinal)
         {
             if (!ModelState.IsValid)
@@ -92,6 +96,7 @@ namespace WebApp.Controllers
 
         // POST: api/PriceFinals
         [ResponseType(typeof(PriceFinal))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostPriceFinal(PriceFinal priceFinal)
         {
             if (!ModelState.IsValid)
@@ -114,6 +119,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/PriceFinals/5
         [ResponseType(typeof(PriceFinal))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeletePriceFinal(int id)
         {
             PriceFinal priceFinal = unitOfWork.PriceFinal.Get(id);

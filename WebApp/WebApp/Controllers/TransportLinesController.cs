@@ -30,6 +30,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [Route("api/transportlines/addStationInLine/{id}")]
         [ResponseType(typeof(TransportLine))]
+        [Authorize(Roles ="Admin")]
         public IHttpActionResult AddStationInLine(string id,Station externalStation)
         {
             var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
@@ -44,6 +45,7 @@ namespace WebApp.Controllers
         [HttpPut]
         [Route("api/transportlines/editStationInLine/{id}")]
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult EditStationInLine(string id, Station externalStation)
         {
             var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
@@ -62,6 +64,7 @@ namespace WebApp.Controllers
         [ResponseType(typeof(ICollection<Station>))]
         [HttpGet]
         [Route("api/transportlines/GetStationsForTransportLine/{id}")]
+        [AllowAnonymous]
         public IHttpActionResult GetStationsForTransportLine(string id)
         {
             TransportLine transportLine = unitOfWork.TransportLine.Get(id);
@@ -77,6 +80,8 @@ namespace WebApp.Controllers
 
         [ResponseType(typeof(TransportLine))]
         [Route("api/transportlines/deleIt/{id}")]
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteStationOnTransportLine(string id,Station externalStation)
         {
             var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
@@ -99,6 +104,7 @@ namespace WebApp.Controllers
 
 
         // GET: api/TransportLines
+        [AllowAnonymous]
         public IEnumerable<TransportLine> GetTransportLines()
         {
             return unitOfWork.TransportLine.GetAll();
@@ -106,6 +112,7 @@ namespace WebApp.Controllers
 
         // GET: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
+        [AllowAnonymous]
         public IHttpActionResult GetTransportLine(string id)
         {
             TransportLine transportLine = unitOfWork.TransportLine.Get(id);
@@ -119,6 +126,7 @@ namespace WebApp.Controllers
 
         // PUT: api/TransportLines/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutTransportLine(string id, TransportLine transportLine)
         {
             if (!ModelState.IsValid)
@@ -155,6 +163,7 @@ namespace WebApp.Controllers
 
         // POST: api/TransportLines
         [ResponseType(typeof(TransportLine))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostTransportLine(TransportLine transportLine)
         {
             if (!ModelState.IsValid)
@@ -177,6 +186,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteTransportLine(string id)
         {
             TransportLine transportLine = unitOfWork.TransportLine.Get(id);
