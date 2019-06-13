@@ -15,7 +15,7 @@ using WebApp.Persistence.UnitOfWork;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TicketsController : ApiController
     {
         private IUnitOfWork unitOfWork { get; set; }
@@ -59,8 +59,10 @@ namespace WebApp.Controllers
             //0---- regularan
             //1---- student
             //2---- penzioner
-            var typeUserInDB = ConvertStringToInt(tipKorisnika);
-            
+            int typeUserInDB = ConvertStringToInt(tipKorisnika);
+
+            int bozeMoj = typeUserInDB + 1;
+
 
 
             UserType userType = unitOfWork.UserType.Find(u => u.TypeOfUser == typeUserInDB).FirstOrDefault();
@@ -71,20 +73,84 @@ namespace WebApp.Controllers
             if (pricelist == null)
                 return BadRequest("trenutno ne postoji cenovnik");
 
+            int aaaaa;
+            if (typeUserInDB == 2)
+            {
+                aaaaa = 2;
+            }
+            else if (typeUserInDB == 1)
+            {
+                aaaaa = 1;
+            }
+            else
+            {
+                aaaaa = typeUserInDB + bozeMoj;
+            }
+
+            if (tipKarte.Equals("regularna"))
+            {
+                if (typeUserInDB == 2)
+                {
+                    --aaaaa;
+                }
+
+            }
+            else if (tipKarte.Equals("dnevna"))
+            {
+                if (typeUserInDB == 2)
+                {
+
+                }
+                else
+                {
+                    ++aaaaa;
+                }
+            }
+            else if (tipKarte.Equals("mesecna"))
+            {
+                if (typeUserInDB == 2)
+                {
+                    ++aaaaa;
+                }
+                else
+                {
+                    aaaaa += 2;
+                }
+            }
+            else
+            {
+                if (typeUserInDB == 2)
+                {
+                    aaaaa += 2;
+                }
+                else
+                {
+                    aaaaa += 3;
+                }
+            }
+
+            //PriceFinal priceFinal2 = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketType.Equals(tipKarte) &&
+            //                                                    z.ID == aaaaa).FirstOrDefault();
 
 
-            PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketType == tipKarte &&
-                                                                z.Ticket.User.UserType.TypeOfUser== typeUserInDB).FirstOrDefault();
+            //PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID==aaaaa &&z.ID == pricelist.ID).FirstOrDefault();
+            PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID == aaaaa).FirstOrDefault();
 
-            PriceFinal priceFinal2 = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketID == 2 &&
-                                                    z.Ticket.User.UserType.TypeOfUser == typeUserInDB).FirstOrDefault();
+            //PriceFinal priceFinal = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID &&
+            //                                                    z.Ticket.User.UserType.UserTypeID == typeUserInDB + 1).FirstOrDefault();
+
+            //var a = unitOfWork.PriceFinal.Find(z => z.Ticket.User.UserType.UserTypeID ==typeUserInDB+1).FirstOrDefault();
+
+            //PriceFinal priceFinal2 = unitOfWork.PriceFinal.Find(z => z.ID == pricelist.ID && z.Ticket.TicketType == tipKarte).FirstOrDefault();
+
 
             if (priceFinal == null)
                 return BadRequest("trenutno ne postoji cena za regularni tip karne i trenutni cenovnik");
 
+
             priceFinal.Price = userType.Coefficient * priceFinal.Price;
-            unitOfWork.PriceFinal.Update(priceFinal);
-            unitOfWork.Complete();
+            //unitOfWork.PriceFinal.Update(priceFinal);
+            //unitOfWork.Complete();
 
             return Ok(priceFinal.Price);
         }

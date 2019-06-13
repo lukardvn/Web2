@@ -90,9 +90,22 @@
             }
 
 
+
             if (!context.Users.Any(u => u.UserName == "anonymus@anonymus.com"))
             {
                 var user = new ApplicationUser() { Id = "anonymus", UserName = "anonymus@anonymus", Email = "anonymus@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01), UserTypeID = 1 };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "AppUser");
+            }
+            if (!context.Users.Any(u => u.UserName == "anonymus1@anonymus.com"))
+            {
+                var user = new ApplicationUser() { Id = "anonymus1", UserName = "anonymus1@anonymus", Email = "anonymus1@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01), UserTypeID = 2 };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "AppUser");
+            }
+            if (!context.Users.Any(u => u.UserName == "anonymus2@anonymus.com"))
+            {
+                var user = new ApplicationUser() { Id = "anonymus2", UserName = "anonymus2@anonymus", Email = "anonymus2@anonymus.com", PasswordHash = ApplicationUser.HashPassword("password"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01), UserTypeID = 3 };
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
