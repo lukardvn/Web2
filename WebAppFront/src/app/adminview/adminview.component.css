@@ -1,6 +1,7 @@
 .prvo-dugme {
-    margin-left : 7rem;
-    width: 5rem;
+    margin-left : 14%;
+    margin-top : 30%;
+    width: 15%;
     height: 3.6rem;
     size: 100%;
   }
@@ -8,4 +9,7 @@
   form {
       margin-left : 30%;
       width : 40%;
+      height: 100%;
+      background-color: transparent;
+
   }
