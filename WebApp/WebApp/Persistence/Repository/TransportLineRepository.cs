@@ -13,5 +13,9 @@ namespace WebApp.Persistence.Repository
         {
 
         }
+        new public IEnumerable<TransportLine> GetAll()
+        {
+            return context.Set<TransportLine>().Include("Stations").ToList();
+        }
     }
 }

@@ -27,6 +27,77 @@ namespace WebApp.Controllers
 
 
 
+        [HttpPost]
+        [Route("api/transportlines/addStationInLine/{id}")]
+        [ResponseType(typeof(TransportLine))]
+        public IHttpActionResult AddStationInLine(string id,Station externalStation)
+        {
+            var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
+
+            line.Stations.Add(externalStation);
+            unitOfWork.Complete();
+
+
+            return Ok(line);
+        }
+
+        [HttpPut]
+        [Route("api/transportlines/editStationInLine/{id}")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult EditStationInLine(string id, Station externalStation)
+        {
+            var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
+
+            var stat = unitOfWork.Station.Find(s => s.StationID == externalStation.StationID).FirstOrDefault();
+            stat.Name = externalStation.Name;
+            stat.X = externalStation.X;
+            stat.Y = externalStation.Y;
+            stat.Address = externalStation.Address;
+            unitOfWork.Complete();
+
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [ResponseType(typeof(ICollection<Station>))]
+        [HttpGet]
+        [Route("api/transportlines/GetStationsForTransportLine/{id}")]
+        public IHttpActionResult GetStationsForTransportLine(string id)
+        {
+            TransportLine transportLine = unitOfWork.TransportLine.Get(id);
+            if (transportLine == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(transportLine.Stations.ToList());
+        }
+
+
+        [ResponseType(typeof(TransportLine))]
+        [Route("api/transportlines/deleIt/{id}")]
+        public IHttpActionResult DeleteStationOnTransportLine(string id,Station externalStation)
+        {
+            var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
+
+            var stat = unitOfWork.Station.Find(s => s.StationID == externalStation.StationID).FirstOrDefault();
+
+            line.Stations.Remove(stat);
+
+            try
+            {
+                unitOfWork.Complete();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return Ok(line);
+        }
+
+
         // GET: api/TransportLines
         public IEnumerable<TransportLine> GetTransportLines()
         {
