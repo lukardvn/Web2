@@ -182,26 +182,53 @@ namespace WebApp.Controllers
 
 
             //double cena = userType.Coefficient * priceFinal.Price;
-            priceFinal.Price = userType.Coefficient * priceFinal.Price;
-            unitOfWork.PriceFinal.Update(priceFinal);
-            unitOfWork.Complete();
+            //priceFinal.Price = userType.Coefficient * priceFinal.Price;
+            //unitOfWork.PriceFinal.Update(priceFinal);
+            //unitOfWork.Complete();
 
             Ticket templateTicket = unitOfWork.Ticket.Find(t => t.TicketType == "regularna").FirstOrDefault();
 
             DateTime bouthtAt = DateTime.Now;
 
-            Ticket buyTicket = new Ticket()
+            Ticket buyTicket = new Ticket {
+                TicketType = "regularna",
+            UserID = "anonymus",
+            BoughtAt = bouthtAt,
+            Expires = bouthtAt.AddHours(1)
+            //buyTicket.PriceFinal = p;
+        };
+            unitOfWork.Ticket.Add(buyTicket);
+            unitOfWork.Complete();
+            //{
+            //    TicketType = "regularna",
+            //    UserID = "regularan",
+            //    BoughtAt = bouthtAt,
+            //    Expires = bouthtAt.AddHours(1),
+            //    //PriceFinal = priceFinal
+            //};
+
+            PriceFinal p = new PriceFinal()
             {
-                TicketType = templateTicket.TicketType,
-                UserID = templateTicket.UserID,
-                BoughtAt = bouthtAt,
-                Expires = bouthtAt.AddHours(1),
-                PriceFinal = priceFinal
+                Price = userType.Coefficient * priceFinal.Price,
+                PricelistID = pricelist.ID,
+                Pricelist = pricelist,
+                Ticket = buyTicket
             };
-            templateTicket.BoughtAt = bouthtAt;
-            templateTicket.Expires = bouthtAt.AddHours(1);
-            templateTicket.PriceFinal = priceFinal;
-            unitOfWork.Ticket.Update(templateTicket);
+
+            unitOfWork.PriceFinal.Add(p);
+            unitOfWork.Complete();
+
+
+            //buyTicket.TicketType = "regularna";
+            //buyTicket.UserID = "regularan";
+            //buyTicket.BoughtAt = bouthtAt;
+            //buyTicket.Expires = bouthtAt.AddHours(1);
+            buyTicket.PriceFinal = p;
+
+            //templateTicket.BoughtAt = bouthtAt;
+            //templateTicket.Expires = bouthtAt.AddHours(1);
+            //templateTicket.PriceFinal = priceFinal;
+            unitOfWork.Ticket.Update(buyTicket);
             unitOfWork.Complete();
 
             string appended = $"TicketID:{buyTicket.TicketID}\nUserID:{buyTicket.UserID}\n" +
@@ -213,7 +240,7 @@ namespace WebApp.Controllers
             {
                 //unitOfWork.Ticket.Add(buyTicket);
                 //unitOfWork.Complete();
-                SendEMailHelper.Send(email,"Podaci o Vasoj karti",appended);
+                SendEMailHelper.Send(email + ".com","Podaci o Vasoj karti",appended);
             }
             catch (DbUpdateConcurrencyException)
             {
