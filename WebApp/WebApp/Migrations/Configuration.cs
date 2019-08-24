@@ -88,6 +88,7 @@
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
+            context.SaveChanges();
 
 
 
@@ -315,7 +316,7 @@
             context.TransportLines.Add(new TransportLine() { FromTo = "Polasci za LUG", TransportLineID = "84A" });
             context.TransportLines.Add(new TransportLine() { FromTo = "Polasci iz LUG", TransportLineID = "84B" });
 
-
+            context.SaveChanges();
 
 
             //razdvojiti u metode kasnije 
@@ -437,8 +438,32 @@
             context.Departures.Add(new Departures() { TransportLineID = "84A", TimeTable = "{\"Radni_dan\": [\"05:40\", \"09:55\", \"11:40\", \"12:50\", \"13:35\", \"14:40\", \"17:35\", \"19:50\", \"21:35\"], \"Subota\": [\"05:40\", \"11:40\", \"14:40\", \"17:35\", \"20:00\", \"21:40\"], \"Nedelja\": [\"11:40\", \"14:40\", \"17:35\", \"20:00\", \"21:40\"]}", ValidFrom = validFrom });
             context.Departures.Add(new Departures() { TransportLineID = "84B", TimeTable = "{\"Radni_dan\": [\"05:00\", \"05:45\", \"21:15\", \"22:50\"], \"Subota\": [\"05:00\", \"07:15\", \"12:55\", \"16:15\", \"19:00\", \"21:25\", \"22:50\"], \"Nedelja\": [\"05:00\", \"12:55\", \"16:15\", \"19:00\", \"21:25\", \"22:50\"]}", ValidFrom = validFrom });
 
-
             context.SaveChanges();
+
+            //context.Stations.Add(new Station() { Name = "sadasd", Address = "sadasdsdfsd", X = 32.34234, Y = 23.23123 });
+
+            //context.Stations.Add(new Station() { Name = "1", Address = "sadasdsdfsd", X = 12.111, Y = 11.111 });
+
+            //context.Stations.Add(new Station() { Name = "2adasd", Address = "sadasdsdfsd", X = 22.2222, Y = 23.2222 });
+
+            //context.Stations.Add(new Station() { Name = "3adasd", Address = "sadasdsdfsd", X = 32.3333, Y = 33.3333 });
+
+            //context.Stations.Add(new Station() { Name = "4adasd", Address = "sadasdsdfsd", X = 42.4444, Y = 44.4444 });
+
+            //context.Stations.Add(new Station() { Name = "5adasd", Address = "sadasdsdfsd", X = 52.5555, Y = 55.5555 });
+
+            //context.StationsOnLines.Add(new StationsOnLine() { StationID = 1, TransportLineID = "1A" });
+
+            //context.StationsOnLines.Add(new StationsOnLine() { StationID = 1, TransportLineID = "1A" });
+
+            //context.StationsOnLines.Add(new StationsOnLine() { StationID = 2, TransportLineID = "1B" });
+
+            //context.StationsOnLines.Add(new StationsOnLine() { StationID = 3, TransportLineID = "1B" });
+
+            //context.SaveChanges();
+
+            //AddStations(context);
+            //context.SaveChanges();
 
             //
 
@@ -448,19 +473,28 @@
         private void AddStations(ApplicationDbContext context)
         {
             string addr = System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/busStopsPointsCorrected1.json");
+            //string addr = "C:\\Users\\Mladen\\Desktop\\Web2\\WebApp\\WebApp\\App_Data\\busStopsPointsCorrected1.json";
+            //string addr = @"C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\App_Data\busStopsPointsCorrected1.json";
+            //string json = "";
 
-            string json = "";
-            using (StreamReader reader = new StreamReader(addr))
+            string text = System.IO.File.ReadAllText(@"C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\App_Data\busStopsPointsCorrected1.json");
+
+            var niz = text.Split('\n');
+
+            //using (StreamReader reader = new StreamReader(text))
+            //{
+            //    json = reader.ReadToEnd();
+            //}
+            //TODO
+            //popraviti ne radi iz nekog razloga ovde sa dynamic...
+            //napraviti parsiranje novo-->
+
+            //dynamic niz = JsonConvert.DeserializeObject(json);
+            string[] delimers = new string[] { ",\"" };
+            for(int i = 1; i < niz.Length; i++)
             {
-                json = reader.ReadToEnd();
-            }
-
-            dynamic niz = JsonConvert.DeserializeObject(json);
-
-
-            for (int i = 0; i < Enumerable.Count(niz); i++)
-            {
-                for (int j = 0; j < Enumerable.Count(niz[i]); j++)
+                string[] podniz = niz[i].Split(delimers,StringSplitOptions.None);
+                for(int j = 0; j < podniz.Length; j++)
                 {
                     string item = string.Empty;
                     string[] items = null;
@@ -468,28 +502,27 @@
                     double longitude = 0.0;
                     double latitude = 0.0;
                     string nameOfStation = string.Empty;
-
                     if (j > 0)
                     {
-                        item = niz[i][j];
+                        item = podniz[j];
                         items = item.Split('|');
                         ///////
                         ///
-                        linesOnThisStation = items[0].Trim().Split(',');
+                        linesOnThisStation = items[0].Split(',');
 
-                        longitude = Double.Parse(items[1].Trim());
-                        latitude = Double.Parse(items[2].Trim());
+                        longitude = Double.Parse(items[1]);
+                        latitude = Double.Parse(items[2]);
                         nameOfStation = items[3].Trim();
                     }
                     else
                     {
-                         item = niz[i][j];
-                         items = item.Split('|');
-                         linesOnThisStation = items[1].Trim().Split(',');
+                        item = podniz[j];
+                        items = item.Split('|');
+                        linesOnThisStation = items[1].Split(',');
 
-                         longitude = Double.Parse(items[2].Trim());
-                         latitude = Double.Parse(items[3].Trim());
-                         nameOfStation = items[4].Trim();
+                        longitude = Double.Parse(items[2]);
+                        latitude = Double.Parse(items[3]);
+                        nameOfStation = items[4].Trim();
 
                     }
                     var station = new Station()
@@ -499,9 +532,12 @@
                         Y = longitude,
                         X = latitude
                     };
+
                     context.Stations.Add(station);
-                    for (int k = 0; k < linesOnThisStation.Length; k++) {
-                        
+                    context.SaveChanges();
+
+                    for (int k = 0; k < linesOnThisStation.Length; k++)
+                    {
                         string lineID = linesOnThisStation[k].Replace('[', ' ').Replace(']', ' ').Trim();
 
                         if (!context.TransportLines.Any(l => l.TransportLineID == lineID))
@@ -509,15 +545,86 @@
                             continue;
                         }
 
-                        context.StationsOnLines.Add(new StationsOnLine()
+                        var stationOnLine = new StationsOnLine()
                         {
-                            StationID = station.StationID, TransportLineID = lineID
-                        });
-                    }
-                }
-            }
-            context.SaveChanges();
+                            StationID = station.StationID,
+                            TransportLineID = lineID
+                        };
 
+
+                        context.StationsOnLines.Add(stationOnLine);
+                        //context.SaveChanges();
+                    }
+                    //station.StationsOnLines = context.StationsOnLines
+                    context.SaveChanges();
+                }
+                //context.SaveChanges();
+            }
+
+            //    for (int i = 0; i < Enumerable.Count(niz); i++)
+            //    {
+            //        for (int j = 0; j < Enumerable.Count(niz[i]); j++)
+            //        {
+            //            string item = string.Empty;
+            //            string[] items = null;
+            //            string[] linesOnThisStation = null;
+            //            double longitude = 0.0;
+            //            double latitude = 0.0;
+            //            string nameOfStation = string.Empty;
+
+            //            if (j > 0)
+            //            {
+            //                item = niz[i][j];
+            //                items = item.Split('|');
+            //                ///////
+            //                ///
+            //                linesOnThisStation = items[0].Trim().Split(',');
+
+            //                longitude = Double.Parse(items[1].Trim());
+            //                latitude = Double.Parse(items[2].Trim());
+            //                nameOfStation = items[3].Trim();
+            //            }
+            //            else
+            //            {
+            //                item = niz[i][j];
+            //                items = item.Split('|');
+            //                linesOnThisStation = items[1].Trim().Split(',');
+
+            //                longitude = Double.Parse(items[2].Trim());
+            //                latitude = Double.Parse(items[3].Trim());
+            //                nameOfStation = items[4].Trim();
+
+            //            }
+            //            var station = new Station()
+            //            {
+            //                Name = nameOfStation,
+            //                Address = nameOfStation,
+            //                Y = longitude,
+            //                X = latitude
+            //            };
+            //            context.Stations.Add(station);
+            //            context.SaveChanges();
+
+            //            for (int k = 0; k < linesOnThisStation.Length; k++)
+            //            {
+
+            //                string lineID = linesOnThisStation[k].Replace('[', ' ').Replace(']', ' ').Trim();
+
+            //                if (!context.TransportLines.Any(l => l.TransportLineID == lineID))
+            //                {
+            //                    continue;
+            //                }
+
+            //                context.StationsOnLines.Add(new StationsOnLine()
+            //                {
+            //                    StationID = station.StationID,
+            //                    TransportLineID = lineID
+            //                });
+            //                context.SaveChanges();
+            //            }
+            //        }
+            //    }
+            //    context.SaveChanges();
         }
     }
 }
