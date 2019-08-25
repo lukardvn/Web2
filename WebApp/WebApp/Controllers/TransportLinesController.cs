@@ -35,8 +35,31 @@ namespace WebApp.Controllers
         {
             var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
 
-            line.Stations.Add(externalStation);
-            unitOfWork.Complete();
+            //try
+            //{
+            //    unitOfWork.Station.Add(externalStation);
+            //    unitOfWork.Complete();
+            //}
+            //catch (DBConcurrencyException)
+            //{
+
+            //}
+
+            try
+            {
+                line.Stations.Add(externalStation);
+                unitOfWork.StationsOnLine.Add(new StationsOnLine()
+                {
+                    StationID = externalStation.StationID,
+                    TransportLineID = line.TransportLineID
+                });
+                unitOfWork.Complete();
+            }
+            catch (DBConcurrencyException)
+            {
+
+            }
+
 
 
             return Ok(line);
@@ -55,10 +78,20 @@ namespace WebApp.Controllers
             stat.X = externalStation.X;
             stat.Y = externalStation.Y;
             stat.Address = externalStation.Address;
-            unitOfWork.Complete();
+            try
+            {
+                unitOfWork.Station.Update(stat);
+                unitOfWork.Complete();
+            }
+            catch (DBConcurrencyException)
+            {
+
+            }
 
 
-            return StatusCode(HttpStatusCode.NoContent);
+
+            //return StatusCode(HttpStatusCode.NoContent);
+            return Ok(stat);
         }
 
         [ResponseType(typeof(ICollection<Station>))]
@@ -79,7 +112,7 @@ namespace WebApp.Controllers
 
 
         [ResponseType(typeof(TransportLine))]
-        [Route("api/transportlines/deleIt/{id}")]
+        [Route("api/transportlines/deleteStationOnLine/{id}")]
         [HttpDelete]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteStationOnTransportLine(string id,Station externalStation)
@@ -88,10 +121,12 @@ namespace WebApp.Controllers
 
             var stat = unitOfWork.Station.Find(s => s.StationID == externalStation.StationID).FirstOrDefault();
 
-            line.Stations.Remove(stat);
+
 
             try
             {
+                //line.Stations.Remove(stat);
+                unitOfWork.Station.Remove(stat);
                 unitOfWork.Complete();
             }
             catch

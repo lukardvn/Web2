@@ -50,6 +50,35 @@ namespace WebApp.Controllers
             return Ok(departures);
         }
 
+        //bice ujedno i za brisanje i za editovanje i za dodavanje novih jer je timetable string pa je svejedno 
+        [HttpPut]
+        [Route("api/departures/putDeparturesForLine")]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult PutDeparturesForLine(Departures departures)
+        {
+
+            var l = unitOfWork.Departures.Find(x => x.TransportLineID == departures.TransportLineID).FirstOrDefault();
+            try
+            {
+                l.TimeTable = departures.TimeTable;
+                
+                unitOfWork.Departures.Update(l);
+                unitOfWork.Complete();
+            }catch(DbUpdateConcurrencyException)
+            {
+                if (!DeparturesExists(departures.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return Ok();
+        }
+
+
         // PUT: api/Departures/5
         [ResponseType(typeof(void))]
         [Authorize(Roles = "Admin")]
@@ -94,6 +123,14 @@ namespace WebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Route("api/departures/getDeparturesByLine/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetDeparturesByLine(string id)
+        {
+            //var lines = unitOfWork.TransportLine.Get(id);
+            return Ok(unitOfWork.Departures.Find(x => x.TransportLineID == id).FirstOrDefault());
+        }
+
         // POST: api/Departures
         [ResponseType(typeof(Departures))]
         [Authorize(Roles = "Admin")]
@@ -107,7 +144,7 @@ namespace WebApp.Controllers
             try
             {
 
-                departures.ValidFrom = DateTime.Now;
+                //departures.ValidFrom = DateTime.Now;
                 unitOfWork.Departures.Add(departures);
                 unitOfWork.Complete();
             }

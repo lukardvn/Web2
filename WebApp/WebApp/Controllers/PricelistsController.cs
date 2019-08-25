@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 
         // GET: api/Pricelists/5
         [ResponseType(typeof(Pricelist))]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public IHttpActionResult GetPricelist(int id)
         {
             Pricelist pricelist = unitOfWork.Pricelist.Get(id);
