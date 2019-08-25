@@ -100,8 +100,9 @@ namespace WebApp.Controllers
 
         // POST: api/PriceFinals
         [ResponseType(typeof(PriceFinal))]
-        [Authorize(Roles = "Admin")]
-        public IHttpActionResult PostPriceFinal(PriceFinal priceFinal)
+        [Route("api/pricefinals/addPriceToPricelist/{pricelistId}")]
+        //[Authorize(Roles = "Admin")]
+        public IHttpActionResult PostPriceFinal(int pricelistId,PriceFinal priceFinal)
         {
             if (!ModelState.IsValid)
             {
@@ -110,6 +111,11 @@ namespace WebApp.Controllers
 
             try
             {
+                var pricelist = unitOfWork.Pricelist.Get(pricelistId);
+
+                priceFinal.Pricelist = pricelist;
+                priceFinal.PricelistID = pricelistId;
+
                 unitOfWork.PriceFinal.Add(priceFinal);
                 unitOfWork.Complete();
             }
@@ -118,7 +124,7 @@ namespace WebApp.Controllers
                 throw;
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = priceFinal.ID }, priceFinal);
+            return Ok(priceFinal);
         }
 
         // DELETE: api/PriceFinals/5
@@ -134,7 +140,7 @@ namespace WebApp.Controllers
 
             try
             {
-                unitOfWork.PriceFinal.Add(priceFinal);
+                unitOfWork.PriceFinal.Remove(priceFinal);
                 unitOfWork.Complete();
             }
             catch

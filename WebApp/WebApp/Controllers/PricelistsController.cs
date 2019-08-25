@@ -46,6 +46,7 @@ namespace WebApp.Controllers
 
         // GET: api/Pricelists/5
         [ResponseType(typeof(Pricelist))]
+        [Route("api/pricelists/getSelectedPricelist/{id}")]
         //[Authorize(Roles ="Admin")]
         public IHttpActionResult GetPricelist(int id)
         {
@@ -60,9 +61,12 @@ namespace WebApp.Controllers
 
         // PUT: api/Pricelists/5
         [ResponseType(typeof(void))]
-        [Authorize(Roles = "Admin")]
+        [Route("api/pricelists/editPricelist/{id}")]
+        //[Authorize(Roles = "Admin")]
         public IHttpActionResult PutPricelist(int id, Pricelist pricelist)
         {
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -73,10 +77,15 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            
+            var price = unitOfWork.Pricelist.Find(x => x.ID == pricelist.ID).FirstOrDefault();
+
 
             try
             {
+                //var priceFinal = unitOfWork.PriceFinal.GetAll().Where(x => x.PricelistID == price.ID);
+
+                //price.PriceFinals = priceFinal.ToList();
+
                 unitOfWork.Pricelist.Update(pricelist);
                 unitOfWork.Complete();
             }
@@ -97,7 +106,7 @@ namespace WebApp.Controllers
 
         // POST: api/Pricelists
         [ResponseType(typeof(Pricelist))]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IHttpActionResult PostPricelist(Pricelist pricelist)
         {
             if (!ModelState.IsValid)
@@ -107,7 +116,13 @@ namespace WebApp.Controllers
 
             try
             {
+                var lastPricelist = unitOfWork.Pricelist.GetAll().Last();
+
+                pricelist.From = lastPricelist.To.Value;
+
                 unitOfWork.Pricelist.Add(pricelist);
+
+
                 unitOfWork.Complete();
             }
             catch
