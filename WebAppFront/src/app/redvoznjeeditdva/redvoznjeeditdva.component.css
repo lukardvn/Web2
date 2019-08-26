@@ -30,7 +30,7 @@
   }
 
   label {
-      margin-left: 40%;
+      margin-left: 45%;
   }
 
   .labeldva {
@@ -40,4 +40,9 @@
 .dugme{
     margin-left: 40%;
     width : 20%;
+}
+
+.form-control {
+    margin-left : 30%;
+    width: 40%;
 }

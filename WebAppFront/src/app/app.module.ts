@@ -31,6 +31,7 @@ import { StaniceeditComponent } from './staniceedit/staniceedit.component';
 import { StaniceeditdvaComponent } from './staniceeditdva/staniceeditdva.component';
 import { LinijeeditdvaComponent } from './linijeeditdva/linijeeditdva.component';
 import { RedvoznjeeditdvaComponent } from './redvoznjeeditdva/redvoznjeeditdva.component';
+import { SpajanjeeditComponent } from './spajanjeedit/spajanjeedit.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'linijeeditdva', component: LinijeeditdvaComponent },
   { path: 'redvoznjeeditdva', component: RedvoznjeeditdvaComponent },
   { path: 'staniceeditdva', component: StaniceeditdvaComponent },
+  { path: 'spajanjeedit', component: SpajanjeeditComponent },
 
   { path: '**', redirectTo: 'home' }
 ]
@@ -69,7 +71,8 @@ const routes: Routes = [
     StaniceeditComponent,
     StaniceeditdvaComponent,
     LinijeeditdvaComponent,
-    RedvoznjeeditdvaComponent
+    RedvoznjeeditdvaComponent,
+    SpajanjeeditComponent
     ],
   imports: [
     BrowserModule,

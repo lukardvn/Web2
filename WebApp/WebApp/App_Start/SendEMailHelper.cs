@@ -11,7 +11,7 @@ namespace WebApp.App_Start
     {
         public static void Send(string to,string subject,string body)
         {
-            MailMessage mailMessage = new MailMessage("djomlanebitno@gmail.com", to, subject, body);
+            MailMessage mailMessage = new MailMessage("webtest9696@gmail.com", to, subject, body);
             mailMessage.IsBodyHtml = true;
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.UseDefaultCredentials = true;
@@ -19,7 +19,7 @@ namespace WebApp.App_Start
             smtpClient.Host ="smtp.gmail.com";
             smtpClient.Port = 587;
             smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential("djomlanebitno@gmail.com","");
+            smtpClient.Credentials = new NetworkCredential("webtest9696@gmail.com", "web2web2");
             try
             {
                 smtpClient.Send(mailMessage);
