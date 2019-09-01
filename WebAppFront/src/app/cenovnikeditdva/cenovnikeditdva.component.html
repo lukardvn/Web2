@@ -1,0 +1,24 @@
+<form>
+    <a  mat-fab class="prvo-dugme" color="primary" routerLink="/cenovnikedit">Nazad</a>
+    <br><br>
+    <label class="labeldva"><b>Regularna</b></label>
+    <br>
+    <textarea [(ngModel)]= "regularna" [ngModelOptions]="{standalone: true}"> </textarea>
+    <br><br>
+
+    <label class="labeldva"><b>Dnevna</b></label>
+    <br>
+    <textarea [(ngModel)]= "dnevna" [ngModelOptions]="{standalone: true}"> </textarea>
+    <br><br>
+    <label class="labeldva"><b>Mesecna</b></label>
+    <br>
+    <textarea [(ngModel)]= "mesecna" [ngModelOptions]="{standalone: true}"> </textarea>
+    <br><br>
+    <label class="labeldva"><b>Godisnja</b></label>
+    <br>
+    <textarea [(ngModel)]= "godisnja" [ngModelOptions]="{standalone: true}"> </textarea>
+    <br><br>
+  
+  
+    <button mat-raised-button class="dugme" color="primary" (click)="postCenovnik()">Sacuvaj</button>
+  </form>

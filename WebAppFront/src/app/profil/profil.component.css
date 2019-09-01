@@ -1,0 +1,52 @@
+.form1 {
+    
+    float: right;
+    margin-right: 20%;
+    margin-top: 5%; 
+}
+
+.glavnaForma {
+    width : 70%;
+    height: 100%;
+    margin : auto;
+    background-color:silver;
+}
+
+.form2 {
+    margin-left: 20%;
+    margin-top: 5%;
+    float: left;
+}
+
+.textarea1 {
+    margin-left: 20%;
+    margin-top:1%;
+    width: 100%;
+    resize: none;
+}
+
+.label1 {
+    margin-left: 50%;
+    margin-top:3%;
+    width: 100%;
+}
+
+.select1 {
+    margin-left: 20%;
+    margin-top: 3%;
+    width: 105%;
+    height: 50%;
+}
+
+input {
+    margin-left: 20%;
+    margin-top:3%;
+    width: 100%;
+}
+
+.dugme {
+    margin-left : 20%;
+    margin-top : 30%;
+    width: 70%;
+    
+}

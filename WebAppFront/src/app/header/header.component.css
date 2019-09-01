@@ -5,8 +5,17 @@ mat-toolbar {
 }
 
 .prvo-dugme {
-    margin-left : 9%;
-    width: 5rem;
-    height: 3.6rem;
+    margin-left : 5%;
+    width: 6.7%;
+    height: 3.5rem;
     size: 100%;
+    align-content: center;
+  }
+
+  .drugo-dugme {
+    margin-left : 7%;
+    width: 8%;
+    height: 3.5rem;
+    size: 100%;
+    align-content: center;
   }

@@ -1,0 +1,103 @@
+<form>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/staniceedit">Nazad</a>
+  <br><br>
+
+  <div class="form-group">
+    <label for="linija"><b>
+      Stanice
+      </b>
+    </label>
+    <br>
+    <select id="id" name="linija"
+            [(ngModel)]="selected" class="form-control" (ngModelChange)="onChange($event)">
+            <option *ngFor = "let st of stanice" [(ngValue)] = "st" >
+              <a title="{{text}}">{{st.Naziv}}</a>
+            </option>
+          </select>
+  </div>
+  <br><br>
+<label><b>Naziv</b></label>
+<br>
+<textarea  type="text" [(ngModel)] = "name" [ngModelOptions]="{standalone: true}"></textarea>
+<br>
+<label><b>Adresa</b></label>
+<br>
+<textarea  type="text" [(ngModel)] = "adresa" [ngModelOptions]="{standalone: true}"> </textarea>
+<br>
+<label><b>X</b></label>
+<br>
+<textarea  type="number" [(ngModel)] = "x" [ngModelOptions]="{standalone: true}"> </textarea>
+<br>
+<label><b>Y</b></label>
+<br>
+<textarea  type="number" [(ngModel)] = "y" [ngModelOptions]="{standalone: true}"> </textarea>
+<br>
+<button mat-raised-button color="primary" class="dugme" (click)="postStanica()">Sacuvaj</button>
+</form> 
+
+<!-- <form class="glavnaForma">
+<form  #f="ngForm" (submit)="postStanica(f.value, f)" >
+  <mat-form-field>
+   <input
+      matInput
+      type="text"
+      name="naziv"
+      ngModel
+      required
+      #naziv="ngModel"
+      placeholder="Naziv">
+
+      <mat-error *ngIf="naziv.invalid"></mat-error>
+    </mat-form-field>
+
+    <br>
+    <br>
+    <mat-form-field>
+    <input
+      matInput
+      type="text"
+      name="adresa"
+      ngModel
+      required
+      placeholder="Adresa"
+      #adresa="ngModel">
+    
+      <mat-error *ngIf="adresa.invalid"></mat-error>
+
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field>
+  <input
+    matInput
+    type="number"
+    name="x"
+    ngModel
+    required
+    placeholder="X"
+    #x="ngModel">
+  
+    <mat-error *ngIf="X.invalid"></mat-error>
+
+</mat-form-field>
+<br>
+<br>
+<mat-form-field>
+<input
+  matInput
+  type="number"
+  name="y"
+  ngModel
+  required
+  placeholder="Y"
+  #y="ngModel">
+
+  <mat-error *ngIf="Y.invalid"></mat-error>
+</mat-form-field>
+  <br><br>
+  <button mat-raised-button
+    color="accent" type="submit" >Sacuvaj</button>
+    
+</form> -->
+<!-- <br>
+<button mat-raised-button color="primary" class="dugme" (click)="postStanica()">Sacuvaj</button>  -->

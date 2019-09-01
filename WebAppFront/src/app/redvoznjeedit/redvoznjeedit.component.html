@@ -1,7 +1,7 @@
 <form>
   <a  mat-fab class="prvo-dugme" color="primary" routerLink="/redvoznjeeditdva">Dodaj</a>
-  <a  mat-fab class="prvo-dugme" color="primary" >Obrisi</a>
-  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/redvoznjeeditdva">Osvezi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" (click)="deleteRed()" >Obrisi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/redvoznjeupdate">Osvezi</a>
   <a  mat-fab class="prvo-dugme" color="primary" routerLink="/adminview">Pocetna</a>
 
   <br><br><br>
@@ -12,10 +12,10 @@
     </label>
     <br>
     <select id="id" name="linija"
-            [(ngModel)]="linija" class="form-control">
-          <option value="1">Djacka</option>
-          <option value="2">Penzionerska</option>
-          <option value="3">Regularna</option>
+            [(ngModel)]="selectedRed" class="form-control">
+            <option *ngFor = "let red of redovi">
+              <a title="{{text}}">{{red}}</a>
+            </option>
           </select>
   </div>
   </form>

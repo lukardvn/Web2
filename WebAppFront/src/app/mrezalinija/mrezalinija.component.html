@@ -10,14 +10,13 @@
           </b>
         </label>
         <br>
-        <select id="tip" name="korisnik"
-                [(ngModel)]="korisnik" class="form-control">
-              <option value="1">Djacka</option>
-              <option value="2">Penzionerska</option>
-              <option value="3">Regularna</option>
-              </select> 
+        <select id="id" name="linija"
+            [(ngModel)]="selectedLinija" class="form-control">
+            <option *ngFor = "let lin of linije">
+              <a title="{{text}}">{{lin}}</a>
+            </option>
+          </select>
       </div>
       <br><br>
-      <button mat-raised-button
-      color="primary">Registruj se</button>
+
   </form>

@@ -27,6 +27,85 @@ namespace WebApp.Controllers
 
         public DeparturesController() { }
 
+        [AllowAnonymous]
+        [ResponseType(typeof(string))]
+        [Route("api/departures/deleteDepartures/{id}")]
+        public IHttpActionResult DeleteDepartures(int id)
+        {
+            Departures dep = unitOfWork.Departures.Get(id);
+            if (dep == null)
+            {
+                return NotFound();
+            }
+
+            unitOfWork.Departures.Remove(dep);
+            unitOfWork.Complete();
+
+            return Ok("obrisan red");
+        }
+
+        [AllowAnonymous]
+        [Route("api/departures/getAllDepartures")]
+        public List<int> GetAllDepartures()
+        {
+            IQueryable<Departures> dep = unitOfWork.Departures.GetAll().AsQueryable();
+            List<int> redovi = new List<int>();
+            foreach (Departures l in dep)
+            {
+                redovi.Add(l.ID);
+            }
+            return redovi;
+        }
+
+        [AllowAnonymous]
+        [Route("api/departures/getAllDeparturesForUpdate")]
+        public List<RedVoznjeUpdate> GetAllDeparturesForUpdate()
+        {
+            IQueryable<Departures> dep = unitOfWork.Departures.GetAll().AsQueryable();
+            List<RedVoznjeUpdate> redovi = new List<RedVoznjeUpdate>();
+            foreach (Departures l in dep)
+            {
+                RedVoznjeUpdate rv = new RedVoznjeUpdate();
+                rv.ID = l.ID;
+                rv.TransportLineID = l.TransportLineID;
+                rv.TimeTable = l.TimeTable;
+                redovi.Add(rv);
+            }
+            return redovi;
+        }
+
+
+        [AllowAnonymous]
+        [Route("api/departures/updateDeparture/")]
+        public IHttpActionResult UpdateRedVoznje(RedVoznjeUpdate rv)
+        {
+
+            Departures tl = unitOfWork.Departures.Get(rv.ID);
+            tl.TimeTable = rv.TimeTable;
+            tl.TransportLineID = rv.TransportLineID;
+           
+
+
+            unitOfWork.Departures.Update(tl);
+            unitOfWork.Complete();
+
+            return Ok("Dodato");
+        }
+
+        //dodavanje reda voznje
+        [AllowAnonymous]
+        [Route("api/departures/postDeparture/")]
+        public IHttpActionResult PostDeparture(RedVoznje rv)
+        {
+            Departures dep = new Departures();
+            dep.TimeTable = rv.TimeTable;
+            dep.TransportLineID = rv.TransportLineID;
+            dep.ValidFrom = DateTime.Now;
+            unitOfWork.Departures.Add(dep);
+            unitOfWork.Complete();
+
+            return Ok("ok");
+        }
 
         // GET: api/Departures
         [AllowAnonymous]
@@ -157,28 +236,28 @@ namespace WebApp.Controllers
         }
 
         // DELETE: api/Departures/5
-        [ResponseType(typeof(Departures))]
-        [Authorize(Roles = "Admin")]
-        public IHttpActionResult DeleteDepartures(int id)
-        {
-            Departures departures = unitOfWork.Departures.Get(id);
-            if (departures == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Departures))]
+        //[Authorize(Roles = "Admin")]
+        //public IHttpActionResult DeleteDepartures(int id)
+        //{
+        //    Departures departures = unitOfWork.Departures.Get(id);
+        //    if (departures == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            try
-            {
-                unitOfWork.Departures.Remove(departures);
-                unitOfWork.Complete();
-            }
-            catch
-            {
-                throw;
-            }
+        //    try
+        //    {
+        //        unitOfWork.Departures.Remove(departures);
+        //        unitOfWork.Complete();
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
 
-            return Ok(departures);
-        }
+        //    return Ok(departures);
+        //}
 
         protected override void Dispose(bool disposing)
         {

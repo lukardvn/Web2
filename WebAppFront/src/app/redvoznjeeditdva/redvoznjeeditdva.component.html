@@ -8,18 +8,24 @@
       </label>
       <br>
       <select id="id" name="linija"
-              [(ngModel)]="linija" class="form-control">
-            <option value="1">Djacka</option>
-            <option value="2">Penzionerska</option>
-            <option value="3">Regularna</option>
+              [(ngModel)]="selectedLinija" class="form-control">
+            <option *ngFor = "let lin of linije">
+              <a title="{{text}}">{{lin}}</a>
+            </option>
             </select>
     </div>
-    <br><br>
-  
+    <br><br> 
+         
+ 
+        
+
+
     <label class="labeldva"><b>Polasci</b></label>
     <br>
-    <textarea class="textarea2"> </textarea>
-    <br><br>
+    <textarea class="textarea2" [(ngModel)] = "polasci"
+    type = "text"
+    [ngModelOptions]="{standalone: true}"></textarea>
+    <br><br> 
 
-    <button mat-raised-button class="dugme" color="primary">Sacuvaj</button>
+    <button mat-raised-button class="dugme" color="primary" (click)="postDeparture()">Sacuvaj</button>
   </form>

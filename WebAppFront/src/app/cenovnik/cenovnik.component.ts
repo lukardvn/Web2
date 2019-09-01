@@ -17,12 +17,21 @@ export class CenovnikComponent implements OnInit {
   tipKupca : string;
   email : string;
   retVal : boolean;
+  role : any;
 
-  cenaTemp : number = 1000;
+  cenaTemp : number ;
 
   constructor(private http: AuthHttpService) { }
   
   ngOnInit() {
+    if(localStorage.getItem('jwt') != "null" && localStorage.getItem('jwt') != "undefined" && localStorage.getItem('jwt') != ""){
+      let jwtData = localStorage.jwt.split('.')[1]
+      let decodedJwtJsonData = window.atob(jwtData)
+      let decodedJwtData = JSON.parse(decodedJwtJsonData)
+
+
+       this.role = decodedJwtData.nameid;
+    }
   }
 
   proveriCenu() {
@@ -36,12 +45,52 @@ export class CenovnikComponent implements OnInit {
 
   kupiKartu(email : string, form : NgForm) {
     console.log(email);
+    if(this.IsAnonymus())
+    {
     this.http.GetKupiKartu(email).subscribe((cena)=>{
       this.retVal = cena;
      
       err => console.log(err);
     });
     console.log(this.retVal);
+  }
+  }
+
+  kupiKartu2(email : string, form : NgForm) {
+    console.log(email);
+    if(this.IsNormal())
+    {
+    this.http.KupiKartu(email, this.tipKarte).subscribe((cena)=>{
+      this.retVal = cena;
+     
+      err => console.log(err);
+    });
+    console.log(this.retVal);
+  }
+  }
+
+  IsAnonymus()
+  {
+    if(localStorage.jwt == "undefined")
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  IsNormal(){
+  
+    if(this.role == "admin"){
+      return false;
+     }
+     else if (localStorage.jwt != "undefined")
+     {
+       return true;
+     }
+     
   }
 // regularna,
 // dnevna,

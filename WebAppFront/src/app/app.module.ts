@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatInputModule, MatCardModule} from '@angular/material';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { AgmCoreModule } from '@agm/core'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
@@ -10,6 +10,7 @@ import { HttpService } from './services/http.service';
 import { AuthHttpService } from './services/auth.service';
 import { from } from 'rxjs';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,13 @@ import { StaniceeditdvaComponent } from './staniceeditdva/staniceeditdva.compone
 import { LinijeeditdvaComponent } from './linijeeditdva/linijeeditdva.component';
 import { RedvoznjeeditdvaComponent } from './redvoznjeeditdva/redvoznjeeditdva.component';
 import { SpajanjeeditComponent } from './spajanjeedit/spajanjeedit.component';
+import { LinijeupdateComponent } from './linijeupdate/linijeupdate.component';
+import { StanicaupdateComponent } from './stanicaupdate/stanicaupdate.component';
+import { RedvoznjeupdateComponent } from './redvoznjeupdate/redvoznjeupdate.component';
+import { ProfilComponent } from './profil/profil.component';
+import { CenovnikeditComponent } from './cenovnikedit/cenovnikedit.component';
+import { CenovnikeditdvaComponent } from './cenovnikeditdva/cenovnikeditdva.component';
+import { CenovnikupdateComponent } from './cenovnikupdate/cenovnikupdate.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -49,6 +57,13 @@ const routes: Routes = [
   { path: 'redvoznjeeditdva', component: RedvoznjeeditdvaComponent },
   { path: 'staniceeditdva', component: StaniceeditdvaComponent },
   { path: 'spajanjeedit', component: SpajanjeeditComponent },
+  { path: 'linijeupdate', component: LinijeupdateComponent },
+  { path: 'stanicaupdate', component: StanicaupdateComponent },
+  { path: 'redvoznjeupdate', component: RedvoznjeupdateComponent },
+  { path: 'profil', component: ProfilComponent },
+  { path: 'cenovnikedit', component: CenovnikeditComponent },
+  { path: 'cenovnikeditdva', component: CenovnikeditdvaComponent },
+  { path: 'cenovnikupdate', component: CenovnikupdateComponent },
 
   { path: '**', redirectTo: 'home' }
 ]
@@ -72,7 +87,14 @@ const routes: Routes = [
     StaniceeditdvaComponent,
     LinijeeditdvaComponent,
     RedvoznjeeditdvaComponent,
-    SpajanjeeditComponent
+    SpajanjeeditComponent,
+    LinijeupdateComponent,
+    StanicaupdateComponent,
+    RedvoznjeupdateComponent,
+    ProfilComponent,
+    CenovnikeditComponent,
+    CenovnikeditdvaComponent,
+    CenovnikupdateComponent
     ],
   imports: [
     BrowserModule,
@@ -83,6 +105,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     RouterModule.forRoot(routes),
      AgmCoreModule.forRoot(

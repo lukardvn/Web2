@@ -1,0 +1,27 @@
+<form>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/linijeedit">Nazad</a>
+  <br><br>
+
+  <div class="form-group">
+    <label for="linija"><b>
+      Linija
+      </b>
+    </label>
+    <br>
+    <select id="id" name="linija"
+            [(ngModel)]="selectedLinija" class="form-control" (ngModelChange)="onChange($event)">
+            <option *ngFor = "let lin of linije" [(ngValue)] = "lin">
+              <a title="{{text}}">{{lin.TransportLineID}}</a>
+            </option>
+          </select>
+  </div>
+  <br><br>
+
+  <label class="labeldva"><b>Smer</b></label>
+  <br>
+  <textarea name="tekst" [(ngModel)] = "tempStr" class="textarea2">{{selectedLinija.FromTo}} </textarea>
+  <br><br><br>
+
+
+  <button mat-raised-button class="dugme" color="primary" (click)="postLine(tempStr)">Sacuvaj</button>
+</form>

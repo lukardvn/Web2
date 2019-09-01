@@ -474,7 +474,7 @@
             //string addr = @"C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\App_Data\busStopsPointsCorrected1.json";
             //string json = "";
 
-            string text = System.IO.File.ReadAllText(@"C:\Users\Mladen\Desktop\Web2\WebApp\WebApp\App_Data\busStopsPointsCorrected.json");
+            string text = System.IO.File.ReadAllText(@"C:\Users\mbogd\Web2\WebApp\WebApp\App_Data\busStopsPointsCorrected.json");
 
             var niz = text.Split('\n');
 

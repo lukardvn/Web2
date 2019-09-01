@@ -1,0 +1,21 @@
+<form>
+    <a  mat-fab class="prvo-dugme" color="primary" routerLink="/cenovnikeditdva">Dodaj</a>
+    <a  mat-fab class="prvo-dugme" color="primary" (click)="deleteCenovnik()" >Obrisi</a>
+    <a  mat-fab class="prvo-dugme" color="primary" routerLink="/cenovnikupdate">Osvezi</a>
+    <a  mat-fab class="prvo-dugme" color="primary" routerLink="/adminview">Pocetna</a>
+  
+    <br><br><br>
+    <div class="form-group">
+      <label for="linija"><b>
+        Red voznje
+        </b>
+      </label>
+      <br>
+      <select id="id" name="linija"
+              [(ngModel)]="selected" class="form-control">
+              <option *ngFor = "let red of cenovnici">
+                <a title="{{text}}">{{red}}</a>
+              </option>
+            </select>
+    </div>
+    </form>

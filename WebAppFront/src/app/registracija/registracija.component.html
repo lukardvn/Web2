@@ -3,6 +3,20 @@
         ngModel
         #username="ngModel"  
 -->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- Include the above in your HEAD tag -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
  <form class="glavnaForma">
   <form  #f="ngForm" (submit)="login(f.value, f)" class="form2">
     <mat-form-field>
@@ -38,104 +52,95 @@
       
   </form>
 
-  <form (submit)="logIn(accDetail)" #postForm2="ngForm" class="form1">
-      <mat-form-field>
+  <form [formGroup] = "rf" (ngSubmit)="regUse()"  class="form1">
+    <p ><span class="fa fa-user"></span>
        <input
           matInput
           type="email"
-          name="email"
-          ngModel
-          required
-          #email="ngModel"
-          placeholder="Email">
-  
-          <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
-        </mat-form-field>
+          formControlName = "email"
+          placeholder="Email"
+          required>
+        </p>
+         
+         
         <br>
-        <mat-form-field>
+        <p ><span class="fa fa-user"></span>
         <input
           matInput
           type="password"
-          name="pass"
-          ngModel
-          required
-          placeholder="Password"
-          #pass="ngModel">
-        
-          <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
-      </mat-form-field>
+          placeholder="Sifra"
+          formControlName = "password"
+          required>
+        </p>
+      
       <br>
-      <mat-form-field>
+      <p ><span class="fa fa-user"></span>
           <input
             matInput
             type="password"
-            name="pass"
-            ngModel
-            required
-            placeholder="Confirm Password"
-            #pass="ngModel">
-          
-            <mat-error *ngIf="pass.invalid">Unesi svoj password!</mat-error>
-        </mat-form-field>
+            placeholder="Potvrdi sifru"
+            formControlName = "confirmPassword"
+            required>
+          </p>
+     
       <br>
 
-      <mat-form-field>
+      <p ><span class="fa fa-user"></span>
           <input
              matInput
              type="text"
-             name="ime"
-             ngModel
-             required
-             #ime="ngModel"
-             placeholder="Ime">
+             formControlName = "name"
+             placeholder="Ime"
+             required>
+            </p>
      
-             <mat-error *ngIf="ime.invalid">Unesi svoje ime!</mat-error>
-           </mat-form-field>
            <br>
 
-           <mat-form-field>
+           <p ><span class="fa fa-user"></span>  
               <input
                  matInput
                  type="text"
-                 name="prezime"
-                 ngModel
                  required
-                 #prezime="ngModel"
+                 formControlName = "surname"
                  placeholder="Prezime">
-         
-                 <mat-error *ngIf="prezime.invalid">Unesi svoje prezime!</mat-error>
-               </mat-form-field>
+                </p>
+              
+       
                <br>
-
-               <mat-form-field>
+               <p ><span class="fa fa-user"></span>
                   <input
                      matInput
                      type="text"
-                     name="adresa"
-                     ngModel
-                     required
-                     #adresa="ngModel"
-                     placeholder="Adresa">
+                     formControlName = "adress"
+                     placeholder="Adresa"
+                     required>
+                    </p>
              
-                     <mat-error *ngIf="adresa.invalid">Unesi svoju adresu!</mat-error>
-                   </mat-form-field>
+                 
                    <br>
 
-                   <mat-form-field>
+                   <p ><span class="fa fa-user"></span>
                       <input
                          matInput
                          type="date"
-                         name="adresa"
-                         ngModel
-                         required
-                         #datum="ngModel"
-                         placeholder="Datum rodjenja">
-                 
-                         <mat-error *ngIf="datum.invalid">Unesi svoj datum rodjenja!</mat-error>
-                       </mat-form-field>
+                         formControlName = "date"
+                         placeholder="Datum rodjenja"
+                         required>
+                        </p>
+                       
+                
+                        <br>
+                     
+                        <select id="id" name="linija"
+                        formControlName="tip" class="form-control">
+                      <option *ngFor = "let lin of tipovi">
+                        {{lin}}
+                      </option>
+                      </select>
+                  
                        <br>
       <button mat-raised-button
-        color="primary">Registruj se</button>
+        color="primary" type="submit">Registruj se</button>
         
     </form>
   </form>

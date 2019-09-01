@@ -1,27 +1,27 @@
-<form class="formaCenovnik">
+<form>
+ 
+  <br><br><br>
+  <div class="form-group">
+    <label for="linija"><b>
+      Linija
+      </b>
+    </label>
     <br>
-    <br>
-      <div class="form-group">
-        <label for="linija"><b>
-          Linija
-          </b>
-        </label>
-        <br>
-        <select id="id" name="linija"
-                [(ngModel)]="linija" class="form-control">
-              <option value="1">Djacka</option>
-              <option value="2">Penzionerska</option>
-              <option value="3">Regularna</option>
-              </select>
-      </div>
-      <br>
-      <br>
-      
-            <button mat-raised-button
-              color="primary">Kupi kartu</button> 
+    <select id="id" name="linija"
+            [(ngModel)]="selectedLinija" class="form-control" (ngModelChange)="onChange($event)">
+          <option *ngFor = "let lin of linije" [(ngValue)] = "lin">
+            <a title="{{text}}">{{lin.TransportLineID}}</a>
+          </option>
+          </select>
+  </div>
+  <br><br> 
+       
 
-      <br>
-      <br>
-      <br>
-      <textarea rows="15" disabled></textarea>
- </form>
+  <label class="labeldva"><b>Polasci</b></label>
+  <br>
+  <textarea class="textarea2" [(ngModel)] = "polasci"
+  type = "text"
+  [ngModelOptions]="{standalone: true}" disabled rows="15"></textarea>
+  <br><br> 
+
+</form>

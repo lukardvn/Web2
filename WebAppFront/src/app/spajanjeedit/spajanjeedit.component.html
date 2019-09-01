@@ -9,10 +9,10 @@
     </label>
     <br>
     <select id="id" name="linija"
-            [(ngModel)]="linija" class="form-control">
-          <option value="1">Djacka</option>
-          <option value="2">Penzionerska</option>
-          <option value="3">Regularna</option>
+            [(ngModel)]="selectedLinija" class="form-control">
+            <option *ngFor = "let lin of linije">
+              <a title="{{text}}">{{lin}}</a>
+            </option>
           </select>
         </div>
   <br><br><br>
@@ -23,12 +23,12 @@
     </label>
     <br>
     <select id="id" name="stanica"
-            [(ngModel)]="stanica" class="form-control">
-          <option value="1">Djacka</option>
-          <option value="2">Penzionerska</option>
-          <option value="3">Regularna</option>
+            [(ngModel)]="selectedStanica" class="form-control">
+            <option *ngFor = "let st of stanice">
+              <a title="{{text}}">{{st}}</a>
+            </option>
           </select>
   </div>
   <br><br><br>
-  <button mat-raised-button class="dugme" color="primary">Spoji</button>
+  <button mat-raised-button class="dugme" color="primary" (click)="spoji()">Spoji</button>
   </form>

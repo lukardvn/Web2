@@ -1,0 +1,67 @@
+.prvo-dugme {
+    
+    width: 5rem;
+    height: 3.6rem;
+    margin-top : 3%;
+    margin-left : 3%;
+    size: 100%;
+  }
+
+  form {
+      margin-left : 30%;
+      width : 40%;
+      height: 100%;
+      background-color: silver;
+  }
+
+  textarea
+  {
+      margin-left : 20%;
+      width: 60%;
+      resize: none;
+  }
+
+  .textarea2
+  {
+      margin-left : 20%;
+      width: 60%;
+      height: 30%;
+      resize: none;
+  }
+
+  label {
+      margin-left: 43%;
+  }
+
+  .labeldva {
+    margin-left: 45%;
+}
+
+.dugme{
+    margin-left: 40%;
+    width : 20%;
+}
+
+.prvo-dugme {
+    margin-left : 10%;
+    margin-top : 20%;
+    width: 12%;
+    height: 3.6rem;
+    size: 100%;
+  }
+
+  form {
+      margin-left : 30%;
+      width : 40%;
+      height: 100%;
+      background-color: silver;
+  }
+
+  .form-control {
+      margin-left : 30%;
+      width: 40%;
+  }
+
+  label {
+      margin-left : 45%;
+  }

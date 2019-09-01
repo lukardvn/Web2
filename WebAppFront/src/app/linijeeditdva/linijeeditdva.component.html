@@ -3,14 +3,14 @@
     <br><br>
     <label><b>Redni broj</b></label>
     <br>
-    <textarea> </textarea>
+    <textarea [(ngModel)]= "transportLine" [ngModelOptions]="{standalone: true}"> </textarea>
     <br><br>
 
-    <label class="labeldva"><b>Stanice</b></label>
+    <label class="labeldva"><b>Smer</b></label>
     <br>
-    <textarea class="textarea2"> </textarea>
+    <textarea class="textarea2" [(ngModel)]= "fromTo" [ngModelOptions]="{standalone: true}"> </textarea>
     <br><br><br>
   
   
-    <button mat-raised-button class="dugme" color="primary">Sacuvaj</button>
+    <button mat-raised-button class="dugme" color="primary" (click)="postLine()">Sacuvaj</button>
   </form>

@@ -1,0 +1,74 @@
+<form class="glavnaForma">
+ <form class="form2">
+  <br>
+  <label class="label1">Ime</label>
+  <br>
+  <textarea class="textarea1" [ngModelOptions]="{standalone: true}" [(ngModel)] = "user.Name"> </textarea>
+
+  <br>
+  <label class="label1">Prezime</label>
+  <br>
+  <textarea class="textarea1" [ngModelOptions]="{standalone: true}" [(ngModel)] = "user.Surname"> </textarea>
+
+  <br>
+  <label class="label1">Adresa</label>
+  <br>
+  <textarea class="textarea1" [ngModelOptions]="{standalone: true}" [(ngModel)] = "user.Adress"> </textarea>
+
+  <br>
+  <label class="label1" >Datum</label>
+  <br>
+  <input
+                         matInput
+                         type="date"
+                         [(ngModel)]="user.Date" [ngModelOptions]="{standalone: true}"
+                         placeholder="Datum rodjenja"
+                         required>
+  <!-- <textarea class="textarea1" type="date" [ngModelOptions]="{standalone: true}" [(ngModel)] = "date"> </textarea> -->
+  <br>
+  <label class="label1">Tip</label>
+  <br>
+  <select class="select1"
+  [(ngModel)]="user.Tip" [ngModelOptions]="{standalone: true}" >
+<option *ngFor = "let lin of tipovi" [(ngValue)] = "lin">
+  {{lin}}
+</option>
+</select>
+
+<br>
+<button mat-raised-button class="dugme" color="primary" (click)="Update()">Sacuvaj</button>
+</form>
+
+<form class="form1" (submit)="Change()">
+    <br>
+    <label class="label1">Stara</label>
+    <br>
+    <input
+                         matInput
+                         type="password"
+                         [(ngModel)]="old" [ngModelOptions]="{standalone: true}"
+                         placeholder="Stara sifra"
+                         required>
+    <br>
+    <label class="label1" >Nova</label>
+    <br>
+    <input
+                         matInput
+                         type="password"
+                         [(ngModel)]="new" [ngModelOptions]="{standalone: true}"
+                         placeholder="Nova sifra"
+                         required>
+    <br>
+    <label class="label1">Potvrda</label>
+    <br>
+    <input
+                         matInput
+                         type="password"
+                         [(ngModel)]="conf" [ngModelOptions]="{standalone: true}"
+                         placeholder="Potvrda sifre"
+                         required>
+    <br>
+<button mat-raised-button class="dugme" color="primary" type="submit">Sacuvaj</button>
+</form>
+  
+</form>

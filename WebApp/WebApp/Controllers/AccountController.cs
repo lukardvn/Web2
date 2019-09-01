@@ -17,6 +17,8 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebApp.Models;
+using WebApp.Models.DomainEntities;
+using WebApp.Persistence.UnitOfWork;
 using WebApp.Providers;
 using WebApp.Results;
 
@@ -28,9 +30,15 @@ namespace WebApp.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private IUnitOfWork unitOfWork;
 
         public AccountController()
         {
+        }
+
+        public AccountController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -82,6 +90,98 @@ namespace WebApp.Controllers
             }
 
             return Ok(user);
+        }
+
+        [Route("getProfileInfo/{id}")]
+        [AllowAnonymous]
+        public Osoba GetProfileInfo(string id)
+        {
+            
+            ApplicationUser user = unitOfWork.User.Get(id);
+            Osoba o = new Osoba();
+            try
+            {
+                o.Username = user.UserName;
+            }
+            catch
+            {
+                
+            }
+            try
+            {
+                o.Name = user.Name;
+            }
+            catch
+            {
+                o.Name = "";
+            }
+            try
+            {
+                o.Surname = user.Surname;
+            }
+            catch
+            {
+                o.Surname = "";
+            }
+            try
+            {
+                switch (user.UserTypeID)
+                {
+                    case 1: o.Tip = "Obican"; break;
+                    case 2: o.Tip = "Student"; break;
+                    case 3: o.Tip = "Penzioner"; break;
+
+                    default: o.Tip = ""; break;
+                }
+            }
+            catch
+            {
+                o.Tip = "";
+            }
+            try
+            {
+                o.Adress = user.Adress;
+            }
+            catch
+            {
+                o.Adress = "";
+            }
+            try
+            {
+                o.Date = Convert.ToDateTime(user.DateOfBirth);
+            }
+            catch
+            {
+
+            }
+
+
+            return o;
+        }
+
+        [Route("updateProfileInfo")]
+        [AllowAnonymous]
+        public IHttpActionResult UpdateProfileInfo(Osoba o)
+        {
+            ApplicationUser auser = unitOfWork.User.Find(x => x.UserName == o.Username).FirstOrDefault();
+
+            auser.Name = o.Name;
+            auser.Surname = o.Surname;
+            auser.Adress = o.Adress;
+            switch(o.Tip)
+            {
+                case "Obican": auser.UserTypeID = 1; break;
+                case "Student": auser.UserTypeID = 2; break;
+                case "Penzioner": auser.UserTypeID = 3; break;
+
+                default: break;
+            }
+            auser.DateOfBirth = Convert.ToDateTime(o.Date);
+
+            unitOfWork.User.Update(auser);
+            unitOfWork.Complete();
+
+            return Ok();
         }
 
 
@@ -239,7 +339,7 @@ namespace WebApp.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok(true);
         }
 
         // POST api/Account/SetPassword
@@ -382,7 +482,16 @@ namespace WebApp.Controllers
                 Authentication.SignIn(identity);
             }
 
-            return Ok();
+            if (user.UserName == "admin@yahoo")
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+
+            
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
@@ -430,7 +539,7 @@ namespace WebApp.Controllers
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        {
+            {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -445,7 +554,7 @@ namespace WebApp.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok(true);
         }
 
         // POST api/Account/RegisterExternal

@@ -1,7 +1,7 @@
 <form>
   <a  mat-fab class="prvo-dugme" color="primary" routerLink="/staniceeditdva">Dodaj</a>
-  <a  mat-fab class="prvo-dugme" color="primary" >Obrisi</a>
-  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/staniceeditdva">Osvezi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" (click)="deleteStanica()">Obrisi</a>
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/stanicaupdate">Osvezi</a>
   <a  mat-fab class="prvo-dugme" color="primary" routerLink="/adminview">Pocetna</a>
 
   <br><br><br>
@@ -12,10 +12,10 @@
     </label>
     <br>
     <select id="id" name="linija"
-            [(ngModel)]="linija" class="form-control">
-          <option value="1">Djacka</option>
-          <option value="2">Penzionerska</option>
-          <option value="3">Regularna</option>
+            [(ngModel)]="selectedStanica" class="form-control">
+            <option *ngFor = "let st of stanice">
+              <a title="{{text}}">{{st}}</a>
+            </option>
           </select>
   </div>
   </form>

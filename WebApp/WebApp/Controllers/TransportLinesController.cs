@@ -25,15 +25,73 @@ namespace WebApp.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        //prikaz svih linija
+        [AllowAnonymous]
+        [Route("api/transportlines/getAllLines")]
+        public List<string> GetAllLines()
+        {
+            IQueryable<TransportLine> linije = unitOfWork.TransportLine.GetAll().AsQueryable();
+            List<string> BrojeviLinija = new List<string>();
+            foreach (TransportLine l in linije)
+            {
+                BrojeviLinija.Add(l.TransportLineID);
+            }
+            return BrojeviLinija;
+        }
 
+        [AllowAnonymous]
+        [Route("api/transportlines/getAllLinesForUpdate")]
+        public List<Linije> GetAllLinesForUpdate()
+        {
+            IQueryable<TransportLine> linije = unitOfWork.TransportLine.GetAll().AsQueryable();
+            List<Linije> BrojeviLinija = new List<Linije>();
+            foreach (TransportLine l in linije)
+            {
+                Linije lin = new Linije();
+                lin.TransportLineID = l.TransportLineID;
+                lin.FromTo = l.FromTo;
+                BrojeviLinija.Add(lin);
+            }
+            return BrojeviLinija;
+        }
+
+        [AllowAnonymous]
+        [ResponseType(typeof(string))]
+        [Route("api/transportLines/deleteLine/{id}")]
+        public IHttpActionResult DeleteLine(string id)
+        {
+            TransportLine st = unitOfWork.TransportLine.Get(id);
+            if (st == null)
+            {
+                return NotFound();
+            }
+            IQueryable<StationsOnLine> stanice = unitOfWork.StationsOnLine.GetAll().AsQueryable();
+            foreach (var it in stanice)
+            {
+                if (it.TransportLineID == st.TransportLineID)
+                {
+                    unitOfWork.StationsOnLine.Remove(it);
+                }
+            }
+
+            unitOfWork.TransportLine.Remove(st);
+            unitOfWork.Complete();
+
+            return Ok("obrisana linija");
+        }
 
         [HttpPost]
-        [Route("api/transportlines/addStationInLine/{id}")]
-        [ResponseType(typeof(TransportLine))]
-        [Authorize(Roles ="Admin")]
-        public IHttpActionResult AddStationInLine(string id,Station externalStation)
+        [Route("api/transportlines/addStationInLine/")]
+        [AllowAnonymous]
+        public IHttpActionResult AddStationInLine(StaniceNaLiniji bravo)
         {
-            var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
+            StationsOnLine st = new StationsOnLine();
+            st.StationID = bravo.StationID;
+            st.TransportLineID = bravo.TransportLineID;
+            unitOfWork.StationsOnLine.Add(st);
+            unitOfWork.Complete();
+
+            //var line = unitOfWork.TransportLine.Find(x => x.TransportLineID == id).FirstOrDefault();
 
             //try
             //{
@@ -45,25 +103,55 @@ namespace WebApp.Controllers
 
             //}
 
-            try
-            {
-                line.Stations.Add(externalStation);
-                unitOfWork.StationsOnLine.Add(new StationsOnLine()
-                {
-                    StationID = externalStation.StationID,
-                    TransportLineID = line.TransportLineID
-                });
-                unitOfWork.Complete();
-            }
-            catch (DBConcurrencyException)
-            {
+            //try
+            //{
+            //    line.Stations.Add(externalStation);
+            //    unitOfWork.StationsOnLine.Add(new StationsOnLine()
+            //    {
+            //        StationID = externalStation.StationID,
+            //        TransportLineID = line.TransportLineID
+            //    });
+            //    unitOfWork.Complete();
+            //}
+            //catch (DBConcurrencyException)
+            //{
 
-            }
+            //}
 
 
 
-            return Ok(line);
+            return Ok("uspesno dodato");
         }
+
+        [AllowAnonymous]
+        [Route("api/transportLines/dodajLiniju/")]
+        public IHttpActionResult DodajLiniju(Linije linija)
+        {
+
+            TransportLine tl = new TransportLine();
+            tl.TransportLineID = linija.TransportLineID;
+            tl.FromTo = linija.FromTo;
+
+            unitOfWork.TransportLine.Add(tl);
+            unitOfWork.Complete();
+
+            return Ok("Dodato");
+        }
+
+        [AllowAnonymous]
+        [Route("api/transportLines/updateLiniju/")]
+        public IHttpActionResult UpdateLiniju(Linije linija)
+        {
+
+            TransportLine tl = unitOfWork.TransportLine.Get(linija.TransportLineID);
+            tl.FromTo = linija.FromTo;
+
+            unitOfWork.TransportLine.Update(tl);
+            unitOfWork.Complete();
+
+            return Ok("Dodato");
+        }
+
 
         [HttpPut]
         [Route("api/transportlines/editStationInLine/{id}")]

@@ -34,6 +34,7 @@ namespace WebApp.Controllers
         }
 
         // GET: api/StationsOnLines/5
+        [AllowAnonymous]
         [ResponseType(typeof(StationsOnLine))]
         public IHttpActionResult GetStationsOnLine(int id)
         {
