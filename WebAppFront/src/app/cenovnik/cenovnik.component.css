@@ -1,9 +1,10 @@
+
 .formaCenovnik {
     background-color : silver;
     width : 40%;
     height: 100%;
     margin-left: 30%;
-
+    text-align: left;
 }
 
 .formaCenovnik2 {

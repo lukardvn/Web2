@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -96,12 +97,152 @@ namespace WebApp.Controllers
 
                 default: break;
             }
-
-        
-
             return Ok(cena * tipK);
         }
 
+        [Route("api/tickets/UserType")]
+        [HttpGet]
+        public IHttpActionResult GetUserType()
+        {
+            var userId = User.Identity.GetUserId();
+            if (userId != null && userId !="admin")
+            {
+                var user = this.unitOfWork.User.Get(userId);
+                var usertype = user.UserType.TypeOfUser;
+                string userstring = string.Empty;
+                if(usertype == 1)
+                {
+                    userstring = "regularan";
+                }else if(usertype == 2)
+                {
+                    userstring = "student";
+                }else
+                {
+                    userstring = "penzioner"; 
+                }
+                return Ok(userstring);
+            } else
+            {
+                return Ok("anoniman");
+            }
+        }
+
+        [NonAction]
+        private DateTime ExpiresAt(string tipKarte)
+        {
+            DateTime dateTime = DateTime.Now;
+            switch (tipKarte)
+            {
+                case "regularna":
+                    {
+                        dateTime = dateTime.AddHours(1);
+                        break;
+                    }
+                case "dnevna":
+                    {
+                        dateTime = dateTime.AddHours(23 - dateTime.Hour);
+                        dateTime = dateTime.AddMinutes(59 - dateTime.Minute);
+                        dateTime = dateTime.AddSeconds(59 - dateTime.Second);
+                        break;
+                    }
+                case "mesecna":
+                    {
+                        var daysInMonth = DateTime.DaysInMonth(dateTime.Year, dateTime.Month);
+
+                        dateTime = dateTime.AddDays(daysInMonth - dateTime.Day);
+                        dateTime = dateTime.AddHours(23 - dateTime.Hour);
+                        dateTime = dateTime.AddMinutes(59 - dateTime.Minute);
+                        dateTime = dateTime.AddSeconds(59 - dateTime.Second);
+                        break;
+                    }
+                case "godisnja":
+                    {
+                        dateTime = dateTime.AddMonths(12 - dateTime.Month);
+                        dateTime = dateTime.AddHours(23 - dateTime.Hour);
+                        dateTime = dateTime.AddMinutes(59 - dateTime.Minute);
+                        dateTime = dateTime.AddSeconds(59 - dateTime.Second);
+                        break;
+                    }
+            }
+            return dateTime;
+        }
+
+        [Route("api/tickets/BuyTicket/{karta}/{korisnik}")]
+        [HttpPost]
+        [Authorize(Roles = "AppUser")]
+        [ResponseType(typeof(Ticket))]
+        public IHttpActionResult Buy(string karta,string korisnik,PayPalPaymentDetails paymentDetails)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var user = this.unitOfWork.User.Get(userId);
+
+            var userType = this.unitOfWork.UserType.Get((int)user.UserTypeID);
+
+            Pricelist pricelist = unitOfWork.Pricelist.Find(x => x.To == null).FirstOrDefault();
+            if (pricelist == null)
+                return BadRequest("trenutno ne postoji cenovnik");
+
+            PriceFinal priceFinal = unitOfWork.PriceFinal.GetAll().Where(z => z.PricelistID == pricelist.ID).FirstOrDefault();
+            if (priceFinal == null)
+                return BadRequest("trenutno ne postoji cena trenutni cenovnik");
+
+            DateTime dateTimeNow = DateTime.UtcNow;
+
+            var expires = ExpiresAt(karta);
+            Ticket ticket = new Ticket()
+            {
+                BoughtAt = dateTimeNow,
+                PayPalPaymentDetails = paymentDetails,
+                TicketType = karta,
+                UserID = userId,
+                Expires = expires
+            };
+
+            unitOfWork.Ticket.Add(ticket);
+            unitOfWork.Complete();
+
+            PriceFinal p = new PriceFinal()
+            {
+                Price = userType.Coefficient * priceFinal.Price,
+                PricelistID = pricelist.ID,
+                Pricelist = pricelist,
+                Ticket = ticket
+            };
+
+            unitOfWork.PriceFinal.Add(p);
+            unitOfWork.Complete();
+
+
+
+            ticket.PriceFinal = p;
+
+
+            unitOfWork.Ticket.Update(ticket);
+            unitOfWork.Complete();
+
+            //try
+            //{
+            //    unitOfWork.Ticket.Add(ticket);
+            //    unitOfWork.Complete();
+            //}catch(DBConcurrencyException)
+            //{
+            //    if (!TicketExists(ticket.TicketID))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+
+
+
+
+            return Ok(ticket);   
+        }
 
 
 

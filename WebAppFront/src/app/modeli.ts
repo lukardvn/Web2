@@ -111,3 +111,71 @@ export class Kupac {
     tip : string
     koeficijent : number
 }
+
+export class PayPalPaymentDetails {
+    Id : string
+    Intent : string
+    State : string
+    Cart : string
+    CreateTime : string
+    PayerPaymentMethod : string
+    PayerStatus : string
+    PayerEmail : string
+    PayerFirstName : string
+    PayerMiddleName : string
+    PayerLastName : string
+    PayerId : string
+    PayerCountryCode : string
+    ShippingAddressRecipientName : string
+    ShippingAddressStreet : string
+    ShippingAddressCity : string
+    ShippingAddressState : string
+    ShippingAddressPostalCode :number
+    ShippingAddressCountryCode : string
+    TransactionsAmountTotal : number
+    TransactionsAmountCurrency : string
+    TransactionsDetailsSubtotal : number
+    TransactionsDetailsShipping : number
+    TransactionsDetailsHandlingFee : number
+    TransactionsDetailsInsurance : number
+    TransactionsShippingDiscount : number
+    TransactionsItemListItemsName : string
+    TransactionsItemListItemsPrice : number
+    TransactionsItemListItemsCurrencty : string
+    TransactionsItemListItemsQuantity : number
+    TransactionsItemListItemsTax : number
+
+    constructor(jsonData : any) {
+        this.Id = jsonData['id'];
+        this.Intent = jsonData['intent'];
+        this.State = jsonData['state'];
+        this.Cart = jsonData['cart'];
+        this.CreateTime = jsonData['create_time'];
+        this.PayerPaymentMethod = jsonData['payer']['payment_method'];
+        this.PayerStatus = jsonData['payer']['status'];
+        this.PayerEmail = jsonData['payer']['payer_info']['email'];
+        this.PayerFirstName = jsonData['payer']['payer_info']['first_name'];
+        this.PayerMiddleName = jsonData['payer']['payer_info']['middle_name'];
+        this.PayerLastName = jsonData['payer']['payer_info']['last_name'];
+        this.PayerId = jsonData['payer']['payer_info']['payer_id'];
+        this.PayerCountryCode = jsonData['payer']['payer_info']['country_code'];
+        this.ShippingAddressRecipientName = jsonData['payer']['payer_info']['shipping_address']['recipient_name'];
+        this.ShippingAddressStreet = jsonData['payer']['payer_info']['shipping_address']['line1'];
+        this.ShippingAddressCity = jsonData['payer']['payer_info']['shipping_address']['city'];
+        this.ShippingAddressState = jsonData['payer']['payer_info']['shipping_address']['state'];
+        this.ShippingAddressCountryCode = jsonData['payer']['payer_info']['shipping_address']['country_code'];
+        this.ShippingAddressPostalCode = jsonData['payer']['payer_info']['shipping_address']['postal_code'];
+        this.TransactionsAmountTotal = jsonData['transactions']['0']['amount']['total'];
+        this.TransactionsAmountCurrency = jsonData['transactions']['0']['amount']['currency'];
+        this.TransactionsDetailsSubtotal = jsonData['transactions']['0']['amount']['details']['subtotal'];
+        this.TransactionsDetailsShipping = jsonData['transactions']['0']['amount']['details']['shipping'];
+        this.TransactionsDetailsHandlingFee = jsonData['transactions']['0']['amount']['details']['handling_fee'];
+        this.TransactionsDetailsInsurance = jsonData['transactions']['0']['amount']['details']['insurance'];
+        this.TransactionsDetailsShipping = jsonData['transactions']['0']['amount']['details']['shipping_discount'];
+        this.TransactionsItemListItemsName = jsonData['transactions']['0']['item_list']['items']['0']['name'];
+        this.TransactionsItemListItemsPrice = jsonData['transactions']['0']['item_list']['items']['0']['price'];
+        this.TransactionsItemListItemsCurrencty = jsonData['transactions']['0']['item_list']['items']['0']['currency'];
+        this.TransactionsItemListItemsQuantity = jsonData['transactions']['0']['item_list']['items']['0']['quantity'];
+        this.TransactionsItemListItemsTax = jsonData['transactions']['0']['item_list']['items']['0']['tax'];
+    }
+}

@@ -30,6 +30,8 @@ namespace WebApp.Models.DomainEntities
         
         public virtual PriceFinal PriceFinal { get; set; }
 
+        public string PayPalPaymentDetailsID { get; set; }
+        public virtual PayPalPaymentDetails PayPalPaymentDetails { get; set; }
 
     }
 }

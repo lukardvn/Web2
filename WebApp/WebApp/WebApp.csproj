@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201906112216502_BozeTiPomozi123.Designer.cs">
       <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001301246598_addedPaypalModel.cs" />
+    <Compile Include="Migrations\202001301246598_addedPaypalModel.Designer.cs">
+      <DependentUpon>202001301246598_addedPaypalModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -289,6 +293,7 @@
     <Compile Include="Models\DomainEntities\AllModelsForPost.cs" />
     <Compile Include="Models\DomainEntities\Departures.cs" />
     <Compile Include="Models\DomainEntities\LinePoint.cs" />
+    <Compile Include="Models\DomainEntities\PayPalPaymentDetails.cs" />
     <Compile Include="Models\DomainEntities\PriceFinal.cs" />
     <Compile Include="Models\DomainEntities\Pricelist.cs" />
     <Compile Include="Models\DomainEntities\Station.cs" />
@@ -434,6 +439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906112216502_BozeTiPomozi123.resx">
       <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001301246598_addedPaypalModel.resx">
+      <DependentUpon>202001301246598_addedPaypalModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

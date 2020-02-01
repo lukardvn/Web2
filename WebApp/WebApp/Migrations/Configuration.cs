@@ -117,8 +117,8 @@
 
 
             ///////////
-            DateTime priceValidFrom = new DateTime(2019, 05, 25);
-            Pricelist pricelist = new Pricelist() { From = priceValidFrom, To = priceValidFrom.AddDays(100) };
+            DateTime priceValidFrom = new DateTime(2020, 01, 01);
+            Pricelist pricelist = new Pricelist() { From = priceValidFrom };
 
             context.Pricelists.Add(pricelist);
             context.SaveChanges();
@@ -459,7 +459,7 @@
 
             //context.SaveChanges();
 
-            AddStations(context);
+            ////AddStations(context);
             //context.SaveChanges();
 
             //

@@ -181,7 +181,18 @@ export class AuthHttpService{
         console.log(email);
          this.tempStr = JSON.stringify(email).split('"');
          return this.http.get<any>(this.base_url + "/api/tickets/BuyTicketRegular/" + this.tempStr[3] + "/" + karta);
-     }
+    }
+    //zavrsiti ovde sam stao
+    // BuyTicket(karta: string, json: any): Observable<any> {
+    //     return this.http.post(this.base_url + "/api/tickets/BuyTicket/" + karta ,json, { "headers" : {'Content-type' : 'application/json'}});
+    // }
+    BuyTicket(karta: string, korisnik: string,json: any): Observable<any> {
+        return this.http.post(this.base_url + "/api/tickets/BuyTicket/" + karta + "/" + korisnik ,json,{ "headers" : {'Content-type' : 'application/json'}} );
+    }
+
+    GetUserType(): Observable<any> {
+        return this.http.get<any>(this.base_url + "/api/tickets/UserType");
+    }
 
     GetStanicaCord(idStanice: string): Observable<any>{
         return this.http.get<any>(this.base_url + "/api/Stanicas/GetStanica/" + idStanice);

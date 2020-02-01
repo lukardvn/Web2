@@ -1,3 +1,4 @@
+<div >
 <form class="formaCenovnik">
   <br>
   <br>
@@ -33,7 +34,7 @@
         <b>Cena</b>
       </label>
       <label class="cenaLabel">
-          <b>{{cenaTemp}}</b>
+          <b>{{cenaTemp}} din</b>
       </label>
       <br>
       <br>
@@ -43,7 +44,7 @@
       <br>
 
       <form (submit)="kupiKartu(f.value, f)" #f="ngForm" class="formaCenovnik2">
-          <mat-form-field>
+          <!-- <mat-form-field>
            <input
               matInput
               type="email"
@@ -54,16 +55,32 @@
               placeholder="Email">
       
               <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
-          </mat-form-field>
-          <br><br><br>
-          <button mat-raised-button *ngIf="IsAnonymus()"
+          </mat-form-field> -->
+          <!-- <br><br><br> -->
+          <!-- <button mat-raised-button *ngIf="IsAnonymus()"
             color="primary" type="submit">Kupi kartu</button> 
             <br>
           <button mat-raised-button *ngIf="IsNormal()"
-            color="primary" (click)="kupiKartu2(f.value, f)">Kupi kartu </button> 
+            color="primary" (click)="buyTicket(tipKarte,tipKupca)">Kupi kartu </button>  -->
+            <div hidden #divPaypal>
+              <p *ngIf="cenaEur"> Cena EUR,PP ne podrzava RSD!</p>
+              <label *ngIf="cenaEur" class="font-1-1">{{cenaEura}} eur</label>
+              <br>
+              <div *ngIf="kupljenaKartaID > 0">
+                <label class="font-1-1">ID karte je <b>{{kupljenaKartaID}}</b></label>
+                <br>
+                <label class="font-1-1">Vazi do <b>{{kupljenaKartaIstice}}</b></label>
+                <br>
+                <label class="font-1-1">Cena RSD <b>{{cenaTemp}}</b></label>
+              </div>
+              <div id="paypal-checkout-btn"></div>
+            </div>
       </form>
 
+
+
 </form>
+</div>
 
 <!-- <form class="glavnaForma">
     <form  #f="ngForm" (submit)="login(f.value, f)" class="form2">
