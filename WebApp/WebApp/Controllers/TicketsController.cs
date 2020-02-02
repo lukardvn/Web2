@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApp.App_Start;
+using WebApp.Models;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
@@ -105,15 +106,15 @@ namespace WebApp.Controllers
         public IHttpActionResult GetUserType()
         {
             var userId = User.Identity.GetUserId();
-            if (userId != null && userId !="admin")
+            if (userId != null)
             {
                 var user = this.unitOfWork.User.Get(userId);
                 var usertype = user.UserType.TypeOfUser;
                 string userstring = string.Empty;
-                if(usertype == 1)
+                if(usertype == 0)
                 {
                     userstring = "regularan";
-                }else if(usertype == 2)
+                }else if(usertype == 1)
                 {
                     userstring = "student";
                 }else
@@ -123,7 +124,7 @@ namespace WebApp.Controllers
                 return Ok(userstring);
             } else
             {
-                return Ok("anoniman");
+                return Ok("regularan");
             }
         }
 
@@ -157,10 +158,11 @@ namespace WebApp.Controllers
                     }
                 case "godisnja":
                     {
-                        dateTime = dateTime.AddMonths(12 - dateTime.Month);
+                        dateTime = dateTime.AddMonths(13 - dateTime.Month);
+                        dateTime = dateTime.AddDays(-dateTime.Day);
                         dateTime = dateTime.AddHours(23 - dateTime.Hour);
                         dateTime = dateTime.AddMinutes(59 - dateTime.Minute);
-                        dateTime = dateTime.AddSeconds(59 - dateTime.Second);
+                        dateTime = dateTime.AddSeconds(60 - dateTime.Second);
                         break;
                     }
             }
@@ -169,15 +171,24 @@ namespace WebApp.Controllers
 
         [Route("api/tickets/BuyTicket/{karta}/{korisnik}")]
         [HttpPost]
-        [Authorize(Roles = "AppUser")]
+        ///[Authorize(Roles = "AppUser")]
         [ResponseType(typeof(Ticket))]
         public IHttpActionResult Buy(string karta,string korisnik,PayPalPaymentDetails paymentDetails)
         {
             var userId = User.Identity.GetUserId();
+            ApplicationUser user;
+            UserType userType;
 
-            var user = this.unitOfWork.User.Get(userId);
+            if (userId == null)
+            {
+                userType = this.unitOfWork.UserType.Get(1);
+            }
+            else
+            {
+                user = this.unitOfWork.User.Get(userId);
 
-            var userType = this.unitOfWork.UserType.Get((int)user.UserTypeID);
+                userType = this.unitOfWork.UserType.Get((int)user.UserTypeID);
+            }
 
             Pricelist pricelist = unitOfWork.Pricelist.Find(x => x.To == null).FirstOrDefault();
             if (pricelist == null)
@@ -190,14 +201,28 @@ namespace WebApp.Controllers
             DateTime dateTimeNow = DateTime.UtcNow;
 
             var expires = ExpiresAt(karta);
-            Ticket ticket = new Ticket()
+            Ticket ticket;
+            if (userId == null)
             {
-                BoughtAt = dateTimeNow,
-                PayPalPaymentDetails = paymentDetails,
-                TicketType = karta,
-                UserID = userId,
-                Expires = expires
-            };
+                ticket = new Ticket()
+                {
+                    BoughtAt = dateTimeNow,
+                    PayPalPaymentDetails = paymentDetails,
+                    TicketType = karta,
+                    UserID = "anonymus",
+                    Expires = expires
+                };
+            } else
+            {
+                ticket = new Ticket()
+                {
+                    BoughtAt = dateTimeNow,
+                    PayPalPaymentDetails = paymentDetails,
+                    TicketType = karta,
+                    UserID = userId,
+                    Expires = expires
+                };
+            }
 
             unitOfWork.Ticket.Add(ticket);
             unitOfWork.Complete();
@@ -220,24 +245,6 @@ namespace WebApp.Controllers
 
             unitOfWork.Ticket.Update(ticket);
             unitOfWork.Complete();
-
-            //try
-            //{
-            //    unitOfWork.Ticket.Add(ticket);
-            //    unitOfWork.Complete();
-            //}catch(DBConcurrencyException)
-            //{
-            //    if (!TicketExists(ticket.TicketID))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-
 
 
 

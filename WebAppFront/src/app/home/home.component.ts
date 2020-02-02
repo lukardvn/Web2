@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
 
        this.role = decodedJwtData.nameid
-       console.log(decodedJwtData);
+       //console.log(decodedJwtData);
     
     }
     this.IsAdmin();

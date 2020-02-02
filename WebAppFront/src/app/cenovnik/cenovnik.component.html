@@ -44,75 +44,20 @@
       <br>
 
       <form (submit)="kupiKartu(f.value, f)" #f="ngForm" class="formaCenovnik2">
-          <!-- <mat-form-field>
-           <input
-              matInput
-              type="email"
-              name="email"
-              ngModel
-              required
-              #email="ngModel"
-              placeholder="Email">
-      
-              <mat-error *ngIf="email.invalid">Unesi svoj mail!</mat-error>
-          </mat-form-field> -->
-          <!-- <br><br><br> -->
-          <!-- <button mat-raised-button *ngIf="IsAnonymus()"
-            color="primary" type="submit">Kupi kartu</button> 
-            <br>
-          <button mat-raised-button *ngIf="IsNormal()"
-            color="primary" (click)="buyTicket(tipKarte,tipKupca)">Kupi kartu </button>  -->
             <div hidden #divPaypal>
+              <br>
               <p *ngIf="cenaEur"> Cena EUR,PP ne podrzava RSD!</p>
               <label *ngIf="cenaEur" class="font-1-1">{{cenaEura}} eur</label>
               <br>
+              <div id="paypal-checkout-btn"></div>
               <div *ngIf="kupljenaKartaID > 0">
                 <label class="font-1-1">ID karte je <b>{{kupljenaKartaID}}</b></label>
                 <br>
-                <label class="font-1-1">Vazi do <b>{{kupljenaKartaIstice}}</b></label>
+                <label class="font-1-1">Vazi do: <br> <b style="text-align: center;">{{kupljenaKartaIstice}}</b></label>
                 <br>
                 <label class="font-1-1">Cena RSD <b>{{cenaTemp}}</b></label>
               </div>
-              <div id="paypal-checkout-btn"></div>
             </div>
       </form>
-
-
-
 </form>
 </div>
-
-<!-- <form class="glavnaForma">
-    <form  #f="ngForm" (submit)="login(f.value, f)" class="form2">
-      <mat-form-field>
-       <input
-          matInput
-          type="email"
-          name="username"
-          ngModel
-          required
-          #username="ngModel"
-          placeholder="Email">
-  
-          <mat-error *ngIf="username.invalid">Unesi svoj mail!</mat-error>
-        </mat-form-field>
-  
-        <br>
-        <br>
-        <mat-form-field>
-        <input
-          matInput
-          type="password"
-          name="password"
-          ngModel
-          required
-          placeholder="Password"
-          #password="ngModel">
-        
-          <mat-error *ngIf="password.invalid">Unesi svoj password!</mat-error>
-      </mat-form-field>
-      <br><br>
-      <button mat-raised-button
-        color="accent" type="submit" >Prijavi se</button>
-        
-    </form> -->
