@@ -38,6 +38,13 @@
 <br>
 <button mat-raised-button class="dugme" color="primary" (click)="Update()">Sacuvaj</button>
 </form>
+<form class="form1">
+  <label class="custom-file-upload">
+    <input type="file" (change)="onFileChanged($event)" accept="image/png,image/jpeg,image/jpg,image/bmp"/> Ucitaj
+  </label>
+  <img [src]="imgURL" class="margin-top-10" width="100%" height="auto" *ngIf="imgURL">
+  <button mat-raised-button class="dugme" color="primary" (click)="UploadPicture()">Uploaduj sliku</button>
+</form>
 
 <form class="form1" (submit)="Change()">
     <br>

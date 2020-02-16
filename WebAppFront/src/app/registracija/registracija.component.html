@@ -89,8 +89,9 @@
           <input
              matInput
              type="text"
-             formControlName = "name"
+             formControlName = 'name'
              placeholder="Ime"
+             name='name'
              required>
             </p>
      
@@ -101,7 +102,8 @@
                  matInput
                  type="text"
                  required
-                 formControlName = "surname"
+                 formControlName = 'surname'
+                 name='surname'
                  placeholder="Prezime">
                 </p>
               
@@ -111,7 +113,8 @@
                   <input
                      matInput
                      type="text"
-                     formControlName = "adress"
+                     formControlName = 'adress'
+                     name='adress'
                      placeholder="Adresa"
                      required>
                     </p>
@@ -123,7 +126,8 @@
                       <input
                          matInput
                          type="date"
-                         formControlName = "date"
+                         formControlName = 'date'
+                         name='date'
                          placeholder="Datum rodjenja"
                          required>
                         </p>
@@ -131,14 +135,33 @@
                 
                         <br>
                      
-                        <select id="id" name="linija"
-                        formControlName="tip" class="form-control">
-                      <option *ngFor = "let lin of tipovi">
+                        <mat-select disableOptionCentering (selectionChange)="selectChange()" formControlName="type" matNativeControl>
+                          <mat-option value="Obican" mat-selected>Obican</mat-option>
+                          <mat-option value="Student">Student - Djak</mat-option>
+                          <mat-option value="Penzioner">Penzos</mat-option>
+                        </mat-select>
+                        <!-- <select id="id" name='linija'
+                        formControlName="tip" class="form-control"
+                        (selectionChange)='selectChange()'>
+                      <!-- <option *ngFor = "let lin of tipovi" value="{{lin}}">
                         {{lin}}
-                      </option>
-                      </select>
+                      </option> -->
+                      <!-- <option value="Obican">Obican</option>
+                      <option value="Student">Student</option>
+                      <option value="Penzioner">Penzioner</option>
+                      </select> -->
                   
                        <br>
+                       <!-- <p><span class="fa fa-user"></span>
+                        <input type="file" name="files" 
+                        (change)="onFileChanged($event)">
+                      </p> -->
+                      <div *ngIf="tip !== 'Obican'">
+                        <label class="custom-file-upload">
+                          <input type="file" (change)="onFileChanged($event)" accept="image/png,image/jpeg,image/jpg,image/bmp"/> Ucitaj
+                        </label>
+                        <img [src]="imgURL" class="margin-top-10" width="100%" height="auto" *ngIf="imgURL">
+                      </div>
       <button mat-raised-button
         color="primary" type="submit">Registruj se</button>
         

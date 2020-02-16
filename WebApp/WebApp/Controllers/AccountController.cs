@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -80,7 +81,7 @@ namespace WebApp.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [ResponseType(typeof(ApplicationUser))]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, AppUser, Controller")]
         public IHttpActionResult GetUser(string id)
         {
             ApplicationUser user = UserManager.Users.ToList().Find(x => x.Id == id);
@@ -535,26 +536,101 @@ namespace WebApp.Controllers
             return logins;
         }
 
+        [NonAction]
+        private int ConvertStringToInt(string tipKorisnika)
+        {
+            if (tipKorisnika.Equals("regularan"))
+            {
+                return 0;
+            }
+            else if (tipKorisnika.Equals("student"))
+            {
+                return 1;
+            }
+            else if (tipKorisnika.Equals("penzioner"))
+            {
+                return 2;
+            }
+            else
+            {
+                return -1;
+            }
+
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        [ResponseType(typeof(ApplicationUser))]
+        [HttpPost]
+        public async Task<IHttpActionResult> Register(/*RegisterBindingModel model*/)
             {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var httpRequest = HttpContext.Current.Request;
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            var samoDavidim = httpRequest.Files;
+
+            string status = "verified";
+            if (httpRequest.Form.Get("tip") != "Obican")
+                status = "not verified";
+
+
+
+            var user = new ApplicationUser() { 
+                UserName = httpRequest.Form.Get("email"), 
+                Email = httpRequest.Form.Get("email"),
+                DateOfBirth = DateTime.Parse(httpRequest.Form.Get("date")),
+                Adress = httpRequest.Form.Get("adress"),
+                Name = httpRequest.Form.Get("name"),
+                Surname = httpRequest.Form.Get("surname"),
+                Status = status,
+                UserTypeID = ConvertStringToInt(httpRequest.Form.Get("tip")),
+                Files = ""};
+
+            IdentityResult result = await UserManager.CreateAsync(user,httpRequest.Form.Get("password"));
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
+            } else
+            {
+                UserManager.AddToRole(user.Id, "AppUser");
+
+                if(httpRequest.Files.Count > 0)
+                {
+                    var path = GetUserFolderPath(user.Id);
+                    CreateUserFolder(path);
+
+                    List<string> uploadedFiles = new List<string>();
+                    foreach(string file in httpRequest.Files)
+                    {
+                        var uploadedFile = httpRequest.Files[file];
+
+                        if (IsCorrectFileExtension(uploadedFile.FileName)){
+                            uploadedFile.SaveAs(path + "/" + uploadedFile.FileName);
+                            uploadedFiles.Add(uploadedFile.FileName);
+                        }
+                    }
+
+                    if(uploadedFiles.Count > 0)
+                    {
+                        if (user.Files != null && user.Files.Length > 0)
+                            user.Files += "," + string.Join(",", uploadedFiles);
+                        else
+                            user.Files = string.Join(",", uploadedFiles);
+
+                        user.Status = "processing";
+                        UserManager.Update(user);
+                    }
+                }
             }
 
-            return Ok(true);
+            return Ok(user);
         }
 
         // POST api/Account/RegisterExternal
@@ -590,6 +666,112 @@ namespace WebApp.Controllers
             return Ok();
         }
 
+        [Route("ProcessingUsers")]
+        [Authorize(Roles = "Controller")]
+        [HttpGet]
+        public List<ApplicationUser> GetProcessingUsers()
+        {
+            return UserManager.Users.ToList().FindAll(x => x.Status == "processing");
+        }
+
+        [Route("VerifyUser/{id}")]
+        [Authorize(Roles ="Controller")]
+        [HttpPut]
+        public IHttpActionResult VerifyUser(string id)
+        {
+            var a = UserManager.Users.ToList();
+
+            var user = UserManager.Users.FirstOrDefault(x => x.Id == id);
+
+            if(user == null)
+            {
+                return BadRequest("User does not exists");
+            }
+
+            if (!UserManager.IsInRole(id, "AppUser"))
+            {
+                return BadRequest();
+            }
+
+            user.Status = "verified";
+            UserManager.Update(user);
+
+            return Ok();
+        }
+
+        [Route("DenyUser/{id}")]
+        [Authorize(Roles = "Controller")]
+        [HttpPut]
+        public IHttpActionResult DenyUser(string id)
+        {
+            var user = UserManager.Users.FirstOrDefault(x => x.Id == id);
+
+            if (user == null)
+            {
+                return BadRequest("User does not exists");
+            }
+
+            if (!UserManager.IsInRole(id, "AppUser"))
+            {
+                return BadRequest();
+            }
+
+            user.Status = "denied";
+            UserManager.Update(user);
+
+            return Ok();
+        }
+
+        [Route("UploadPictures")]
+        [ResponseType(typeof(string))]
+        [HttpPost]
+        public IHttpActionResult PictureUpload()
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            var userId = User.Identity.GetUserId();
+
+            var user = UserManager.Users.FirstOrDefault(x => x.Id == userId);
+
+            if (user == null)
+                return BadRequest("User does not exist");
+
+            var userPath = GetUserFolderPath(userId);
+            CreateUserFolder(userPath);
+
+            if (httpRequest.Files.Count == 0)
+                return BadRequest("No files selected");
+
+            List<string> uploadedFiles = new List<string>();
+            foreach(string file in httpRequest.Files)
+            {
+                var uploadedFile = httpRequest.Files[file];
+
+                if(IsCorrectFileExtension(uploadedFile.FileName))
+                {
+                    uploadedFile.SaveAs(userPath + "/" + uploadedFile.FileName);
+                    uploadedFiles.Add(uploadedFile.FileName);
+                }
+            }
+
+            if (uploadedFiles.Count == 0)
+                return BadRequest("Error occured invalid file type");
+
+            if (user.Files == null)
+                user.Files = "";
+
+            if (user.Files != null && user.Files.Length > 0)
+                user.Files += "," + string.Join(",", uploadedFiles);
+            else
+                user.Files = string.Join(",", uploadedFiles);
+
+            user.Status = "processing";
+            UserManager.Update(user);
+
+            return Ok(user.Files);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -602,6 +784,32 @@ namespace WebApp.Controllers
         }
 
         #region Helpers
+
+        private void CreateUserFolder(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        private string GetUserFolderPath(string userId)
+        {
+            return System.Web.Hosting.HostingEnvironment.MapPath("~/imgs/users/" + userId);
+        }
+
+        private bool IsCorrectFileExtension(string fileName)
+        {
+            var fileExtension = fileName.Split('.').Last();
+
+            if (fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png" || fileExtension == "bmp")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
 
         private IAuthenticationManager Authentication
         {

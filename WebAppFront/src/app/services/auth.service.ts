@@ -51,14 +51,43 @@ export class AuthHttpService{
         
     }
 
-    reg(data: RegUser) : Observable<any>{
-        return this.http.post<any>(this.base_url + "/api/Account/Register", data);
+    reg(data: RegUser,file: File) : Observable<any>{
+        var formData = new FormData();
+
+
+        if(file != null)
+            formData.append("0",file, file.name);
+
+        for(var k in data)
+            formData.append(k,data[k]);
+
+        return this.http.post<any>(this.base_url + "/api/Account/Register", formData);
     }
 
     ChangePW(sif: Sifra) : Observable<any>{
         return this.http.post<any>(this.base_url + "/api/Account/ChangePassword", sif);
     }
 
+    UploadPicture(file: File) : Observable<any> {
+        var formData = new FormData();
+
+
+        if(file != null)
+            formData.append("0",file, file.name);
+
+        return this.http.post<any>(this.base_url + "/api/Account/UploadPictures",formData);
+    }
+
+    GetUsersToVerify() : Observable<any> {
+        return this.http.get<any>(this.base_url + "/api/Account/ProcessingUsers");
+    }
+
+    VerifyUser(id: string) {
+        return this.http.put<any>(this.base_url + "/api/Account/VerifyUser/" + id,id);
+    }
+    DenyUser(id: string) {
+        return this.http.put<any>(this.base_url + "/api/Account/VerifyUser/",id);
+    }
  
     GetPolasci(id: number, dan : string) : Observable<any> {
         return this.http.get<any>(this.base_url + "/api/Linijas/GetLinija/" + id +"/" + dan);

@@ -33,6 +33,7 @@ export class CenovnikEdit
 }
 
 export class RegUser2{
+    Id : string
     Name: string
     Surname: string
     Username: string
@@ -42,7 +43,7 @@ export class RegUser2{
     Date: string
     Tip : string
     Adress : string
-
+    Files : string
 }
 
 export class Sifra{

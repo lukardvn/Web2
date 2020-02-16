@@ -31,6 +31,11 @@ namespace WebApp.Models
 
         public DateTime? DateOfBirth { get; set; }
 
+        public string Status { get; set; }
+
+        public bool HasVerified { get; set; }
+
+        public string Files { get; set; }
         public virtual UserType UserType { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; }

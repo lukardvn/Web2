@@ -88,6 +88,8 @@ namespace WebApp.Controllers
                 default: break;
             }
 
+            
+
             double cena = 0;
             switch(tipKarte)
             {
@@ -176,7 +178,7 @@ namespace WebApp.Controllers
         public IHttpActionResult Buy(string karta,string korisnik,PayPalPaymentDetails paymentDetails)
         {
             var userId = User.Identity.GetUserId();
-            ApplicationUser user;
+            ApplicationUser user = new ApplicationUser();
             UserType userType;
 
             if (userId == null)
@@ -235,18 +237,17 @@ namespace WebApp.Controllers
                 Ticket = ticket
             };
 
+            //nema popusta nije verifikovan
+            if (!user.Status.Equals("verified"))
+                p.Price = 1 * priceFinal.Price;
+
             unitOfWork.PriceFinal.Add(p);
             unitOfWork.Complete();
 
-
-
             ticket.PriceFinal = p;
-
 
             unitOfWork.Ticket.Update(ticket);
             unitOfWork.Complete();
-
-
 
             return Ok(ticket);   
         }

@@ -19,7 +19,9 @@ export class HomeComponent implements OnInit {
       let jwtData = localStorage.jwt.split('.')[1]
       let decodedJwtJsonData = window.atob(jwtData)
       let decodedJwtData = JSON.parse(decodedJwtJsonData)
-
+      console.log('JWT DATA: ',jwtData);
+      console.log('DECODEDJWTJSONDATA: ',decodedJwtJsonData);
+      console.log('DECOTED JWT DATA ONLY: ',decodedJwtData);
 
        this.role = decodedJwtData.nameid
        //console.log(decodedJwtData);
@@ -32,6 +34,9 @@ export class HomeComponent implements OnInit {
     if(this.role == "admin"){
       this.router.navigate(["/adminview"]);
       console.log("admin");
+     }
+     else if(this.role =="controller"){
+       this.router.navigate(["/controllerview"]);
      }
      else{
       this.router.navigate(["/home"]);

@@ -1,0 +1,30 @@
+<form [formGroup] = "rf">
+  <a  mat-fab class="prvo-dugme" color="primary" routerLink="/controllerview">Pocetna</a>
+  <br><br><br>
+  <div class="form-group">
+    <label for="korisnici"><b>
+      Neverifikovani korisnici
+      </b>
+    </label>
+    <br>
+    <!-- <select id="id" name="korisnici" formControlName="korisnici"
+            [(ngModel)]="korisnik" class="form-control" (selectionChange)="selectChange()">
+            <option *ngFor = "let korisnik of korisnici">
+              <a title="{{text}}">{{korisnik.Email}}</a>
+            </option>
+    </select> -->
+    <mat-select disableOptionCentering (selectionChange)="selectChange()" formControlName="korisnici" matNativeControl>
+      <mat-option *ngFor = "let korisnik of korisnici" value="{{korisnik.Email}}" mat-selected="korisnici[0]">
+        {{korisnik.Email}}
+      </mat-option>
+    </mat-select>
+    <br>
+    <img [src]="imgURL" class="margin-top-10" width="100%" height="auto" *ngIf="imgURL" alt="korisnik nije postavio sliku">
+    <br>
+    <label>Korisnik tvrdi da je :</label>
+    <textarea readonly class="form-control">{{tip}}</textarea>
+    <br>
+    <a  mat-fab class="prvo-dugme" color="primary" (click)="Verify()">Verifikuj</a>
+    <a  mat-fab class="prvo-dugme" color="primary" (click)="Deny()">Odbij</a>
+  </div>
+</form>

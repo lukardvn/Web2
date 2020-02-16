@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatInputModule, MatCardModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatSelectModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router'
 import { AgmCoreModule } from '@agm/core'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
@@ -15,6 +16,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ControllerviewComponent } from './controllerview/controllerview.component';
 import { HeaderComponent } from './header/header.component';
 import { RedvoznjeComponent } from './redvoznje/redvoznje.component';
 import { MrezalinijaComponent } from './mrezalinija/mrezalinija.component';
@@ -40,6 +42,7 @@ import { ProfilComponent } from './profil/profil.component';
 import { CenovnikeditComponent } from './cenovnikedit/cenovnikedit.component';
 import { CenovnikeditdvaComponent } from './cenovnikeditdva/cenovnikeditdva.component';
 import { CenovnikupdateComponent } from './cenovnikupdate/cenovnikupdate.component';
+import { VerifyUserComponent } from './verify-user/verify-user.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -64,6 +67,8 @@ const routes: Routes = [
   { path: 'cenovnikedit', component: CenovnikeditComponent },
   { path: 'cenovnikeditdva', component: CenovnikeditdvaComponent },
   { path: 'cenovnikupdate', component: CenovnikupdateComponent },
+  { path: 'controllerview', component: ControllerviewComponent},
+  { path: 'verify-user', component: VerifyUserComponent},
 
   { path: '**', redirectTo: 'home' }
 ]
@@ -94,7 +99,9 @@ const routes: Routes = [
     ProfilComponent,
     CenovnikeditComponent,
     CenovnikeditdvaComponent,
-    CenovnikupdateComponent
+    CenovnikupdateComponent,
+    ControllerviewComponent,
+    VerifyUserComponent
     ],
   imports: [
     BrowserModule,
@@ -103,6 +110,7 @@ const routes: Routes = [
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
+    MatSelectModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,

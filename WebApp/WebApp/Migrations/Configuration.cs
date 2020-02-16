@@ -89,6 +89,13 @@
                 userManager.Create(user);
                 userManager.AddToRole(user.Id, "AppUser");
             }
+            if (!context.Users.Any(u => u.UserName == "controller@yahoo.com"))
+            {
+                var user = new ApplicationUser() { Id = "controller", UserName = "controller@yahoo", Email = "controller@yahoo.com", PasswordHash = ApplicationUser.HashPassword("Controller123!"), DateOfBirth = new DateTime(1996, 9, 6, 10, 02, 01)/*,UserTypeID = 2*/ };
+                userManager.Create(user);
+                userManager.AddToRole(user.Id, "Controller");
+            }
+
             context.SaveChanges();
 
 

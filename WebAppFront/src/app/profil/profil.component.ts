@@ -31,6 +31,8 @@ export class ProfilComponent implements OnInit {
   tip : string;
   poruka : boolean = false;
   tipovi: string[] = [ "Obican", "Student", "Penzioner" ];
+  file: File;
+  imgURL: any;
 
 
   ngOnInit() {
@@ -63,6 +65,11 @@ export class ProfilComponent implements OnInit {
       console.log(this.user.Name);
   }
 
+  UploadPicture() {
+
+    this.http.UploadPicture(this.file).subscribe();
+  }
+
   Update() {
     this.user.Name = this.name;
     this.user.Surname = this.surname;
@@ -72,6 +79,17 @@ export class ProfilComponent implements OnInit {
 
     this.http.UpdateProfil(this.user).subscribe();
   }
+
+  onFileChanged(event) {
+    this.file = event.target.files[0];
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.file); 
+    reader.onload = (_event) => { 
+      this.imgURL = reader.result; 
+    }
+  }
+
 
   Change() {
     this.sifra = {

@@ -14,6 +14,7 @@ namespace WebApp
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
+            app.UseStaticFiles("/imgs");
             ConfigureAuth(app);
             app.MapSignalR();
         }
