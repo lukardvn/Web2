@@ -351,4 +351,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-index.html
+WebAppFront/src/index.html
