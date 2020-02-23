@@ -230,5 +230,12 @@ export class AuthHttpService{
        
         return this.http.get<any>(this.base_url + "/api/Kartas/GetProveri/" + idKorisnika );
     }
+
+    GetLine(lineId: string): Observable<any> {
+        return this.http.get<any>(this.base_url + "/api/TransportLines/" + lineId);
+    }
+    GetStationsOnLine(): Observable<any> {
+        return this.http.get<any>(this.base_url + "/api/StationsOnLines");
+    }
  
 }

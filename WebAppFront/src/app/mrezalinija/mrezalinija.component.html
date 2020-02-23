@@ -1,7 +1,8 @@
 <form>
-    <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14">
+    <!-- <agm-map  [latitude]="latitude" [longitude]="longitude" [zoom]="14">
 
-      </agm-map>
+      </agm-map> -->
+      <div #map style="width:800px; height:590px; transition-property: filter; transition-duration: 0.8s; float:right;"></div>
 
       <br><br><br><br><br><br>
       <div class="form-group">
@@ -11,12 +12,13 @@
         </label>
         <br>
         <select id="id" name="linija"
-            [(ngModel)]="selectedLinija" class="form-control">
+            [(ngModel)]="selectedLinija" class="form-control" (ngModelChange)="onChange($event)">
             <option *ngFor = "let lin of linije">
               <a title="{{text}}">{{lin}}</a>
             </option>
           </select>
       </div>
-      <br><br>
+      <br><br> 
+      <button name="button" (click)="Submit()">Clear all routes</button>
 
   </form>

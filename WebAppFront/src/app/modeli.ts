@@ -96,6 +96,48 @@ export class linja {
 
     linije : number[]
 }
+//////
+export class Vehicle {
+    VehicleID : string;
+    TransportLineID : string;
+    TransportLine : TransportLine;
+    X : number;
+    Y : number;
+}
+
+export class Station {
+    StationID : number;
+    Address : string;
+    Name : string;
+    X : number;
+    Y : number;
+    StationsOnLines : Array<StationsOnLine> = new Array();
+}
+
+export class StationsOnLine {
+    StationsOnLineID : number;
+    StationID : number;
+    Station : Station;
+    TransportLineID : string;
+    TransportLine : TransportLine;
+}
+
+export class LinePoint {
+    LinePointID : number;
+    X : number;
+    Y : number;
+    TransportLineID : string;
+    TransportLine : TransportLine
+}
+
+export class TransportLine {
+    TransportLineID : string;
+    FromTo : string;
+    Vehicles : Array<Vehicle> = new Array();
+    Stations: Array<Station> = new Array();
+    LinePoints: Array<LinePoint> = new Array();
+}
+///////
 export class dani{
     id : number
     dan : string

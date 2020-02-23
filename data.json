@@ -1,0 +1,435 @@
+{
+  "3A": [
+    {
+      "longitude": 19.8419960985,
+      "latitude": 45.255185246,
+      "station": "USPENSKA - POZORIŠNI TRG"
+    },
+    {
+      "longitude": 19.844141,
+      "latitude": 45.253519,
+      "station": "BUL. MIHAJLA PUPINA - POTHODNIK"
+    },
+    {
+      "longitude": 19.8263471168,
+      "latitude": 45.2595168963,
+      "station": "BUL .KRALJA PETRA I - GROBLJE"
+    },
+    {
+      "longitude": 19.8375257882,
+      "latitude": 45.2588786887,
+      "station": "VOJVODE BOJOVIĆ - SOCIALNO"
+    },
+    {
+      "longitude": 19.87968712,
+      "latitude": 45.2464017138,
+      "station": "PRERADOVIĆEVA - MARINA DRŽIĆA"
+    },
+    {
+      "longitude": 19.8878906109,
+      "latitude": 45.2360062995,
+      "station": "PETROVARADIN - OKRETNICA"
+    },
+    {
+      "longitude": 19.8853872807,
+      "latitude": 45.2396101516,
+      "station": "PETROVARADIN - ŽELEZNIČKA STANICA"
+    },
+    {
+      "longitude": 19.8814113961,
+      "latitude": 45.2439233024,
+      "station": "PRERADOVIĆEVA - BOŽIDAR ADŽIJE"
+    },
+    {
+      "longitude": 19.8757045697,
+      "latitude": 45.2496755784,
+      "station": "PRERADOVIĆEVA - BENZINSKA PUMPA"
+    },
+    {
+      "longitude": 19.8519122087,
+      "latitude": 45.2542020579,
+      "station": "BUL. MIHAJLA PUPINA - DUNAVSKI PARK"
+    },
+    {
+      "longitude": 19.8689433116,
+      "latitude": 45.2526031657,
+      "station": "PRERADOVIĆEVA - LOVAČKI DOM"
+    },
+    {
+      "longitude": 19.8623634945,
+      "latitude": 45.2548163902,
+      "station": "BEOGRADSKA - VLADIMIRA NAZORA"
+    },
+    {
+      "longitude": 19.8314132035,
+      "latitude": 45.2605767651,
+      "station": "BUL .KRALJA PETRA I - BUL. OSLOBOĐENJA"
+    },
+    {
+      "longitude": 19.8213763649,
+      "latitude": 45.260450059,
+      "station": "RUMENAČKA - DOM ZDRAVLJA"
+    },
+    {
+      "longitude": 19.8156966528,
+      "latitude": 45.2634661042,
+      "station": "KORNELIJA STANKOVIĆA - FILIPA FILIPOVIĆA"
+    },
+    {
+      "longitude": 19.8111852139,
+      "latitude": 45.2640112807,
+      "station": "MILENKA GRČIĆA - BANATSKA"
+    },
+    {
+      "longitude": 19.808222,
+      "latitude": 45.265188,
+      "station": "OBLAČIĆA RADA - JANKA ČMELIKA"
+    },
+    {
+      "longitude": 19.8182127414,
+      "latitude": 45.2633439588,
+      "station": "RUMENAČKA - BUL. JAŠE TOMIĆA"
+    },
+    {
+      "longitude": 19.8732154355,
+      "latitude": 45.251431704,
+      "station": "PRERADOVIĆEVA - ŠENOINA"
+    }
+  ],
+  "3B": [
+    {
+      "longitude": 19.8416504854,
+      "latitude": 45.255203707,
+      "station": "USPENSKA - ŠAFARIKOVA"
+    },
+    {
+      "longitude": 19.844187,
+      "latitude": 45.253337,
+      "station": "BUL. MIHAJLA PUPINA - POTHODNIK"
+    },
+    {
+      "longitude": 19.8878906109,
+      "latitude": 45.2360062995,
+      "station": "PETROVARADIN - OKRETNICA"
+    },
+    {
+      "longitude": 19.8083164398,
+      "latitude": 45.2649285714,
+      "station": "JANKA ČMELIKA - OBLAČIĆA RADA"
+    },
+    {
+      "longitude": 19.8135399393,
+      "latitude": 45.2620111469,
+      "station": "KORNELIJA STANKOVIĆA - ILIJE BIRČANINA"
+    },
+    {
+      "longitude": 19.8371378326,
+      "latitude": 45.2588985768,
+      "station": "VOJVODE BOJOVIĆA - O.Š. IVO LOLA RIBAR"
+    },
+    {
+      "longitude": 19.8530960428,
+      "latitude": 45.2542765403,
+      "station": "BUL. MIHAJLA PUPINA - SONJE MARINKOVIĆ"
+    },
+    {
+      "longitude": 19.8620128358,
+      "latitude": 45.2547734365,
+      "station": "BEOGRADSKA - LISINSKOG"
+    },
+    {
+      "longitude": 19.8678103709,
+      "latitude": 45.2525866389,
+      "station": "PRERADOVIĆEVA - LOVAČKI DOM"
+    },
+    {
+      "longitude": 19.8801002749,
+      "latitude": 45.2455157784,
+      "station": "PRERADOVIĆEVA - MARINA DRŽIĆA"
+    },
+    {
+      "longitude": 19.8857439999,
+      "latitude": 45.2389365212,
+      "station": "PETROVARADIN - ŽELEZNIČKA STANICA"
+    },
+    {
+      "longitude": 19.876524398,
+      "latitude": 45.2488033781,
+      "station": "PRERADOVIĆEVA - RELJKOVIĆEVA"
+    },
+    {
+      "longitude": 19.8830977084,
+      "latitude": 45.241791669,
+      "station": "PRERADOVIĆEVA - RAČKOG"
+    },
+    {
+      "longitude": 19.8104375633,
+      "latitude": 45.2618134201,
+      "station": "JANKA ČMELIKA - DEČIJE OBDANIŠTE"
+    },
+    {
+      "longitude": 19.8204896166,
+      "latitude": 45.2609008436,
+      "station": "RUMENAČKA - ABC SAMOPOSLUGA"
+    },
+    {
+      "longitude": 19.8244448578,
+      "latitude": 45.2591224024,
+      "station": "KRALJA PETRA I - SAJAM"
+    },
+    {
+      "longitude": 19.8274393446,
+      "latitude": 45.259428265,
+      "station": "KRALJA PETRA I - MAŠINSKA ŠKOLA"
+    },
+    {
+      "longitude": 19.8329179672,
+      "latitude": 45.2607697725,
+      "station": "KRALJA PETRA I - BUL. OSLOBOĐENJA"
+    },
+    {
+      "longitude": 19.8727083512,
+      "latitude": 45.2516407374,
+      "station": "PRERADOVIĆEVA - O.Š. JOVAN DUČIĆ"
+    },
+    {
+      "longitude": 19.8174016008,
+      "latitude": 45.2636389127,
+      "station": "RUMENAČKA - KORNELIJA STANKOVIĆA"
+    }
+  ],
+  "64A": [
+    {
+      "longitude": 19.8475593745,
+      "latitude": 45.2528535063,
+      "station": "ŽARKA ZRENJANINA - IZVRŠNO VEĆE"
+    },
+    {
+      "longitude": 19.8530960428,
+      "latitude": 45.2542765403,
+      "station": "BUL. MIHAJLA PUPINA - SONJE MARINKOVIĆ"
+    },
+    {
+      "longitude": 19.8620128358,
+      "latitude": 45.2547734365,
+      "station": "BEOGRADSKA - LISINSKOG"
+    },
+    {
+      "longitude": 19.876524398,
+      "latitude": 45.2488033781,
+      "station": "PRERADOVIĆEVA - RELJKOVIĆEVA"
+    },
+    {
+      "longitude": 19.8727083512,
+      "latitude": 45.2516407374,
+      "station": "PRERADOVIĆEVA - O.Š. JOVAN DUČIĆ"
+    },
+    {
+      "longitude": 19.8353175469,
+      "latitude": 45.2545506888,
+      "station": "BUL. OSLOBOÐENJA - NOVOSADSKOG SAJMA"
+    },
+    {
+      "longitude": 19.8322222835,
+      "latitude": 45.2601777537,
+      "station": "BUL. OSLOBOĐENJA - KRALJA PETRA I"
+    },
+    {
+      "longitude": 19.8370753816,
+      "latitude": 45.2514514442,
+      "station": "BUL. OSLOBOĐENJA - FUTOŠKA"
+    },
+    {
+      "longitude": 19.8831881997,
+      "latitude": 45.2403483789,
+      "station": "PETROVARADIN - RAČKOG - PETROVARADINSKA PIJACA"
+    },
+    {
+      "longitude": 19.839720893,
+      "latitude": 45.2480202534,
+      "station": "MAKSIMA GORKOG - BUL.OSLOBOĐENJA"
+    },
+    {
+      "longitude": 19.8431913572,
+      "latitude": 45.2488624702,
+      "station": "MAKSIMA GORKOG - SPENS"
+    },
+    {
+      "longitude": 19.8300468015,
+      "latitude": 45.2652079855,
+      "station": "ŽELEZNIČKA STANICA TERMINAL"
+    },
+    {
+      "longitude": 19.8850730991,
+      "latitude": 45.2324088439,
+      "station": "PETROVARADIN - BUKOVAČKI PUT - RAČKOG"
+    },
+    {
+      "longitude": 19.8868243994,
+      "latitude": 45.2293292488,
+      "station": "PETROVARADIN - BUKOVAČKI PUT - CIGLANA"
+    },
+    {
+      "longitude": 19.8873329754,
+      "latitude": 45.2251879467,
+      "station": "BUKOVAČKI DO I"
+    },
+    {
+      "longitude": 19.890452797,
+      "latitude": 45.2183887552,
+      "station": "BUKOVAČKI DO II (kod kućnog broja 141)"
+    },
+    {
+      "longitude": 19.8914366929,
+      "latitude": 45.2124892648,
+      "station": "BUKOVAC - VINOGRADI"
+    },
+    {
+      "longitude": 19.8898733898,
+      "latitude": 45.2095220733,
+      "station": "BUKOVAC - PODVEZIRAC"
+    },
+    {
+      "longitude": 19.8904354534,
+      "latitude": 45.203612119,
+      "station": "BUKOVAC - ULAZ"
+    },
+    {
+      "longitude": 19.8900913343,
+      "latitude": 45.2012979753,
+      "station": "BUKOVAC - KARAĐORĐEVA 157"
+    },
+    {
+      "longitude": 19.8915477816,
+      "latitude": 45.196208419,
+      "station": "BUKOVAC - O.Š. \"22 AVGUST\""
+    },
+    {
+      "longitude": 19.8937409094,
+      "latitude": 45.1942358257,
+      "station": "BUKOVAC - CENTAR"
+    },
+    {
+      "longitude": 19.8947300019,
+      "latitude": 45.1915036219,
+      "station": "BUKOVAC - OKRETNICA"
+    }
+  ],
+  "64B": [
+    {
+      "longitude": 19.8471827488,
+      "latitude": 45.2524025428,
+      "station": "ŽARKA ZRENJANINA - OPŠTINA"
+    },
+    {
+      "longitude": 19.8757045697,
+      "latitude": 45.2496755784,
+      "station": "PRERADOVIĆEVA - BENZINSKA PUMPA"
+    },
+    {
+      "longitude": 19.8519122087,
+      "latitude": 45.2542020579,
+      "station": "BUL. MIHAJLA PUPINA - DUNAVSKI PARK"
+    },
+    {
+      "longitude": 19.8623634945,
+      "latitude": 45.2548163902,
+      "station": "BEOGRADSKA - VLADIMIRA NAZORA"
+    },
+    {
+      "longitude": 19.8732154355,
+      "latitude": 45.251431704,
+      "station": "PRERADOVIĆEVA - ŠENOINA"
+    },
+    {
+      "longitude": 19.830132455,
+      "latitude": 45.2650202834,
+      "station": "ŽELEZNIČKA STANICA - DOLASCI"
+    },
+    {
+      "longitude": 19.8351029309,
+      "latitude": 45.255629856,
+      "station": "BUL. OSLOBOĐENJA - POKRAJINSKI SUP"
+    },
+    {
+      "longitude": 19.8318492939,
+      "latitude": 45.2613766166,
+      "station": "BUL. OSLOBOĐENJA - KRALJA PETRA I"
+    },
+    {
+      "longitude": 19.8368000824,
+      "latitude": 45.2525198464,
+      "station": "BUL. OSLOBOĐENJA - FUTOŠKA PIJACA"
+    },
+    {
+      "longitude": 19.8390130044,
+      "latitude": 45.2485327883,
+      "station": "BUL. OSLOBOĐENJA - MAKSIMA GORKOG"
+    },
+    {
+      "longitude": 19.8421576964,
+      "latitude": 45.2488034819,
+      "station": "MAKSIMA GORKOG - SREMSKA"
+    },
+    {
+      "longitude": 19.8947300019,
+      "latitude": 45.1915036219,
+      "station": "BUKOVAC - OKRETNICA"
+    },
+    {
+      "longitude": 19.8833365176,
+      "latitude": 45.2402949361,
+      "station": "PETROVARADIN - RAČKOG - PETROVARADINSKA PIJACA"
+    },
+    {
+      "longitude": 19.8939648265,
+      "latitude": 45.1944548601,
+      "station": "BUKOVAC - POŠTA"
+    },
+    {
+      "longitude": 19.891823186,
+      "latitude": 45.1962659225,
+      "station": "BUKOVAC - O.Š. \"22 AVGUST\""
+    },
+    {
+      "longitude": 19.890136953,
+      "latitude": 45.2011723526,
+      "station": "BUKOVAC - KARAĐORĐEVA 162"
+    },
+    {
+      "longitude": 19.8905047712,
+      "latitude": 45.2034048452,
+      "station": "BUKOVAC - ULAZ"
+    },
+    {
+      "longitude": 19.8902592947,
+      "latitude": 45.2099284717,
+      "station": "BUKOVAC - PODVEZIRAC"
+    },
+    {
+      "longitude": 19.8914850164,
+      "latitude": 45.2129390138,
+      "station": "BUKOVAC - VINOGRADI"
+    },
+    {
+      "longitude": 19.8901967537,
+      "latitude": 45.2189033444,
+      "station": "BUKOVAČKI DO II kod kućnog broja 141"
+    },
+    {
+      "longitude": 19.887440875,
+      "latitude": 45.2249847589,
+      "station": "BUKOVAČKI DO I"
+    },
+    {
+      "longitude": 19.8869030337,
+      "latitude": 45.2292172682,
+      "station": "PETROVARADIN - BUKOVAČKI PUT - CIGLANA"
+    },
+    {
+      "longitude": 19.8853185603,
+      "latitude": 45.2322834738,
+      "station": "PETROVARADIN - BUKOVAČKI PUT - RAČKOG"
+    }
+  ]
+}
