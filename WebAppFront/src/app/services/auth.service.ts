@@ -86,7 +86,7 @@ export class AuthHttpService{
         return this.http.put<any>(this.base_url + "/api/Account/VerifyUser/" + id,id);
     }
     DenyUser(id: string) {
-        return this.http.put<any>(this.base_url + "/api/Account/VerifyUser/",id);
+        return this.http.put<any>(this.base_url + "/api/Account/DenyUser/" + id,id);
     }
  
     GetPolasci(id: number, dan : string) : Observable<any> {

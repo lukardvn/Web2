@@ -23,12 +23,13 @@ export class VerifyUserComponent implements OnInit {
 
     this.http.GetUsersToVerify().subscribe(data=>{
       this.korisnici = data;
+      console.log(data);
       
       for(let k in data) {
         this.korisnici[k].Tip = this.GetUserType(data[k].UserType.TypeOfUser);
       }
       
-      this.imgURL = `http://localhost:52295/imgs/users/${this.korisnik.Id}/${data[0].Files}`;
+      //this.imgURL = `http://localhost:52295/imgs/users/${this.korisnici[0].Id}/${data[0].Files}`;
       this.korisnik = this.korisnici[0];
 
       err=> console.log(err);
@@ -55,21 +56,56 @@ export class VerifyUserComponent implements OnInit {
   }
 
   selectChange(){
-    this.korisnik = this.rf.get('korisnici').value;
-    this.tip = this.UserType(this.korisnik);
+    //this.korisnik = this.rf.get('korisnici').value;
+    //console.log('this.korisnik iz selectchange',this.korisnik);
+    this.korisnik = this.korisnici.find(a=>a.Email == this.rf.get('korisnici').value);
+    console.log(this.korisnik);
+    this.tip = this.UserType(this.korisnik.Email);
     this.imgURL = `http://localhost:52295/imgs/users/${this.korisnik.Id}/${this.korisnik.Files}`;
   }
 
   Verify() {
     this.http.VerifyUser(this.korisnik.Id).subscribe(data=>{
+      console.log(data);
+      this.imgURL = null;
+      this.tip = null;
       err=>console.log(data);
+    });
+    this.http.GetUsersToVerify().subscribe(data=>{
+      this.korisnici = data;
+      console.log(data);
+      
+      for(let k in data) {
+        this.korisnici[k].Tip = this.GetUserType(data[k].UserType.TypeOfUser);
+      }
+      
+      //this.imgURL = `http://localhost:52295/imgs/users/${this.korisnici[0].Id}/${data[0].Files}`;
+      this.korisnik = this.korisnici[0];
+
+      err=> console.log(err);
     });
     this.rf.reset();
   }
 
   Deny() {
     this.http.DenyUser(this.korisnik.Id).subscribe(data=>{
+      console.log(data);
+      this.imgURL = null;
+      this.tip = null;
       err=>console.log(data);
+    });
+    this.http.GetUsersToVerify().subscribe(data=>{
+      this.korisnici = data;
+      console.log(data);
+      
+      for(let k in data) {
+        this.korisnici[k].Tip = this.GetUserType(data[k].UserType.TypeOfUser);
+      }
+      
+      //this.imgURL = `http://localhost:52295/imgs/users/${this.korisnici[0].Id}/${data[0].Files}`;
+      this.korisnik = this.korisnici[0];
+
+      err=> console.log(err);
     });
     this.rf.reset();
   }

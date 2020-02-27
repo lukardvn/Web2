@@ -54,7 +54,8 @@ export class ProfilComponent implements OnInit {
       //   email: user.Email
       // }
       this.user = user as RegUser2;
-      console.log(this.user);
+      console.log(user);
+      this.imgURL = this.user.Files;
       err => console.log(err);
   }
   );

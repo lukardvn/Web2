@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApp.Hubs;
 using WebApp.Models.DomainEntities;
 using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
@@ -17,14 +21,42 @@ namespace WebApp.Controllers
     public class VehiclesController : ApiController
     {
         private IUnitOfWork unitOfWork;
+        private VehicleHub vehicleHub;
         public VehiclesController() { }
 
-        public VehiclesController(IUnitOfWork unitOfWork)
+        public VehiclesController(IUnitOfWork unitOfWork,VehicleHub vehicleHub)
         {
             this.unitOfWork = unitOfWork;
+            this.vehicleHub = vehicleHub;
         }
 
 
+        [Route("api/vehicles/updateVehiclePosition")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult UpdateVehiclePosition()
+        {
+            var request = System.Web.HttpContext.Current.Request;
+            string data = GetDocumentContents(request);
+
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<VehicleHub>();
+            hubContext.Clients.All.newPositions(data);
+
+            foreach (string busData in data.Split('|'))
+            {
+                //busData => NS335XY,45.45453,19.345435,12A
+                var busDataArray = busData.Split(',');
+                Vehicle vehicle = unitOfWork.Vehicle.Get(busDataArray[0]);
+
+                vehicle.X = double.Parse(busDataArray[1]);
+                vehicle.Y = double.Parse(busDataArray[2]);
+                vehicle.TransportLineID = busDataArray[3];
+                unitOfWork.Vehicle.Update(vehicle);
+            }
+            unitOfWork.Complete();
+            return Ok();
+        }
 
 
         // GET: api/Vehicles
@@ -35,7 +67,7 @@ namespace WebApp.Controllers
 
         // GET: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult GetVehicle(int id)
+        public IHttpActionResult GetVehicle(string id)
         {
             Vehicle vehicle = unitOfWork.Vehicle.Get(id);
             if (vehicle == null)
@@ -48,7 +80,7 @@ namespace WebApp.Controllers
 
         // PUT: api/Vehicles/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
+        public IHttpActionResult PutVehicle(string id, Vehicle vehicle)
         {
             if (!ModelState.IsValid)
             {
@@ -106,7 +138,7 @@ namespace WebApp.Controllers
 
         // DELETE: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult DeleteVehicle(int id)
+        public IHttpActionResult DeleteVehicle(string id)
         {
             Vehicle vehicle = unitOfWork.Vehicle.Get(id);
             if (vehicle == null)
@@ -136,9 +168,22 @@ namespace WebApp.Controllers
             base.Dispose(disposing);
         }
 
-        private bool VehicleExists(int id)
+        private bool VehicleExists(string id)
         {
             return unitOfWork.Vehicle.Find(e => e.VehicleID == id).Count() > 0;
+        }
+
+        private string GetDocumentContents(System.Web.HttpRequest Request)
+        {
+            string documentContents;
+            using (Stream receiveStream = Request.InputStream)
+            {
+                using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
+                {
+                    documentContents = readStream.ReadToEnd();
+                }
+            }
+            return documentContents;
         }
     }
 }

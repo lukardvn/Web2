@@ -7,7 +7,7 @@ using WebApp.Models.DomainEntities;
 
 namespace WebApp.Persistence.Repository
 {
-    public interface IVehicleRepository : IRepository<Vehicle,int>
+    public interface IVehicleRepository : IRepository<Vehicle,string>
     {
 
     }

@@ -13,9 +13,13 @@ namespace WebApp.Persistence.Repository
         {
 
         }
+        new public TransportLine Get(string id)
+        {
+            return context.Set<TransportLine>().Where(a => a.TransportLineID == id).Include("Stations").Include("Vehicles").Include("LinePoints").FirstOrDefault();
+        }
         new public IEnumerable<TransportLine> GetAll()
         {
-            return context.Set<TransportLine>().Include("Stations").ToList();
+            return context.Set<TransportLine>().Include("Stations").Include("Vehicles").Include("LinePoints").ToList();
         }
     }
 }

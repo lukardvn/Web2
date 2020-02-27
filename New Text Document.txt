@@ -1,24 +1,4 @@
-﻿namespace WebApp.Migrations
-{
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.IO;
-    using System.Linq;
-    using WebApp.Models;
-    using WebApp.Models.DomainEntities;
-    using WebApp.Persistence;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<WebApp.Persistence.ApplicationDbContext>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
-
-        protected override void Seed(WebApp.Persistence.ApplicationDbContext context)
+protected override void Seed(WebApp.Persistence.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -205,8 +185,8 @@
             //gradski za ns
             //context.TransportLines.Add(new TransportLine() { FromTo = "KLISA - CENTAR - LIMAN I", TransportLineID = "1A" });
             //context.TransportLines.Add(new TransportLine() { FromTo = "LIMAN I - CENTAR - KLISA", TransportLineID = "1B" });
-
-
+            
+            
             //najn zakom
             //context.TransportLines.Add(new TransportLine() { FromTo = "CENTAR - NOVO NASELJE", TransportLineID = "2A" });
             //context.TransportLines.Add(new TransportLine() { FromTo = "NOVO NASELJE - CENTAR", TransportLineID = "2B" });
@@ -338,7 +318,7 @@
 
             //context.Departures.Add(new Departures() { TransportLineID = "1A", TimeTable = "\"Radni_dan\": [\"04:30\", \"05:00\", \"05:15\", \"05:36\", \"05:45\", \"05:54\", \"22:40\", \"23:00\", \"23:20\", \"23:40\", \"00:00\"], \"Subota\": [\"04:30\", \"05:00\", \"05:20\", \"05:37\", \"06:00\", \"23:10\", \"23:35\", \"00:00\"], \"Nedelja\": [\"04:30\", \"05:00\", \"05:20\", \"21:50\", \"22:10\", \"22:30\", \"22:50\", \"23:10\", \"23:35\", \"00:00\"]", ValidFrom = validFrom });
             //context.Departures.Add(new Departures() { TransportLineID = "1B", TimeTable = "\"Radni_dan\": [\"04:30\", \"05:00\", \"05:18\", \"05:36\", \"05:45\", \"05:54\", \"06:03\", \"06:12\", \"06:21\", \"06:30\", \"21:40\", \"22:00\", \"22:20\", \"22:40\", \"23:00\", \"23:20\", \"23:40\", \"00:00\"], \"Subota\": [\"04:30\", \"05:00\", \"05:20\", \"05:40\", \"06:00\", \"22:30\", \"22:50\", \"23:10\", \"23:35\", \"00:00\"], \"Nedelja\": [\"04:30\", \"05:00\", \"05:20\", \"05:40\", \"06:00\", \"20:30\", \"20:50\", \"21:10\", \"21:30\", \"21:50\", \"22:10\", \"22:30\", \"22:50\", \"23:10\", \"23:35\", \"00:00\"]", ValidFrom = validFrom });
-
+            
             //najnovije zakomentarisano
             //context.Departures.Add(new Departures() { TransportLineID = "2A", TimeTable = "\"Radni_dan\": [\"04:30\", \"05:00\", \"05:22\", \"05:35\", \"05:48\", \"06:01\", \"06:14\", \"06:26\", \"06:37\", \"06:48\", \"21:36\", \"22:00\", \"22:24\", \"22:48\", \"23:12\", \"23:36\", \"00:00\"], \"Subota\": [\"04:30\", \"05:00\", \"05:24\", \"05:48\", \"06:12\", \"06:28\", \"06:44\", \"19:53\", \"20:15\", \"20:37\", \"20:59\", \"21:21\", \"21:43\", \"22:05\", \"22:28\", \"22:51\", \"23:14\", \"23:37\", \"00:00\"], \"Nedelja\": [\"04:30\", \"05:00\", \"05:24\", \"05:48\", \"20:16\", \"20:38\", \"21:00\", \"21:22\", \"21:44\", \"22:06\", \"22:28\", \"22:51\", \"23:14\", \"23:37\", \"00:00\"]", ValidFrom = validFrom });
             //context.Departures.Add(new Departures() { TransportLineID = "2B", TimeTable = "\"Radni_dan\": [\"04:30\", \"05:00\", \"05:22\", \"05:35\", \"05:47\", \"05:56\", \"06:09\", \"06:18\", \"06:31\", \"06:41\", \"23:36\", \"00:00\"], \"Subota\": [\"04:30\", \"05:00\", \"05:24\", \"05:46\", \"23:35\", \"00:00\"], \"Nedelja\": [\"04:30\", \"05:00\", \"05:24\", \"05:46\", \"06:03\", \"23:35\", \"00:00\"]", ValidFrom = validFrom });
@@ -507,11 +487,11 @@
 
             var linePointsSplitted = linePointsText.Split('\n');
 
-            for (int i = 0; i < linePointsSplitted.Length; i++)
+            for(int i=0;i<linePointsSplitted.Length;i++)
             {
                 var rowData = linePointsSplitted[i].Split(',');
-                var longitude = Double.Parse(rowData[0], System.Globalization.NumberStyles.Float);
-                var latitude = Double.Parse(rowData[1], System.Globalization.NumberStyles.Float);
+                var longitude = Double.Parse(rowData[0],System.Globalization.NumberStyles.Float);
+                var latitude = Double.Parse(rowData[1],System.Globalization.NumberStyles.Float);
                 var lineId = rowData[3].Trim();
 
                 context.LinePoints.Add(new LinePoint() { TransportLineID = lineId, X = longitude, Y = latitude });
@@ -526,7 +506,7 @@
 
             var stationsOnLineSplitted = stationsOnLineText.Split('\n');
 
-            for (int i = 0; i < stationsOnLineSplitted.Length; i++)
+            for(int i = 0; i < stationsOnLineSplitted.Length; i++)
             {
                 var rowData = stationsOnLineSplitted[i].Split(',');
                 var latitude = Double.Parse(rowData[0]);
@@ -636,5 +616,3 @@
             }
         }
     }
-}
-

@@ -13,5 +13,15 @@ namespace WebApp.Persistence.Repository
         {
         }
         //dodati kasnije metode sa include-om i ostalo sto treba samo za ovaj tip a nema nasledjeno
+        //dosla cica na kolica mladjane, mroao si i ovo da uradis he he 
+        new public LinePoint Get(int id)
+        {
+            return context.Set<LinePoint>().Where(a => a.LinePointID == id).Include("TransportLine").FirstOrDefault();
+        }
+
+        new public IEnumerable<LinePoint> GetAll()
+        {
+            return context.Set<LinePoint>().Include("TransportLine").ToList();
+        }
     }
 }

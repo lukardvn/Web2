@@ -233,6 +233,14 @@ namespace WebApp.Controllers
             return unitOfWork.TransportLine.GetAll();
         }
 
+        [Route("api/TransportLines/WithBuses")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IEnumerable<TransportLine> GetLinesWithBuses()
+        {
+            return unitOfWork.TransportLine.GetAll().Where(x => x.Vehicles.Count > 0);
+        }
+
         // GET: api/TransportLines/5
         [ResponseType(typeof(TransportLine))]
         [AllowAnonymous]

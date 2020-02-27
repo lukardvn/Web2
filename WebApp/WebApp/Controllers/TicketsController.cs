@@ -211,7 +211,7 @@ namespace WebApp.Controllers
                     BoughtAt = dateTimeNow,
                     PayPalPaymentDetails = paymentDetails,
                     TicketType = karta,
-                    UserID = "anonymus",
+                    UserID = "appu",
                     Expires = expires
                 };
             } else
@@ -238,8 +238,13 @@ namespace WebApp.Controllers
             };
 
             //nema popusta nije verifikovan
-            if (!user.Status.Equals("verified"))
-                p.Price = 1 * priceFinal.Price;
+            if (user.Status == null)
+            {
+                //if (!user.Status.Equals("verified"))
+                //{
+                    p.Price = 1 * priceFinal.Price;
+                //}
+            }
 
             unitOfWork.PriceFinal.Add(p);
             unitOfWork.Complete();

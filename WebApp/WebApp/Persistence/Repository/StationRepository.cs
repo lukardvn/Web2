@@ -13,5 +13,15 @@ namespace WebApp.Persistence.Repository
         {
 
         }
+
+        new public Station Get(int id)
+        {
+            return context.Set<Station>().Where(a => a.StationID == id).Include("StationsOnLines").FirstOrDefault();
+        }
+
+        new public IEnumerable<Station> GetAll()
+        {
+            return context.Set<Station>().Include("StationsOnLines").ToList();
+        }
     }
 }

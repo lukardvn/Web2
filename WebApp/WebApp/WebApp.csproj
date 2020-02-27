@@ -272,29 +272,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905222056072_InitialMigration.cs" />
-    <Compile Include="Migrations\201905222056072_InitialMigration.Designer.cs">
-      <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906112152288_BozeTiPomozi.cs" />
-    <Compile Include="Migrations\201906112152288_BozeTiPomozi.Designer.cs">
-      <DependentUpon>201906112152288_BozeTiPomozi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906112205220_BozeTiPomozi2.cs" />
-    <Compile Include="Migrations\201906112205220_BozeTiPomozi2.Designer.cs">
-      <DependentUpon>201906112205220_BozeTiPomozi2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906112216502_BozeTiPomozi123.cs" />
-    <Compile Include="Migrations\201906112216502_BozeTiPomozi123.Designer.cs">
-      <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001301246598_addedPaypalModel.cs" />
-    <Compile Include="Migrations\202001301246598_addedPaypalModel.Designer.cs">
-      <DependentUpon>202001301246598_addedPaypalModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002151237464_o.cs" />
-    <Compile Include="Migrations\202002151237464_o.Designer.cs">
-      <DependentUpon>202002151237464_o.cs</DependentUpon>
+    <Compile Include="Hubs\VehicleHub.cs" />
+    <Compile Include="Migrations\202002261657212_init.cs" />
+    <Compile Include="Migrations\202002261657212_init.Designer.cs">
+      <DependentUpon>202002261657212_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -407,7 +388,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
@@ -438,23 +418,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905222056072_InitialMigration.resx">
-      <DependentUpon>201905222056072_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906112152288_BozeTiPomozi.resx">
-      <DependentUpon>201906112152288_BozeTiPomozi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906112205220_BozeTiPomozi2.resx">
-      <DependentUpon>201906112205220_BozeTiPomozi2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906112216502_BozeTiPomozi123.resx">
-      <DependentUpon>201906112216502_BozeTiPomozi123.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001301246598_addedPaypalModel.resx">
-      <DependentUpon>202001301246598_addedPaypalModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002151237464_o.resx">
-      <DependentUpon>202002151237464_o.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002261657212_init.resx">
+      <DependentUpon>202002261657212_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

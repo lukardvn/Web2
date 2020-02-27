@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthHttpService } from '../services/auth.service';
+import { BusService } from '../services/bus.service';
 import {} from 'googlemaps';
 import {TransportLine,Vehicle,Station,StationsOnLine} from '../modeli';
 
@@ -10,7 +11,7 @@ import {TransportLine,Vehicle,Station,StationsOnLine} from '../modeli';
 })
 export class MrezalinijaComponent implements OnInit {
 
-  constructor(private http: AuthHttpService) { }
+  constructor(private http: AuthHttpService,private bus: BusService) { }
 
   linije : string[];
   allIds : string[];
@@ -28,6 +29,7 @@ export class MrezalinijaComponent implements OnInit {
   stanicePrikazaneNaMapi: Array<any> = new Array<any>();
   @ViewChild('map',{static:true}) mapEl: ElementRef;
   map: google.maps.Map;
+  isConnectedWS: Boolean = false;
 
   ngOnInit() {
     this.http.GetLinije().subscribe((allLines)=> {
@@ -36,6 +38,29 @@ export class MrezalinijaComponent implements OnInit {
     });
 
     this.initMap();
+    this.initWS();
+  }
+
+  private initWS() {
+    this.checkConnection();
+    this.subscribeForBusPositions();
+  }
+
+  private checkConnection(){
+    this.bus.startConnection().subscribe(e => {
+      this.isConnectedWS = e;
+    });
+  }
+  
+  private subscribeForBusPositions () {
+    this.bus.registerVehiclesLocations().subscribe(
+      data => {
+        console.log('data iz subscribe metode',data);
+        data.forEach(bus => {
+          this.DrawBusOnMap(bus);
+        });
+      }
+    )
   }
 
   private initMap() {
@@ -57,15 +82,55 @@ export class MrezalinijaComponent implements OnInit {
   }
 
 
+
   onChange(event) {
     this.DrawLineOnMap();
   }
+
+
+  private DrawBusOnMap(bus:Vehicle) {
+    console.log('bus',bus);
+    console.log(this.displayedLines);
+    if ((bus.TransportLineID in this.displayedLines)) {
+      if (bus.VehicleID in this.displayedBuses) {
+        var linija = this.displayedLines[bus.TransportLineID];
+        console.log('Linija iz drugog ifa',linija);
+        if(linija.Vehicles.find(x => x.Id == bus.VehicleID) == null){
+          linija.Vehicles.push(bus);
+        }
+        console.log('Linija iz drugog iffa posle zadnjeg unutrasnjeg ifa',linija);
+        this.displayedBuses[bus.VehicleID].setTitle(bus.VehicleID);
+        this.displayedBuses[bus.VehicleID].setZIndex(120);
+        this.displayedBuses[bus.VehicleID].setPosition(
+          new google.maps.LatLng(bus.X, bus.Y)
+        );
+        console.log('usao u unutrasnji if');
+      } else {
+        let markerIconPath = "../../assets/rsz_google-maps-bus-icon-55.png";
+        let busMarker = this.DrawMarkerOnMap(bus.X, bus.Y, bus.VehicleID + "|" + bus.TransportLineID, markerIconPath) as google.maps.Marker;
+        busMarker.setZIndex(120);
+        busMarker.addListener('click', () => {
+          let content =
+            `<div>Registracija: <b>${bus.VehicleID}</b></div>
+            <div>Trenutna linija: ${bus.TransportLineID}</div>`;
+          var infoWindow = new google.maps.InfoWindow();
+          infoWindow.setContent(content);
+          infoWindow.open(this.map, busMarker);
+        });
+        this.displayedBuses[bus.VehicleID] = busMarker;
+      }
+    } else if (bus.VehicleID in this.displayedBuses) {
+      this.RemoveBusFromMap(bus);
+    }
+  }
+
   private RemoveBusFromMap(bus:Vehicle) {
     if (bus.VehicleID in this.displayedBuses) {
       this.displayedBuses[bus.VehicleID].setMap(null);
       delete this.displayedBuses[bus.VehicleID];
     }
   }
+
   Submit(){
     for(let l in this.displayedLines){
       this.displayedPointsForLines[l].setMap(null);
@@ -111,6 +176,7 @@ export class MrezalinijaComponent implements OnInit {
         this.line.LinePoints.forEach(item=>{
           lineCoordinatesGoogleArray.push(new google.maps.LatLng(item.X,item.Y))
         });
+        console.log('Data iz getlinija ',data);
     
         let polyOptions = {
           path: lineCoordinatesGoogleArray,
